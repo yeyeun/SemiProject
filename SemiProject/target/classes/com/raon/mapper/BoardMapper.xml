@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.raon.mapper.BoardMapper">
+
+	<!-- id값은 Interface에서 선언한 메소드와 이름 일치시켜야 함 -->
+     <select id="getList" resultType="com.raon.domain.Board">
+         select * from boardtable where bno > 0
+      </select>
+      
+      <insert id="insert">
+      	insert into boardtable(btype,title,content,writer)
+      	values(#{btype},#{title},#{content},#{writer})
+      </insert>
+      
+      <insert id="insertSelectKey">
+      	insert into boardtable(btype,title,content,writer)
+      	values(#{btype},#{title},#{content},#{writer})
+      	<selectKey resultType="int" keyProperty="bno" order="AFTER">
+      		select last_insert_id()
+      	</selectKey>
+      </insert>
+      
+      <select id="read" resultType="com.raon.domain.Board">
+      		select * from boardtable where bno=#{bno}
+      </select>
+      
+      <update id="increaseHit">
+      	update boardtable set hit=hit+1 where bno=#{bno}
+      </update>
+      
+      <delete id="delete">
+      	delete from boardtable where bno=#{bno}
+      </delete>
+      
+      <update id="update">
+      	update boardtable
+      	set title=#{title}, content=#{content}
+      	where bno=#{bno}
+      </update>
+</mapper>
+
