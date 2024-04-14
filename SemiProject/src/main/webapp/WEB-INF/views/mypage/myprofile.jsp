@@ -20,7 +20,7 @@
 	integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
 	crossorigin="anonymous"></script>
 	    <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
-<link rel="stylesheet" href="${contextPath}/mypage/CSS/myprofile.css">
+<link rel="stylesheet" href="${contextPath}/resources/css/mypage/myprofile.css">
 </head>
 <body>
 <div id="myprofile_container">

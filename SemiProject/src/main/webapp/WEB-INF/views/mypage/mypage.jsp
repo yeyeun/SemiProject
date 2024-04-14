@@ -22,18 +22,18 @@
 	integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
 	crossorigin="anonymous"></script>
 	    <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
-<link rel="stylesheet" href="${contextPath}/mypage/CSS/mypage.css">
+<link rel="stylesheet" href="${contextPath}/resources/css/mypage/mypage.css">
 </head>
 <body>
 <div class="mypage_header_container" style="position:relative; height: 100px; width: 100%;">
-	<jsp:include page="${application.contextPath}/front/header.jsp"/>
+	<jsp:include page="${contextPath }/WEB-INF/views/include/header.jsp"></jsp:include>
 </div>
 <div class="body_container" style="position: relative;">
     <nav id="mypage_nav" class="sidebar">
         <header>
             <div class="image-text">
                 <span class="image">
-                    <img id="logo_icon" alt="" src="../images/logo_icon.PNG">
+                    <img id="logo_icon" alt="" src="${contextPath }/resources/images/logo_icon.PNG">
                 </span>
 
                 <div class="text logo-text">                	

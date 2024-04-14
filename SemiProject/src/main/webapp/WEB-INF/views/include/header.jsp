@@ -19,7 +19,7 @@
    <c:choose>
   	<c:when test="${sessionScope.loginId!=null}">
   	<div class="login-user">
-      <span>${sessionScope.loginId}님이 로그인 중입니다</span><img src="../images/user-icon.png">
+      <span>${sessionScope.loginId}님이 로그인 중입니다</span><img src="${resourceurl }/images/user-icon.png">
       <div class="login-user-menu" style="display:none;">
       	<ul>
     		<li><a href="${contextPath}/mypage/mypage.jsp">마이페이지</a></li>
@@ -38,14 +38,14 @@
   </header>
   <nav class="header_nav">
     <div class="logo_container">
-      <img src="../images/logo.png" width=200px>
+      <img src="${resourceurl}/images/logo.png" width=200px>
     </div>
 
     <div class="header-right">
-      <a href="${contextPath}/front/main.jsp" class="nav-item nav-active">홈</a>
-      <a href="${contextPath}/front/tour.api" class="nav-item">여행지</a>
+      <a href="${contextPath}/home/main.jsp" class="nav-item nav-active">홈</a>
+      <a href="${contextPath}/tour/tour.api" class="nav-item">여행지</a>
        <a href="${contextPath}/course/list.course" class="nav-item">여행코스</a>
-      <a href="${contextPath}/front/event_main.jsp" class="nav-item">축제/행사</a>
+      <a href="${contextPath}/event/event_main.jsp" class="nav-item">축제/행사</a>
       <a href="${contextPath}/board/board.bo" class="nav-item">게시판</a>
     </div>
   </nav>
@@ -55,6 +55,7 @@
   $(document).ready(function() {
 	   // 페이지 로드 시 active 클래스 설정
 	    setActiveClass();
+	   //Spring에서 아래 href코드 때문에 이 코드를 실행하면 홈홤년에 있는 nav-active클래스가 삭제되고 잇음
 
 	    // 네비게이션 클릭 시 active 클래스 설정
 	    $('.nav-item').click(function(event) {

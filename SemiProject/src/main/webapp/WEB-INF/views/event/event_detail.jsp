@@ -8,6 +8,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<c:set var="contextPath" value='${pageContext.request.contextPath}' />
 <script src="https://code.jquery.com/jquery-3.7.1.js"
 	integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
 	crossorigin="anonymous"></script>
@@ -21,7 +22,7 @@
 	integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
 	crossorigin="anonymous"></script>
 
-<link rel="stylesheet" href="../CSS/event_detail.css">
+<link rel="stylesheet" href="${contextPath }/resources/css/event/event_detail.css">
 </head>
 <body>
 	<%
@@ -33,7 +34,7 @@
 	%>
 
 	<div class="headerContainer">
-		<jsp:include page="header.jsp" />
+		<jsp:include page="${contextPath }/WEB-INF/views/include/header.jsp"></jsp:include>
 	</div>
 
 	<div class="all_container">
@@ -265,6 +266,5 @@
 
  
 </script>
-	<jsp:include page="footer.jsp" />
 </body>
 </html>

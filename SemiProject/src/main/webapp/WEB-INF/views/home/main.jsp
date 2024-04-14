@@ -25,16 +25,16 @@ background: white;
 	<div class="bodyContainer">
 
 		<div>
-			<jsp:include page="content.jsp"></jsp:include>
+			<jsp:include page="${contextPath }/WEB-INF/views/home/content.jsp"></jsp:include>
 		</div>
 		<div id="slider2Container" style="margin-top: 100px; padding-top: 65px; background: rgb(228, 233, 247);">
 <%-- 			<jsp:include page="${contextPath }/front/allCourse.course"></jsp:include> --%>
 		</div>
 		<div style="height: 900px; margin-top: 100px; background: antiquewhite;">
-			<jsp:include page="slider_1.jsp"></jsp:include>
+			<jsp:include page="${contextPath }/WEB-INF/views/home/slider_1.jsp"></jsp:include>
 		</div>
 		<div style="height: 800px">
-			<jsp:include page="boardBanner.jsp"></jsp:include>
+			<jsp:include page="${contextPath }/WEB-INF/views/home/boardBanner.jsp"></jsp:include>
 		</div>
 		<div>
 		<jsp:include page="${contextPath }/WEB-INF/views/include/footer.jsp"></jsp:include>
