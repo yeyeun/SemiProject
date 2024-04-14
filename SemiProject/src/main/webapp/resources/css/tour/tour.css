@@ -1,0 +1,131 @@
+@charset "UTF-8";
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap');
+* {
+    margin: 0;
+    padding: 0;
+    font-family: "Noto Sans KR";
+}
+html, body {
+	margin: 0;
+	height: 95.8%;
+}
+.noto-sans  {
+  font-family: "Noto Sans KR", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: weight;
+  font-style: normal;
+}
+
+#tour_wrapper{
+	margin-top: 80px;
+	width: 100%;
+	height:100%;
+}
+.left-box{
+	float:left;
+	width:20%;
+	height: 100%;
+	padding: 50px;
+	border-right: solid 1px gray;
+	background: rgb(244,252,255);
+	box-sizing : border-box; /* padding 설정여부 상관없이 원래 사이즈대로 공간설정 */
+	overflow: hidden;
+}
+.right-box{
+	float:right;
+	width:80%;
+	height:100%;
+	padding: 30px;
+	/* background: rgb(218, 218, 218); 구역 확인용 */
+	/* box-sizing : border-box; padding 설정여부 상관없이 원래 사이즈대로 공간설정 */
+	overflow: auto;
+}
+
+.side_tab{
+	position: flex;
+}
+.tour_category{
+	margin-left: 20px;
+}
+.tourlist-wrapper{
+	width:100%;
+	height: 100%;
+	padding: 30px;
+	
+}
+
+.hstack{
+	position:flex;
+	margin-right:20px;
+	margin-top:20px;
+}
+.row{
+	margin-top: 50px;
+} 
+.search>input {
+	margin: 0;
+	padding: 10px;
+  	width: 100%;
+  	border: 1px solid #bbb;
+  	border-radius: 8px;
+  	font-size: 14px;
+  	vertical-align: middle;
+}
+.container{
+	margin: 30 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    height:fit-content;
+}
+
+.card{
+	margin: 0px auto;
+	border-radius: none;
+}
+.card-img-top{
+	height: 13rem;
+	object-fit: cover;
+}
+.right-box::-webkit-scrollbar{
+	display:none;
+}
+.card-title{
+	font-size: 18px;
+}
+.card-text{
+	width: fit-content;
+}
+.pagination {
+    width: 100%;
+    text-align: center;
+    font-family: 'Hahmlet';
+}
+
+.pagination a {
+    color: black;
+    padding: 8px 16px;
+    text-decoration: none;
+    transition: background-color .3s;
+    margin: 0 auto;
+}
+
+.pagination a.active {
+	background-color: rgb(83, 185, 252);
+	color: white;
+}
+
+.pagination a:hover:not(.active) {
+    background-color: #ddd;
+}
+.pagination a {
+  color: black;
+  padding: 8px 16px;
+  text-decoration: none;
+  transition: background-color .3s;
+  margin: 0 auto;
+}
+.pagination a:hover:not(.active) {background-color: #ddd;}

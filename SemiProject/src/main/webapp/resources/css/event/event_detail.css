@@ -1,0 +1,150 @@
+@charset "UTF-8";
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap');
+.noto-sans {
+  font-family: "Noto Sans KR", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: weight;
+  font-style: normal;
+}
+
+*{
+	font-family:"Noto Sans KR";
+}
+
+.all_container{
+	width: 980px;
+	margin: 0 auto;
+	padding: 130px 20px 27px 20px;
+}
+
+/*헤더 컨테이너*/
+.headerContainer{
+	position:absolute;
+	z-index:2;
+}
+
+/* 제목영역 */
+.title {
+    position: relative;
+}
+.title > #title1{
+	font-size: 70px;
+    text-align: center;
+    font-weight: 700;
+/*     background: red; */
+}
+.title > #title2{
+	font-size: 20px;
+	text-align: center;
+	color: gray;
+/* 	background: blue; */
+}
+/* 포스터 */
+.poster {
+    /* width: 100%; */
+    position: relative;
+    /* margin-left: auto; */
+    margin-top: 80px;
+    /* margin-right: auto; */
+    justify-content: center;
+    align-content: center;
+    display: flex;
+}
+.posterImg {
+    width: 500px;
+    max-width: 600px; /* 포스터 이미지의 최대 너비 지정 */
+    height: 666px; 
+}
+#posterClick{
+    position: absolute;
+    margin-top: 666px;
+}
+/* 상세정보 */
+.basicInfo{
+	margin-top: 110px;
+}
+
+/* 캐러셀이미지영역 */
+
+.carousel_container {
+    width: 940px;
+    height: 724px;
+    /* max-width: 100%; */
+    margin-top: 50px;
+    /* margin-left: 300px; */
+    overflow: hidden;
+    /* align-items: center; */
+    display: flex;
+    justify-content: center;
+}
+.carousel {
+    width: 940px;
+    height: 720px;
+}
+.carousel-inner {
+    position: relative;
+    width: 960px;
+    overflow: hidden;
+    height: 720px;
+}
+.carousel-item {
+       height: 720px;
+}
+.w-100 {
+    object-fit: contain;
+    height: 100%;
+}
+.carousel {
+    width: 940px;
+}
+
+/* 이미지 이동 버튼 */
+ .carousel-control-prev-icon,
+.carousel-control-next-icon {
+	  font-size: 50px;
+	  color: black;
+	  background-image: none;
+}
+.carousel-dark .carousel-control-next-icon, .carousel-dark .carousel-control-prev-icon {
+    filter: none;
+}
+.carousel-control-next, .carousel-control-prev {
+    position: absolute;
+    /* top: 130px; */
+    /* bottom: 0; */
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 87px;
+    height: 720px;
+    /* padding: 0; */
+    color: black;
+    text-align: center;
+    background: 0 0;
+    border: 0;
+    opacity: .8;
+    transition: opacity .15s ease;
+    /* margin-left: 0px; */
+    /* margin: 0 auto; */
+    /* margin-top: auto; */
+    /* margin-bottom: auto; */
+}
+/*세부정보*/
+.detailInfo{
+	margin-top: 110px;
+}
+.detailInfoList{
+	display: flex;
+	justify-content: space-between;
+	flex-wrap: wrap;
+}
+.detailInfoList li{
+	 margin-bottom: 15px;
+	width: calc(100%/2);
+}
+
+
+
+
+

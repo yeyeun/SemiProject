@@ -1,0 +1,211 @@
+@charset "UTF-8";
+@charset "UTF-8";
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap');
+
+*{
+	margin:0 auto;
+	padding: 0;
+	font-family: "Noto Sans KR";
+}
+
+.noto-sans  {
+  font-family: "Noto Sans KR", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: weight;
+  font-style: normal;
+}
+
+
+html, body {
+	margin: 0;
+	height: 100%;
+	overflow: hidden;
+}
+
+#event_main_wrapper{
+	margin-top: 80px;
+	width: 100%;
+	height: 100%;
+}
+/* .left_box{
+	float:left;
+	width:20%;
+	height: 100%;
+	padding: 50px;
+	text-align: center;
+    position: static;
+	border-right: solid 1px gray;
+	background: rgb(244,252,255);
+	box-sizing : border-box; padding 설정여부 상관없이 원래 사이즈대로 공간설정
+	overflow: hidden;
+} */
+
+.g-0, .gy-0 { /* 아이텀 슬라이드 창 */
+    background: yellow;
+    border-radius: 10px 10px 10px 10px;
+}
+.event_container2{
+	width:100%;
+	height: 100%;
+	padding: 30px;
+/* 	background: rgb(218, 218, 218); */
+	/* box-sizing : border-box; padding 설정여부 상관없이 원래 사이즈대로 공간설정 */
+}
+
+.item-title{
+	text-decoration-line: none;
+	color: black;
+}
+
+.item-title:hover{
+	color: black;
+}
+.card{
+    background-color: transparent;
+    border: none ;
+    
+}
+.card-body {
+    text-align: center;
+}
+.card-title {
+    font-size: 25px;
+    font-weight: 600;
+}
+.row-wrapper{
+	overflow-x: hidden;
+	overflow-y: scroll;
+	height: calc(100vh - 224px)
+}
+
+.spread-underline {
+	font-size: 20px;
+	color: #333;
+	text-decoration: none;
+	display: inline-block;
+	padding: 30px 0;
+	position: relative;
+	
+}
+
+.row-cols-md-3>* {
+    width: 27.333333%;
+}
+.row>* {
+	padding: 0;
+
+}
+
+.spread-underline:hover{
+	font-weight: 900;
+}
+
+.spread-underline:after {
+  background: none repeat scroll 0 0 transparent;
+  bottom: 0;
+  content: "";
+  display: block;
+  height: 2px;
+  left: 50%;
+  position: absolute;
+  transition: width 0.3s ease 0s, left 0.3s ease 0s;
+  background: #212121;
+  width: 0;
+}
+
+.spread-underline:hover:after {
+  width: 100%;
+  left: 0;
+}
+
+.checked{
+	font-weight: 900;
+}
+
+
+.filter-header {
+    background: lavender;
+    font-size: 23px;
+    font-weight: 800;
+}
+
+#arealist li{
+	list-style:none;
+	display: inline-block;
+}
+
+#arealist span{
+	font-size: 15px;
+}
+
+/* 지역별 버튼 */
+#arealist button{
+	padding: 5px 10px 5px 10px;
+	margin: 4px 2px;
+	background-color: #e7e7e7;
+	color: black;
+	border: none;
+	text-align: center;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+#arealist button:hover,
+#arealist button.active{
+	background-color: #8C8C8C;
+	color: white;
+}
+
+.card-footer {
+	color: white;
+	background: rgb(128,0,255);
+    border-top: none !important;
+    border-radius: 10px !important;
+    margin-bottom: 20px;
+}
+/* 여행코스 이미지 사이즈 */
+
+.img-fluid{
+	width: 510px !important;
+	height: 360px !important;
+}
+
+
+/* 여행코스 카드 이미지/텍스트 사이즈 */
+.col-md-4{
+	float:left;
+	padding:20px;
+}
+
+.col-md-8{
+	padding:20px;
+}
+.col{
+	margin: 50px;
+	box-shadow: rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em;
+}
+
+
+/* 하단 페이지 번호 */
+
+.pagination{
+	width:40%;
+	text-align: center;
+	font-family: 'Noto Sans KR';
+	margin: 0 auto
+}
+
+.pagination a {
+  color: black;
+  padding: 8px 16px;
+  text-decoration: none;
+  transition: background-color .3s;
+  margin-bottom: 50px
+}
+
+.pagination a.active {
+	background-color: rgb(83, 185, 252);
+	color: white;
+}
+
+.pagination a:hover:not(.active) {background-color: #ddd;}

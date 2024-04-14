@@ -1,0 +1,183 @@
+@charset "UTF-8";
+@import
+	url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap');
+
+.noto-sans kr-mainfont {
+	font-family: "Noto Sans KR", sans-serif;
+	font-optical-sizing: auto;
+	font-weight: 400;
+	font-style: normal;
+}
+
+* {
+	font-family: 'Noto Sans KR';
+}
+
+/* 전체 컨테이너 */
+.container-fluid {
+	margin-top: 60px;
+	margin-left: auto;
+	margin-right: auto;
+	width: 80%;
+	max-width: 80%;
+	overflow-x: hidden;
+}
+/* .container-fluid {  배경색 있는 버전*/
+/*     padding: 20px 100px 50px 100px; */
+/*     border-radius: 20px 20px 20px 20px; */
+/*     padding-left: 100px; */
+/*     padding-right: 100px; */
+/*     background: rgb(228, 233, 247); */
+/*     margin-top: 60px; */
+/*     margin-left: auto; */
+/*     margin-right: auto; */
+/*     width: 80%; */
+/*     max-width: 80%; */
+/*     overflow-x: hidden; */
+/* } */
+/* 테이블 위 제목 */
+.title_write {
+	font-weight: 600;
+	border: 2px solid rgba(0, 0, 0, 0.5);
+	padding: 10px 10px;
+	border-radius: 10px 10px 10px 10px;
+}
+
+.title_write:hover {
+	background: rgb(105, 92, 254);
+	color: white;
+}
+
+.title_write.active {
+	background: rgb(105, 92, 254);
+	color: white;
+}
+
+/* 스크롤 영역 지정 */
+
+/* 스크롤이 필요한 부분에만 스크롤 적용 */
+.scrollable {
+	max-height: calc(100vh - 150px); /* 높이 조정 */
+	overflow-y: auto;
+}
+
+/* 글쓰기버튼 */
+#regBtn {
+	border: none;
+	border-radius: 5px 5px 5px 5px; font-size : 15px;
+	font-weight: 600;
+	background: rgb(105, 92, 254);
+	color: white;
+	font-size: 15px;
+}
+
+/* =============여행코스 css================= */
+h1 {
+	font-size: 32px;
+	margin-top: 30px;
+	text-align: center;
+}
+
+.blog-wrapper {
+	padding: 15px;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	flex-wrap: wrap;
+}
+
+.blog-wrapper .blog-card {
+	transition: 0.3s;
+	max-width: 300px;
+	margin: 15px;
+	background: #fff;
+	border: 1px solid lightgray;
+	text-align: center;
+	cursor: pointer;
+}
+
+.card-text p{
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: normal;
+        word-wrap: break-word;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+	
+}
+
+.blog-wrapper .card-img img {
+	opacity: 0.6;
+}
+
+.blog-wrapper .blog-card .card-img {
+	position: relative;
+	text-align: center;
+/* 	background: #cb6074; */
+}
+
+.blog-wrapper .blog-card .card-img img {
+	transition: 0.3s;
+	max-height: 180px;
+	width: 100%;
+	border-bottom: 4px solid black;
+}
+
+.blog-wrapper .blog-card .card-img:before {
+	content: '';
+	position: absolute;
+	bottom: -8px;
+	left: 50%;
+	margin-left: -10px;
+	width: 0;
+	height: 0;
+	border-top: solid 10px black;
+	border-left: solid 10px transparent;
+	border-right: solid 10px transparent;
+}
+
+.blog-wrapper .blog-card .card-img h1 {
+    position: absolute;
+    margin: 0;
+    font-size: 18px;
+    font-weight: 700;
+    bottom: 15px;
+    width: 100%;
+    color: black;
+    background-color: rgba(255, 255, 255, 0.6);
+}
+
+.blog-wrapper .blog-card .card-details {
+	margin-top: 30px;
+	color: #3c3c3c;
+}
+
+.read-more{
+	transition: 0.3s;
+	display: inline-block;
+	width: auto;
+	text-align: center;
+	text-transform: uppercase;
+	background: rgb(105,92,254);
+	padding: 15px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	border-radius: 5px 5px 5px 5px;
+}
+.read-more a{
+	text-decoration: none;
+	color: #fff;
+}
+.blog-wrapper .blog-card .card-details span {
+	padding: 0 30px;
+}
+
+.blog-wrapper .blog-card .card-details span i {
+	margin-right: 5px;
+}
+
+.blog-wrapper .blog-card .card-text {
+	padding: 30px 15px;
+	line-height: 22px;
+}

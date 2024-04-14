@@ -1,0 +1,51 @@
+@charset "UTF-8";
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap');
+.noto-sans kr-mainfont {
+  font-family: "Noto Sans KR", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Noto Sans KR';
+}
+
+/* 제목 */
+.display-3 {
+    font-size: 3rem;
+    font-weight: 600;
+    text-align: center;
+}
+
+
+/* 수정코드 */
+.menu-links{
+	padding-left: 0px;
+}
+.nav-link {
+   padding: 0px;
+}
+
+#myprofile_container{
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 40px;
+    text-align: center;
+    height: 726px;
+    width: 1380px;
+    background-color: var(--body-color);
+    border-radius: 30px 30px 30px 30px;
+    box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px, rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px, rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px;
+}
+
+#myprofile_container form{
+    width: 1200px;
+    margin-left: 187px;
+}
+
+    

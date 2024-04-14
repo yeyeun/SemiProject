@@ -1,0 +1,95 @@
+@charset "UTF-8";
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap');
+.noto-sans kr-mainfont {
+  font-family: "Noto Sans KR", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
+/* 탭 스타일 */
+.tab {
+    overflow: hidden;
+    background-color: none;
+    width: 1200px;
+    margin: auto; /* 화면 가운데 정렬 */
+    margin-top: 50px; /* 위쪽 여백 추가 */
+}
+
+/* 탭 버튼 스타일 */
+.tab button {
+    background-color: inherit !important;
+    float: left !important;
+    border: none !important;
+    outline: none !important;
+    cursor: pointer !important;
+    padding: 14px 16px !important;
+    transition: 0.3s !important;
+    font-size: 17px !important;
+}
+
+/* 활성화된 탭 버튼 스타일 */
+.tab button.active {
+    background-color: #a4d6f3 !important;
+}
+
+/* 탭 내용 스타일 */
+.tabcontent {
+	font-family: "Noto Sans KR";
+	position: relative;
+    margin: auto;
+    width: 1200px;
+    display: none;
+    overflow: hidden;
+    background-color: #fff;
+	box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 3px 0px;
+	border-radius: 20px 20px 20px 20px;
+}
+#tab1_img1 {
+	float:left;
+	position:absolute;
+    width: 690px;
+    height: 520px;
+    background-image: url('../images/boardBanner.jpg'); /*축제/행사탭 기본 이미지*/
+    margin-right: 20px; /* 이미지와 텍스트 사이의 가로 간격 조절 */
+    border-radius: 20px 20px 20px 20px;
+    background-size: cover;
+   
+}
+#ul1 hr {
+	background: rgb(242,252,255) !important;
+	height: 10px !important;
+	border: 0 !important;
+	opacity: 100 !important;
+}
+
+#festivalTitle{
+	list-style-type: none;
+}
+#festivalTitle a{
+	color: black;
+	text-decoration-line: none;
+	font-size: 25px;	
+}
+#festivalDate{
+	list-style-type: none;
+	font-size: 19px;
+	margin-bottom: 17px;
+}
+.tabcontent .boardList {
+    margin-left: 658px;
+    text-align: center;
+}
+
+
+/* 페이드 인/아웃 애니메이션 */
+@keyframes fadeEffect {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+

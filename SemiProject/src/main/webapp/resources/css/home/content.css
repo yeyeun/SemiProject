@@ -1,0 +1,191 @@
+@charset "UTF-8";
+/*font*/
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap');
+@import url("https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900");
+.noto-sans kr-mainfont {
+  font-family: "Noto Sans KR", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+.carousel-inner{
+	height:100vh;
+}
+
+.headerContainer {
+	width:100%;
+	position: absolute;
+	z-index:100;
+}
+.active {
+    background-color: transparent;
+    border-radius: 0px;
+    padding-left: 0px;
+    padding-right: 0px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
+.carousel-caption {
+    position: absolute;
+    width: 500px;
+    bottom: 400px;
+    left: 0;
+    right: 0;
+    background: transparent;
+    color: #fff;
+    padding: 20px;
+    z-index:10;
+    margin:0 auto;
+}
+
+.carousel-caption p{
+	font-size:22px; 
+}
+
+.carousel-item {
+	height: 900px;
+}
+
+.arrow-container {
+	position:absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    height: 150px;
+    z-index:99;
+    bottom: 40px;
+	left:47%;
+}
+#arrow-title{
+	font-family:"Noto Sans KR";
+	font-weight: 500;
+	position:absolute;
+	z-index:99;
+	opacity: 75%;
+	font-size: 20px;
+	color: white;
+	left: 47.7%;
+	bottom: 130px;
+}
+.chevron {
+    position: absolute;
+    width: 100px;
+    height: 0.48rem;
+    opacity: 0;
+    transform: scale(0.3);
+    animation: move-chevron 3s ease-out infinite;
+}
+
+.chevron:first-child {
+    animation: move-chevron 3s ease-out 1s infinite;
+}
+
+.chevron:nth-child(2) {
+    animation: move-chevron 3s ease-out 2s infinite;
+}
+
+.chevron:before,
+.chevron:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 50%;
+    opacity: 50%;
+    background: white;
+}
+
+.chevron:before {
+    left: 0;
+    transform: skewY(30deg);
+}
+
+.chevron:after {
+    right: 0;
+    width: 50%;
+    transform: skewY(-30deg);
+}
+
+@keyframes move-chevron {
+    25% {
+        opacity: 1;
+    }
+
+    33.3% {
+        opacity: 1;
+        transform: translateY(0.1rem);
+    }
+
+    66.6% {
+        opacity: 1;
+        transform: translateY(1.56rem);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateY(2.4rem) scale(0.5);
+    }
+}
+
+
+
+
+/* 폰트 애니메이션 */
+.content {
+    position: relative;
+    bottom: 67px;
+}
+.content h2 {
+    color: #fff;
+    font-size: 128px;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    left: 50%;
+    width: 800px;
+    height: 200px;
+}
+.content h2:nth-child(1) {
+	color: white;
+    opacity: 80%;
+}
+
+.content h2:nth-child(2) {
+    color: #03a9f4;
+    opacity: 50%;
+    animation: animate 4s ease-in-out infinite;
+    top: 0px;
+}
+
+
+@keyframes animate {
+  0%,
+  100% {
+    clip-path: polygon(
+      0% 45%,
+      16% 44%,
+      33% 50%,
+      54% 60%,
+      70% 61%,
+      84% 59%,
+      100% 52%,
+      100% 100%,
+      0% 100%
+    );
+  }
+
+  50% {
+    clip-path: polygon(
+      0% 60%,
+      15% 65%,
+      34% 66%,
+      51% 62%,
+      67% 50%,
+      84% 45%,
+      100% 46%,
+      100% 100%,
+      0% 100%
+    );
+  }
+}
