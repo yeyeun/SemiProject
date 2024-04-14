@@ -93,7 +93,7 @@
 
 <table class="table-bottom">
 	<tr>
-		<td align="right"><button type="button" onclick="location.href='${contextPath}/board/write.jsp';">글쓰기</button></td>
+		<td align="right"><button type="button" onclick="location.href='${contextPath}/board/write';">글쓰기</button></td>
 	</tr>
 </table>
 
