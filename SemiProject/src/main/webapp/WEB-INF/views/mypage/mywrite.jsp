@@ -26,7 +26,7 @@
 			style="text-align: center; font-size: 45px;">작성 목록</h1>
 		<p class="mb-4"></p>
 
-		<!-- DataTales Example -->
+		<!-- DataTalesㄴ Example -->
 		<div class="card shadow mb-4">
 			<div class="card-header py-3">
 				<span class="title_write" id="title_board"
