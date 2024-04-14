@@ -8,8 +8,9 @@
 <meta charset="UTF-8">
 <title>board</title>
 <c:set value="${pageContext.request.contextPath}/resources" var="resourceurl" scope="application"/>
+<c:set value="${pageContext.request.contextPath}" var="contextPath" />
 <link href="${resourceurl}/css/board/common.css" rel="stylesheet">
-<link href="${resourceurl}/css/board/board.css" rel="stylesheet">
+<link href="${resourceurl}/css/board/list.css" rel="stylesheet">
 
 <script src="https://code.jquery.com/jquery-3.7.1.js"
         integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
