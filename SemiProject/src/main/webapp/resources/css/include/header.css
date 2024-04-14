@@ -1,0 +1,161 @@
+@charset "UTF-8";
+
+@import
+	url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap')
+	;
+
+.noto-sans kr-mainfont {
+	font-family: "Noto Sans KR", sans-serif;
+	font-optical-sizing: auto;
+	font-weight: 400;
+	font-style: normal;
+}
+
+body {
+	margin: 0;
+	font-family: "Noto Sans KR";
+}
+
+.header-container {
+	position: fixed;
+	width: 100%;
+	top: 0;
+	left: 0;
+	height: 50px;
+	z-index: 999;
+}
+
+header a {
+	text-decoration: none;
+	color: white;
+	margin: 50px;
+	transition: 0.3s;
+}
+
+.header_nav {
+	height: 90px;
+	/*background-image: linear-gradient(-225deg, #FFFEFF 0%, #D7FFFE 100%);*/
+	background-color: transparent;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	transition: background-color 0.5s ease; /* 부드러운 전환을 위한 transition 속성 */
+}
+
+.header_nav.scrolled {
+	background-color: white; /* 스크롤이 발생할 때 변경될 배경색 */
+}
+
+header {
+	height: 0px;
+	background-color: none;
+	font-size: 7pt;
+}
+
+.login-signup {
+	text-decoration: none;
+	text-align: right;
+	margin-right: 10px;
+	font-size: 9pt;
+	font-weight: 500;
+}
+
+.login-signup>a {
+	background-color: #8C8C8C;
+	border-radius: 5px;
+	padding: 8px;
+}
+
+.login-signup>a:hover {
+	background-color: #F6F6F6;
+	color: #353535;
+	border-radius: 5px;
+	padding: 8px;
+}
+
+.login-user{
+	margin: 0;
+	padding: 0;
+	position: absolute;
+	top: 15%;
+	right: 1%;
+	height: 30px;
+}
+
+.login-user:hover{
+	cursor: pointer;
+}
+
+.login-user img{
+	width: 32px;
+}
+
+.login-user span{
+	font-size: 13px;
+	margin-right: 5px;
+	font-weight: 600;
+	line-height: 30px;
+	text-align: center;
+}
+
+.login-user-menu{
+	font-size: 16px;
+	overflow:hidden;
+	margin-top: 12px;
+}
+
+.login-user-menu li{
+	padding-top: 10px;
+	padding-bottom: 10px;
+	list-style: none;
+	text-align:center;
+	background-color:#F8FFFF;
+}
+
+.login-user-menu li a{
+	margin: 0;
+	padding: 0;
+	color: #353535;
+}
+
+
+.header_nav img {
+	position: absolute;
+	top: 20px;
+	left: 60px;
+}
+
+.nav-active {
+	background-color: rgba(83, 185, 252, 0.7);
+	border-radius: 5px;
+	padding-left: 25px;
+	padding-right: 25px;
+	padding-top: 7px;
+	padding-bottom: 7px;
+}
+
+.header_nav {
+  overflow: hidden;
+  padding: 40px 10px;
+	font-weight: 700;
+}
+
+.header_nav a {
+  float: left;
+  color: black;
+  text-align: center;
+  padding: 12px;
+  text-decoration: none;
+  font-size: 18px; 
+  line-height: 25px;
+  border-radius: 5px;
+}
+
+.header-right a:hover{
+		background-color: rgba(83, 185, 252, 0.5);
+}
+
+.nav-item {
+	margin-left: 50px;
+	margin-right: 50px;
+}
