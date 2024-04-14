@@ -31,7 +31,7 @@
 	</c:when>
 	<c:otherwise>
   		<div class="login-signup">
-        <a href="${contextPath}/login/login.jsp"><b>로그인/회원가입</b></a>
+        <a href="${contextPath}/header/login"><b>로그인/회원가입</b></a>
       </div>
      </c:otherwise>
    </c:choose>
@@ -42,11 +42,11 @@
     </div>
 
     <div class="header-right">
-      <a href="${contextPath}/home/main.jsp" class="nav-item nav-active">홈</a>
-      <a href="${contextPath}/tour/tour.api" class="nav-item">여행지</a>
-       <a href="${contextPath}/course/list.course" class="nav-item">여행코스</a>
-      <a href="${contextPath}/event/event_main.jsp" class="nav-item">축제/행사</a>
-      <a href="${contextPath}/board/board.bo" class="nav-item">게시판</a>
+      <a href="${contextPath}/header/main" class="nav-item nav-active">홈</a>
+      <a href="${contextPath}/header/tour" class="nav-item">여행지</a>
+       <a href="${contextPath}/header/course" class="nav-item">여행코스</a>
+      <a href="${contextPath}/header/event" class="nav-item">축제/행사</a>
+      <a href="${contextPath}/header/board" class="nav-item">게시판</a>
     </div>
   </nav>
 </div>
