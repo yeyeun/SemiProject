@@ -9,13 +9,13 @@
       </select>
       
       <insert id="insert">
-      	insert into boardtable(title,content,writer)
-      	values(#{title},#{content},#{writer})
+      	insert into boardtable(btype,title,content,writer)
+      	values(#{btype},#{title},#{content},#{writer})
       </insert>
       
       <insert id="insertSelectKey">
-      	insert into boardtable(title, content,writer)
-      	values(#{title},#{content},#{writer})
+      	insert into boardtable(btype,title,content,writer)
+      	values(#{btype},#{title},#{content},#{writer})
       	<selectKey resultType="int" keyProperty="bno" order="AFTER">
       		select last_insert_id()
       	</selectKey>

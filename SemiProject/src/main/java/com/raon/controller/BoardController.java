@@ -1,5 +1,7 @@
 package com.raon.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,8 +31,10 @@ public class BoardController {
 	}
 	
 	@PostMapping("/write")
-	public String register(Board board, RedirectAttributes rttr) {
+	public String register(Board board, RedirectAttributes rttr, HttpSession session) {
 		log.info("write : " + board);
+		String writer = (String)session.getAttribute("loginId");
+		board.setWriter(writer);
 		service.write(board);
 		rttr.addFlashAttribute("result", board.getBno());
 		return "redirect:/board/list";
