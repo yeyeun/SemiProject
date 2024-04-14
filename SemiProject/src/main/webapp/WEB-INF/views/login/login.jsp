@@ -258,12 +258,12 @@ background-color: #fff;
   <div class="container__form container--signup">
     <form action="${contextPath}/login/signUp.action" method="Post"class="form" id="form1">
       <h2 class="form__title">Sign Up</h2>
-      <input type="text" name="id" placeholder="UserId" class="input" />
-      <input type="text" name="name" placeholder="Name" class="input" />
-      <input type="email" name="email" placeholder="Email" class="input" />
-      <input type="password" name="pwd" placeholder="Password" class="input" />
-      <input type="text" name="phoneNo" placeholder="Phone" class="input" />
-      <button type="submit" class="btn">Sign Up</button>
+      <input type="text" id="id" name="id" placeholder="UserId" class="input" />
+      <input type="text" id="name" name="name" placeholder="Name" class="input" />
+      <input type="email" id="email"name="email" placeholder="Email" class="input" />
+      <input type="password" id="pwd"name="pwd" placeholder="Password" class="input" />
+      <input type="text" id="phoneNo"name="phoneNo" placeholder="Phone" class="input" />
+      <button type="submit" class="btn" onclick="checkSignUp()">Sign Up</button>
     </form>
   </div>
 
@@ -342,6 +342,44 @@ secondForm.addEventListener("submit", (e) => e.preventDefault());
 
 			});
 	});
+ function checkSignUp(){
+		var id= document.getElementById("id");
+		var name=document.getElementById("name");
+		var email=document.getElementById("email");
+		var password=document.getElementById("pwd");
+		var phoneNo=document.getElementById("phoneNo");
+		if(id==null){
+			alert("id를 입력하세요.");
+			return false;
+		}
+		if(name==null){
+			alert("이름을 입력하세요.");
+			return false;
+		}
+		if(email==null){
+			alert("email을 입력하세요.");
+			return false;
+		}
+		if(password==null){
+			alert("password을 입력하세요.");
+			return false;
+		}
+		if(phoneNo.value.length==0||isNaN(phoneNo.value)){
+			alert("[전화번호]\n숫자만 입력하세요");
+			return false;
+		}
+		
+		document.form1.submit();
+	}
+	function check(regExp, e, msg){
+		if(regExp, test(e.value)){
+			return true;
+		}
+		alert(msg);
+		e.select();
+		e.focus();
+		return false;
+	}
 </script>
 </body>
 </html>
