@@ -10,6 +10,7 @@
   text-align: center;
   table-layout:fixed;
   max-width: 1000px;
+  width: 80%;
 }
 
 .table-middle tr{
@@ -26,6 +27,9 @@ border: 1px solid rgba(0,0,0,.1);
   background: #fff;
 }
 
+.middle-menu{
+	width: 20%;
+}
 
 /* 상단 제목 ('상세보기') */
 .table-top{
@@ -42,7 +46,7 @@ button[type="button"]{
 	border: none;
 	margin: 0 auto;
     padding: 10px 10px;
-    border-radius: 10px;
+    border-radius: 8px;
     text-decoration: none;
     font-weight: 600;
     transition: 0.25s;
@@ -51,5 +55,9 @@ button[type="button"]{
 button[type="button"]:hover{
   background: #E6CCC8;
   color: #333333;
+}
+
+.table-bottom{
+	margin-top: 10px;
 }
 
