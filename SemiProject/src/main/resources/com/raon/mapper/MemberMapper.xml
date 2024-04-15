@@ -2,19 +2,19 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" 
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.raon.mapper.MemberMapper">
-<select id="getAllMembers" resultType="com.example.dto.Members">
+<select id="getAllMembers" resultType="com.raon.domain.Members">
         SELECT * FROM MEMBERS
     </select>
 
-    <select id="getMemberById" resultType="com.example.dto.Members" parameterType="String">
+    <select id="getMemberById" resultType="com.raon.domain.Members" parameterType="String">
         SELECT * FROM MEMBERTABLE WHERE ID = #{id}
     </select>
 
-    <insert id="registerMember" parameterType="com.example.dto.Members">
+    <insert id="registerMember" parameterType="com.raon.domain.Members">
         INSERT INTO MEMBERTABLE (ID, PWD, NAME, EMAIL, PHONENO, REGDATE) VALUES (#{id}, #{pwd}, #{name}, #{email}, #{phoneNo}, NOW())
     </insert>
 
-    <update id="updateMember" parameterType="com.example.dto.Members">
+    <update id="updateMember" parameterType="com.raon.domain.Members">
         UPDATE MEMBERTABLE SET PWD = #{pwd}, NAME = #{name}, EMAIL = #{email}, PHONENO = #{phoneNo} WHERE ID = #{id}
     </update>
 
@@ -26,7 +26,7 @@
         SELECT COUNT(*) FROM MEMBERTABLE WHERE ID = #{id} AND PWD = #{pwd}
     </select>
 
-    <update id="updatePassword" parameterType="com.example.dto.Members">
+    <update id="updatePassword" parameterType="com.raon.domain.Members">
         UPDATE MEMBERTABLE SET PWD = #{pwd} WHERE ID = #{id}
     </update>
 </mapper>

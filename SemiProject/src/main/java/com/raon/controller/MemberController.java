@@ -75,7 +75,7 @@ public class MemberController {
     public String login(HttpSession session, @RequestParam String id, @RequestParam String pwd) {
         if (memberService.isUser(id, pwd)) {
             session.setAttribute("loginId", id);
-            return "redirect:/front/main.jsp";
+            return "redirect:/home/main.jsp";
         } else {
             return "redirect:/login/login.jsp";
         }

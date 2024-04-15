@@ -38,7 +38,7 @@
 
   <!-- Sign In -->
   <div class="container__form container--signin">
-    <form action="${contextPath}/login/login.action" method="Post" class="form" id="form2">
+    <form action="${contextPath}/member/login" method="Post" class="form" id="form2">
       <h2 class="form__title">Sign In</h2>
       <input type="text" name="id" placeholder="UserId" class="input" />
       <input type="password" name="pwd" placeholder="Password" class="input" />
