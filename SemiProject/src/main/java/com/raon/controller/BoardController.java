@@ -68,4 +68,11 @@ public class BoardController {
 		}
 		return "redirect:/board/list";
 	}
+	
+	//세션 확인용
+	@RequestMapping("/sessionTest")
+	public void sessionTest(HttpSession session) {
+		session.setAttribute("loginId", "kimUser");
+		log.info("로그인 세션 설정 완료");
+	}
 }
