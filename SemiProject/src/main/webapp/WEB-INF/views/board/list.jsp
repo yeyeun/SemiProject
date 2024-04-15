@@ -59,7 +59,7 @@
 				<tr align="center">
 					<td>${board.bno}</td>
 					<td>${board.btype}</td>
-					<td align="left"><a href="${contextPath}/board/read.bo?bno=${board.bno}">${board.title}</a></td>
+					<td align="left"><a href="${contextPath}/board/read?bno=${board.bno}">${board.title}</a></td>
 					<td align="center">${board.writer}</td>
 					<td align="center">${board.regDate}</td>
 					<td align="center">${board.hit}</td>
@@ -93,7 +93,7 @@
 
 <table class="table-bottom">
 	<tr>
-		<td align="right"><button type="button" onclick="location.href='${contextPath}/board/write';">글쓰기</button></td>
+		<td align="right"><button type="button" id="regBtn">글쓰기</button></td>
 	</tr>
 </table>
 
@@ -109,6 +109,30 @@
 		//console.log('click');
 		actionFrm.find("input[name='pageNum']").val($(this).attr("href"));
 		actionFrm.submit();
+	});
+	
+	$(document).ready(function(){
+		$("#regBtn").on("click",function(){
+			self.location = "/board/write";
+		})
+		
+		//체크
+		let result = '<c:out value="${result}"/>';
+		console.log('result:',result);
+		checkChange(result);
+		function checkChange(result){
+			if(result === '')
+				{return;}
+			if(parseInt(result)>0){
+				alert("게시글 " + parseInt(result) + "번이 등록되었습니다");
+			}
+			if(result==="modify"){
+				alert("수정이 완료되었습니다");
+			}
+			if(result==="remove"){
+				alert("삭제가 완료되었습니다");
+			}
+		}
 	});
 
 </script>
