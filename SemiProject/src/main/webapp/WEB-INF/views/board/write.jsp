@@ -23,7 +23,7 @@
 			</td>
 		</tr>
 	</table>
-	<form action="${contextPath}/board/write.bo" method="POST">
+	<form action="${contextPath}/board/write" method="POST">
 		<table class="table-middle" width="80%">
 			<tr>
 				<td width="30%">분류</td>
@@ -40,14 +40,17 @@
 				<td><input type="text" name="title" style="width:90%;"/></td>
 			</tr>
 			<tr>
-				<td>내용</td>
-				<td><textarea name="content" style="width:90%; height:100px"></textarea></td>
+				<td height="300">내용</td>
+				<td><textarea name="content" style="width:90%; height:300px"></textarea></td>
 			</tr>
+		</table>
+		
+		<table class="table-bottom">
 			<tr>
-				<td colspan="2" align="center">
+				<td colspan="2" class="bottom-button">
 					<button type="submit">작성완료</button>
 					<button type="reset">다시 입력</button>
-					<button type="button" onclick="location.href='${contextPath}/board/board.bo';">목록 보기</button>
+					<button type="button" onclick="location.href='${contextPath}/board/board';">목록 보기</button>
 				</td>
 			</tr>
 		</table>
