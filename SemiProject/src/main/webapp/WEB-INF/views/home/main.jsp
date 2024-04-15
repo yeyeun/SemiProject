@@ -44,7 +44,7 @@ background: white;
 	<script>
     $(document).ready(function(){
         $.ajax({
-            url: "${contextPath}/front/allCourse.course",
+            url: "/course/list",
             success: function(response){
                 $("#slider2Container").html(response); // 서블릿에서 받은 데이터를 slider2Container에 넣음
             }

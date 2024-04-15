@@ -11,6 +11,7 @@
         <link href="${resourceurl }/css/home/boardBanner.css" rel="stylesheet">
         <title>Document</title>
     </head>
+    
 
     <body>
 

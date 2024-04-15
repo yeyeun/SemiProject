@@ -8,6 +8,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<c:set var="contextPath" value='${pageContext.request.contextPath}' />
+<c:set value="${pageContext.request.contextPath}/resources" var="resourceurl" scope="application"/>
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" 
     crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css">
@@ -23,9 +25,9 @@
 	</div>
 		<div class="swiper-wrapper" >
 				<!--제목, 소제목 위치 조정 필요-->
-				 <c:forEach items="${selectedCourses}" var="course">
+				 <c:forEach items="${courseList}" var="course">
                 <div class="swiper-slide">
-                    <img src="${course.getFirstimage()}" onerror="this.src='../images/nocourseimg.png'">
+                    <img src="${course.getFirstimage()}">
                     <p class="tour_slide_name">${course.getTitle()}</p>
                     <p class="tour_slide_subname">${course.getOverview()}</p>
                     <div class="course_detail">
