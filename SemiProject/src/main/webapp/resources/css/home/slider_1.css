@@ -128,7 +128,7 @@
 }
 
 .swiper1 .swiper-button-next {
-	background: url(../images/right_arrow.png) no-repeat;
+	background: url('/resources/images/right_arrow.png') no-repeat;
 	background-size: 70% auto;
 	background-position: center;
 	position: absolute;
@@ -145,7 +145,7 @@
 }
 
 .swiper1 .swiper-button-prev {
-	background: url(../images/left_arrow.png) no-repeat;
+	background: url('/resources/images/left_arrow.png') no-repeat;
 	background-size: 70% auto;
 	background-position: center;
 	position: absolute;

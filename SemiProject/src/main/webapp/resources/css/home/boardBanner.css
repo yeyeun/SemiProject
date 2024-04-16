@@ -50,7 +50,7 @@
 	position:absolute;
     width: 690px;
     height: 520px;
-    background-image: url('../images/boardBanner.jpg'); /*축제/행사탭 기본 이미지*/
+    background-image: url('/resources/images/boardBanner.jpg'); /*축제/행사탭 기본 이미지*/
     margin-right: 20px; /* 이미지와 텍스트 사이의 가로 간격 조절 */
     border-radius: 20px 20px 20px 20px;
     background-size: cover;

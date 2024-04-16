@@ -121,13 +121,13 @@
     border-radius: 20px 20px 20px 20px;
 }
 .swiper2 .swiper-button-next {
-	background: url(../images/right_arrow.png) no-repeat;
+	background: url('/resources/images/right_arrow.png') no-repeat;
 	background-size: 110% auto;
 	background-position: center;
 }
 
 .swiper2 .swiper-button-prev {
-	background: url(../images/left_arrow.png) no-repeat;
+	background: url('/resources/images/left_arrow.png') no-repeat;
 	background-size: 110% auto;
 	background-position: center;
 }
