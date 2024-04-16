@@ -20,6 +20,8 @@
 </head>
 
 <body>
+<script>
+</script>
 <jsp:include page="${pageContext.request.contextPath}/WEB-INF/views/include/header.jsp" />
 <div class="board-wrapper">
 <form>
@@ -111,10 +113,12 @@
 		actionFrm.submit();
 	});
 	
+
+
 	$(document).ready(function(){
 		$("#regBtn").on("click",function(){
 			self.location = "/board/write";
-		})
+		});
 		
 		//체크
 		let result = '<c:out value="${result}"/>';
@@ -133,6 +137,8 @@
 				alert("삭제가 완료되었습니다");
 			}
 		}
+
+
 	});
 
 </script>

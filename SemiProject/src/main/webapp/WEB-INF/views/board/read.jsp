@@ -8,6 +8,13 @@
 <title>read</title>
 <c:set value="${pageContext.request.contextPath}/resources" var="resourceurl" scope="application"/>
 <c:set value="${pageContext.request.contextPath}" var="contextPath" />
+<script src="https://code.jquery.com/jquery-3.7.1.js"
+        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+	integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+	crossorigin="anonymous"></script>
 <link href="${resourceurl}/css/board/common.css" rel="stylesheet">
 <link href="${resourceurl}/css/board/read.css" rel="stylesheet">
 </head>
@@ -59,22 +66,38 @@
 		</table>
 	</form>
 	<div class="comment-wrapper" style="width:100%; margin-top:15px;">
-		<div class="comment-header">
-		<p>COMMENT<p>
-		<input type="text" id="content"/>
-		<button type="button" id="registerBtn">댓글 달기</button>
+		<div class="comment">
+		<div class="container bootstrap snippets bootdey">
+    <div class="row">
+		<div class="col-md-12">
+		    <div class="blog-comment">
+				<h3 class="text-success">Comments</h3>
+				<input type="text" id="content"/>
+				<button type="button" id="registerBtn">댓글 달기</button>
+                <hr/>
+				<ul class="comments">
+				
+				
+				
+<%-- 				<li class="clearfix">
+				  <img src="${resourceurl}/images/user-icon.png" class="avatar" alt="">
+				  <div class="post-comments">
+				      <p class="meta"><a href="#">유저아이디</a>2024-04-16<i class="pull-right">
+				      <a href="#"><small>수정하기</small></a><a href="#"><small>삭제하기</small></a></i></p>
+				      <p>
+				      안녕하세요 댓글예제
+				      </p>
+				  </div>
+				</li> --%>
+				
+				
+				
+				</ul>
+			</div>
 		</div>
-		<ul class="comment">
-		
-		
-<!-- 			<li class="list-group-item" data-rno="12">
-				<strong class="primary-font">user00</strong>
-				<small>2023-06-18 13:13</small>
-				<p>Good job</p>
-			</li> -->
-			
-			
-		</ul>
+	</div>
+</div>
+		</div>
 	</div>
 </div>
 
@@ -195,7 +218,7 @@ $(document).ready(function(){
 	}
 	
 	//댓글 목록 처리
-	let replyUL = $(".comment");
+	let replyUL = $(".comments");
 	showList(1);
 	function showList(page){
 		getList(
@@ -208,11 +231,19 @@ $(document).ready(function(){
 				}
 				list.forEach(function(item){
 					str+=`
-					<li class="list-group-item" data-commentid="\${item.commentid}">
-						<strong class="primary-font">\${item.id}</strong>
-						<small>\${displayTime(item.regDate)}</small>
-						<p>\${item.content}</p>
+
+					<li class="clearfix" data-commentid="\${item.commentid}">
+					  <img src="${resourceurl}/images/user-icon.png" class="avatar" alt="">
+					  <div class="post-comments">
+					      <p class="meta"><a href="#">\${item.id}</a>\${displayTime(item.regDate)}<i class="pull-right">
+					      <a href="#"><small>수정하기</small></a><a href="#"><small>삭제하기</small></a></i></p>
+					      <p>
+					      \${item.content}
+					      </p>
+					  </div>
 					</li>
+					
+					
 					`;
 				}); //forEach
 				replyUL.html(str);
