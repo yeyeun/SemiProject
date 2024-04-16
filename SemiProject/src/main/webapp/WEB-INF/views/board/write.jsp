@@ -50,7 +50,7 @@
 				<td colspan="2" class="bottom-button">
 					<button type="submit">작성완료</button>
 					<button type="reset">다시 입력</button>
-					<button type="button" onclick="location.href='${contextPath}/board/board';">목록 보기</button>
+					<button type="button" onclick="location.href='/board/list'">목록 보기</button>
 				</td>
 			</tr>
 		</table>

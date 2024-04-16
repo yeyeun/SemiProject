@@ -46,21 +46,17 @@
 		<table class="table-bottom">
 			<tr>
 				<td class="bottom-button">
-					<button data-oper='modify' type="button" onclick="location.href='/board/modify?bno=<c:out value="${board.bno}"/>'">수정하기</button>
-					<button data-oper='delete' type="button" onclick="location.href='/board/deleteProc?bno=<c:out value="${board.bno}"/>'">삭제하기</button>
-					<button type="button" onclick="location.href='/board/list'">목록 보기</button>
-				
 				<!-- 로그인 세션 여부에 따라 보이는 버튼 다르게 하기 -->
-<%-- 				<c:choose>
+ 				<c:choose>
 					<c:when test="${sessionScope.loginId == board.writer }">
-						<button type="button" onclick="location.href='${contextPath}/board/modify.jsp?bno=${board.bno}';">수정하기</button>
-						<button type="button" onclick="location.href='${contextPath}/board/deleteProc.jsp?bno=${board.bno}';">삭제하기</button>
-						<button type="button" onclick="location.href='${contextPath}/board/board.jsp';">목록 보기</button>
+						<button data-oper='modify' type="button" onclick="location.href='/board/modify?bno=<c:out value="${board.bno}"/>'">수정하기</button>
+						<button data-oper='delete' type="button" onclick="location.href='/board/deleteProc?bno=<c:out value="${board.bno}"/>'">삭제하기</button>
+						<button type="button" onclick="location.href='/board/list'">목록 보기</button>
 					</c:when>
 					<c:otherwise>
-						<button type="button" onclick="location.href='${contextPath}/board/board.jsp';">목록 보기</button>
+						<button type="button" onclick="location.href='/board/list'">목록 보기</button>
 					</c:otherwise>
-				</c:choose> --%>
+				</c:choose>
 				</td>
 			</tr>
 		</table>
@@ -71,10 +67,12 @@
     <div class="row">
 		<div class="col-md-12">
 		    <div class="blog-comment">
-				<h3 class="text-success">Comments</h3>
+				<h4>Comments</h4>
+				<div class="comment-header">
 				<input type="text" id="content"/>
 				<button type="button" id="registerBtn">댓글 달기</button>
                 <hr/>
+                </div>
 				<ul class="comments">
 				
 				
@@ -235,9 +233,9 @@ $(document).ready(function(){
 					<li class="clearfix" data-commentid="\${item.commentid}">
 					  <img src="${resourceurl}/images/user-icon.png" class="avatar" alt="">
 					  <div class="post-comments">
-					      <p class="meta"><a href="#">\${item.id}</a>\${displayTime(item.regDate)}<i class="pull-right">
+					      <p class="meta"><span class="id">\${item.id}</span>\${displayTime(item.regDate)}<i class="pull-right">
 					      <a href="#"><small>수정하기</small></a><a href="#"><small>삭제하기</small></a></i></p>
-					      <p>
+					      <p id="comment-content">
 					      \${item.content}
 					      </p>
 					  </div>

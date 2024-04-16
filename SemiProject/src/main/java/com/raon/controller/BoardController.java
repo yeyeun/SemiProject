@@ -72,7 +72,7 @@ public class BoardController {
 	//세션 확인용
 	@RequestMapping("/sessionTest")
 	public void sessionTest(HttpSession session) {
-		session.setAttribute("loginId", "kimUser");
+		session.setAttribute("loginId", "user");
 		log.info("로그인 세션 설정 완료");
 	}
 }

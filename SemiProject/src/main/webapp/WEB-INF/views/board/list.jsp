@@ -116,8 +116,16 @@
 
 
 	$(document).ready(function(){
+		let loginId = '<%=(String)session.getAttribute("loginId")%>';
+		
 		$("#regBtn").on("click",function(){
-			self.location = "/board/write";
+			if(loginId=="null"){
+				alert("로그인 후 사용해주세요");
+				return;
+			}
+			else{
+				self.location = "/board/write";
+			}
 		});
 		
 		//체크
