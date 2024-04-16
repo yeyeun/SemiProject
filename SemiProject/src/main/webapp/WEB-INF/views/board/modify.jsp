@@ -22,10 +22,30 @@
 		</tr>
 	</table>
 	<form action="${contextPath}/board/modifyProc.bo" method="POST">
+		<input type="hidden" name="bno" value="${board.bno}">
 		<table class="table-middle" width="80%">
-			<tr hidden>
-				<td>게시번호</td>
-				<td><input type="text" name="bno" value="${board.bno}"></td>
+			<tr>
+				<td width="30%">분류</td>
+					<td width="70%">
+						<select name="btype" class="btype">
+							<option value="정보공유" <c:if test="${board.btype}=='정보공유'">selected="selected"</c:if>>정보공유</option>
+							<option value="분실물" <c:if test="${board.btype}=='분실물'">selected="selected"</c:if>>분실물</option>
+							<option value="자유주제" <c:if test="${board.btype}=='자유주제'">selected="selected"</c:if>>자유주제</option>
+						</select>
+				<c:choose>
+					<c:when test="${sessionScope.loginId == board.writer }">
+						<button data-oper='modify' type="button" onclick="location.href='/board/modify?bno=<c:out value="${board.bno}"/>'">수정하기</button>
+						<button data-oper='delete' type="button" onclick="location.href='/board/deleteProc?bno=<c:out value="${board.bno}"/>'">삭제하기</button>
+						<button type="button" onclick="location.href='/board/list'">목록 보기</button>
+					</c:when>
+					<c:otherwise>
+						<button type="button" onclick="location.href='/board/list'">목록 보기</button>
+					</c:otherwise>
+				</c:choose>
+						
+						
+						
+					</td>
 			</tr>
 			<tr>
 				<td>제목</td>
@@ -39,7 +59,7 @@
 				<td colspan="2" align="center">
 					<button type="submit">수정 완료</button>
 					<button type="reset">다시 입력</button>
-					<button type="button" onclick="location.href='${contextPath}/board/board.bo';">목록 보기</button>
+					<button type="button" onclick="location.href='/board/list'">목록 보기</button>
 				</td>
 			</tr>
 		</table>
