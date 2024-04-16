@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <title>tourlist</title>
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-<c:set var="contextPath" value="<%=request.getContextPath()%>" scope="application"></c:set>	 
+	 
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
 	rel="stylesheet"
@@ -17,15 +17,16 @@
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
 	integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
 	crossorigin="anonymous"></script> 
-<link rel="stylesheet" href="${contextPath }/resources/css/tour/tour.css"/>
+<link rel="stylesheet" href="${contextPath }/resources/css/tour/tour.css">
 
 <style>
 
 </style>
 </head>
 <body>
+<c:set var="contextPath" value="<%=request.getContextPath()%>" scope="application"></c:set>
 <header>
-	<jsp:include page="${contextPath }/WEB-INF/views/include/header.jsp"></jsp:include>
+		<jsp:include page="${pageContext.request.contextPath}/WEB-INF/views/include/header.jsp" />
 </header>
 
 <div id="tour_wrapper">
@@ -61,7 +62,7 @@
 			</c:forEach>
 			</div> 
 		</div>
-		<div class="pagination">
+    	<div class="pagination">
     			<hr style="margin-bottom: 10px">
     			<a href="#">&laquo;</a>
     			<a href="#" class="active">1</a>
@@ -71,7 +72,7 @@
     			<a href="#">5</a>
     			<a href="#">6</a>
     			<a href="#">&raquo;</a>
-		</div> 
+		</div>
 	</div>
 </div>
 <%-- <jsp:include page="footer.jsp"/> --%>
@@ -99,6 +100,13 @@
 		});
 		
 	   
+	});
+	var actionFrm = $("#actionFrm");
+	$(".pagination a").on("click",function(e){
+		e.preventDefault();
+		//console.log('click');
+		actionFrm.find("input[name='pageNum']").val($(this).attr("href"));
+		actionFrm.submit();
 	});
 </script>
 </body>

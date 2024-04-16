@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.raon.mapper.MemberMapper;
 import com.raon.domain.Members;
@@ -43,7 +44,7 @@ public class MemberService {
     }
 
 
-    public boolean isUser(String id, String pwd) {
+    public int isUser(@RequestParam("id")String id, @RequestParam("pwd") String pwd) {
         return mapper.isUser(id, pwd);
     }
 

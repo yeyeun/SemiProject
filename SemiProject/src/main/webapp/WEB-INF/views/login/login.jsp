@@ -25,7 +25,7 @@
 <div class="container">
   <!-- Sign Up -->
   <div class="container__form container--signup">
-    <form action="${contextPath}/login/signUp.action" method="Post"class="form" id="form1">
+    <form action="${contextPath}/login/signUp" method="Post"class="form" id="form1">
       <h2 class="form__title">Sign Up</h2>
       <input type="text" id="id" name="id" placeholder="UserId" class="input" />
       <input type="text" id="name" name="name" placeholder="Name" class="input" />
@@ -38,7 +38,7 @@
 
   <!-- Sign In -->
   <div class="container__form container--signin">
-    <form action="${contextPath}/member/login" method="Post" class="form" id="form2">
+    <form action="${contextPath}/login/login" method="Post" class="form" id="form2">
       <h2 class="form__title">Sign In</h2>
       <input type="text" name="id" placeholder="UserId" class="input" />
       <input type="password" name="pwd" placeholder="Password" class="input" />

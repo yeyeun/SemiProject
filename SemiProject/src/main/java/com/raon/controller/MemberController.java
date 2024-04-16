@@ -1,7 +1,12 @@
 package com.raon.controller;
 
 import com.raon.domain.Members;
+import com.raon.service.BoardService;
 import com.raon.service.MemberService;
+
+import lombok.AllArgsConstructor;
+import lombok.extern.log4j.Log4j;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,7 +16,9 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
-@RequestMapping("/member")
+@Log4j
+@RequestMapping("/login/*")
+@AllArgsConstructor
 public class MemberController {
 
     @Autowired
@@ -42,7 +49,7 @@ public class MemberController {
     @PostMapping("/update")
     public String update(Members member) {
         memberService.updateMember(member);
-        return "redirect:/front/main.jsp";
+        return "redirect:/header/main";
     }
 
     @PostMapping("/delete")
@@ -63,28 +70,31 @@ public class MemberController {
     @PostMapping("/updatePwd")
     public String updatePwd(Members member) {
         memberService.updatePassword(member);
-        return "redirect:/front/main.jsp";
+        return "redirect:home/main";
     }
 
     @GetMapping("/login")
     public String login() {
-        return "login";
+        return "login/login";
     }
-
+   
+    
     @PostMapping("/login")
     public String login(HttpSession session, @RequestParam String id, @RequestParam String pwd) {
-        if (memberService.isUser(id, pwd)) {
+        if (memberService.isUser(id, pwd)==1) {
+        	log.info("login....");
             session.setAttribute("loginId", id);
-            return "redirect:/home/main.jsp";
+            return "redirect:/header/main";
         } else {
-            return "redirect:/login/login.jsp";
+            return "redirect:/login/login";
         }
     }
 
     @PostMapping("/signUp")
     public String signUp(Members member) {
+    	log.info("signUp...");
         memberService.registerMember(member);
-        return "redirect:/login/login.jsp";
+        return "redirect:/login/login";
     }
 
     @GetMapping("/logout")

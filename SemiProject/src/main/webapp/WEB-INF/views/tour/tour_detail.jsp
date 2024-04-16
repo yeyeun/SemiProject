@@ -6,12 +6,12 @@
 <head>
 <meta charset="UTF-8">
 <title>tour_detail</title>
-<c:set var="contextPath" value="<%=request.getContextPath()%>" scope="application"></c:set>
-<script src="https://code.jquery.com/jquery-3.7.1.js"></script>	 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+	 
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
-<link rel="stylesheet" href="${contextPath }/resources/css/tour/tour_detail.css"/>
+<link rel="stylesheet" href="${contextPath }/resources/css/tour/tour_detail.css">
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8c21d4e024682dd160eb186f02ced1e1"></script>
 <script src="https://kit.fontawesome.com/3a115195d8.js" crossorigin="anonymous"></script>
 </head>
@@ -21,15 +21,17 @@
 	String contentid = request.getParameter("contentid");
 	String title = request.getParameter("title");
 %>
-
+<c:set var="contextPath" value="<%=request.getContextPath()%>" scope="application"></c:set>
 <div class="menu">
-	<jsp:include page="${contextPath }/WEB-INF/views/include/header.jsp"></jsp:include>
+	<jsp:include page="${pageContext.request.contextPath}/WEB-INF/views/include/header.jsp" />
 </div>
 	 <div class="container">
 	  	<div class="tour_title" style="display:inline; white-space:nowrap;">
+	  	<form name="addForm" action="${contextPath}/front/add.pro?contentid=${contentid}">
 	  		<blockquote><h2><%=title %><button type="button" class="like" onclick="click()"><i class="fa-regular fa-heart" style="color: #7E57C2; margin-left:10px;"></i></button></h2>
 	  		
 	  		</blockquote>
+	  	</form>
         </div>
         <div class="row">
         	<div class="col">
@@ -134,12 +136,18 @@ $(document).ready(function(){
             if(i==0){
                 $(this).attr('class','fa-solid fa-heart');
                 i++;
+                addToCart();
             }else if(i==1){
                 $(this).attr('class','fa-regular fa-heart');
                 i--;
             }
 
         });
+        function addToCart(){
+        	if(confirm("상품을 장바구니에 추가하시겠습니까?")){
+        		document.addForm.submit();
+        	}else{document.addForm.reset();}
+        }
 
 	});
 var container = document.getElementById('map');

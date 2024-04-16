@@ -31,7 +31,7 @@
 	</c:when>
 	<c:otherwise>
   		<div class="login-signup">
-        <a href="${contextPath}/header/login"><b>로그인/회원가입</b></a>
+        <a href="${contextPath}/login/login"><b>로그인/회원가입</b></a>
       </div>
      </c:otherwise>
    </c:choose>

@@ -22,7 +22,7 @@
         DELETE FROM MEMBERTABLE WHERE ID = #{id}
     </delete>
 
-    <select id="isUser" resultType="int" parameterType="map">
+    <select id="isUser" resultType="int" parameterType="hashMap">
         SELECT COUNT(*) FROM MEMBERTABLE WHERE ID = #{id} AND PWD = #{pwd}
     </select>
 
