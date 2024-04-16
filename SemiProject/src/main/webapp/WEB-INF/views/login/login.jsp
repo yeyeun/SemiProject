@@ -117,28 +117,13 @@ secondForm.addEventListener("submit", (e) => e.preventDefault());
 		var email=document.getElementById("email");
 		var password=document.getElementById("pwd");
 		var phoneNo=document.getElementById("phoneNo");
-		if(id==null){
-			alert("id를 입력하세요.");
+		if(id==null|| name==null || email==null || password==null || phoneNo.value.length==0||isNaN(phoneNo.value)){
+			alert("정보를 입력하세요.");
 			return false;
-		}
-		if(name==null){
-			alert("이름을 입력하세요.");
-			return false;
-		}
-		if(email==null){
-			alert("email을 입력하세요.");
-			return false;
-		}
-		if(password==null){
-			alert("password을 입력하세요.");
-			return false;
-		}
-		if(phoneNo.value.length==0||isNaN(phoneNo.value)){
-			alert("[전화번호]\n숫자만 입력하세요");
-			return false;
+		}else{
+			document.form1.submit();
 		}
 		
-		document.form1.submit();
 	}
 	function check(regExp, e, msg){
 		if(regExp, test(e.value)){
