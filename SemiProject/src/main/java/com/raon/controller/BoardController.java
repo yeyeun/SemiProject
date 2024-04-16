@@ -50,6 +50,11 @@ public class BoardController {
 		log.info("/read");
 		model.addAttribute("board", service.read(bno));
 	}
+
+	@GetMapping("/modify")
+	public void modify() {
+		
+	}
 	
 	@PostMapping("/modify")
 	public String modify(Board board, RedirectAttributes rttr) {
