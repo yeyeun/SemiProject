@@ -41,7 +41,7 @@ public class CourseService {
 		for (String subcontentIdListString : contentIds) {
 			int itemCount = 0; // 각 API 호출 이후에 추가된 항목의 개수를 저장
 
-			// URL 생성
+			// URL  생성
 			StringBuilder urlBuilder = new StringBuilder(
 					"https://apis.data.go.kr/B551011/KorService1/detailInfo1"); /* URL */
 			urlBuilder.append("?" + URLEncoder.encode("serviceKey", "UTF-8")
