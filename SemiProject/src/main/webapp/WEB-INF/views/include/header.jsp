@@ -22,7 +22,7 @@
       <span>${sessionScope.loginId}님이 로그인 중입니다</span><img src="${resourceurl }/images/user-icon.png">
       <div class="login-user-menu" style="display:none;">
       	<ul>
-    		<li><a href="${contextPath}/mypage/mypage.jsp">마이페이지</a></li>
+    		<li><a href="${contextPath}/mypage">마이페이지</a></li>
     		<li><a href="${contextPath}/login/logout.action">로그아웃</a></li>
     	</ul>
     	</div>
@@ -45,7 +45,7 @@
       <a href="${contextPath}/header/main" class="nav-item nav-active">홈</a>
       <a href="${contextPath}/header/tour" class="nav-item">여행지</a>
        <a href="${contextPath}/header/course" class="nav-item">여행코스</a>
-      <a href="${contextPath}/header/event" class="nav-item">축제/행사</a>
+      <a href="${contextPath}/event/list" class="nav-item">축제/행사</a>
       <a href="${contextPath}/board/list" class="nav-item">게시판</a>
     </div>
   </nav>
