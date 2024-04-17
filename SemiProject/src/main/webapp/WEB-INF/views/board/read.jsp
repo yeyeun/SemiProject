@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -34,7 +35,7 @@
 				<td class="middle-menu">번호</td><td>${board.bno}</td><td class="middle-menu">작성자</td><td>${board.writer}</td>
 			</tr>
 			<tr>
-				<td>작성일</td><td>${board.regDate}</td><td>조회수</td><td>${board.hit}</td>
+				<td>작성일</td><td><fmt:formatDate pattern="yyyy/MM/dd hh:mm" value="${board.regDate}"/></td><td>조회수</td><td>${board.hit}</td>
 			</tr>
 			<tr>
 				<td>제목</td><td colspan="3"><span style="font-weight:bold">[${board.btype}]</span>&nbsp;${board.title}</td>
@@ -284,7 +285,8 @@ $(document).ready(function(){
 		};
 		add(comment,function(result){
 			alert("댓글이 등록되었습니다");
-			document.getElementById('content').innerText = ""; //댓글 등록이 되면, 텍스트 내용을 지움
+			/* document.getElementById('content').innerText = ""; //댓글 등록이 되면, 텍스트 내용을 지움 */
+			$('#content').val("");
 			showList(1);
 		});
 	});
