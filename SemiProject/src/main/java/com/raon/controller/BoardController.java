@@ -52,8 +52,9 @@ public class BoardController {
 	}
 
 	@GetMapping("/modify")
-	public void modify() {
-		
+	public void modify(@RequestParam("bno") Integer bno, Model model) {
+		log.info("/modify");
+		model.addAttribute("board", service.read(bno));
 	}
 	
 	@PostMapping("/modify")
@@ -65,7 +66,7 @@ public class BoardController {
 		return "redirect:/board/list";
 	}
 	
-	@PostMapping("/remove")
+	@GetMapping("/remove")
 	public String remove(@RequestParam("bno") Integer bno, RedirectAttributes rttr) {
 		log.info("remove....." + bno);
 		if(service.remove(bno)) {
