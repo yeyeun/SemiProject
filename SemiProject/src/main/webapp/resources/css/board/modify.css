@@ -37,19 +37,24 @@ border: 1px solid rgba(0,0,0,.1);
 
 
 button{
-	background: #D7CCC8;
+	background: #96C7ED;
 	color: #333333;
 	border: none;
-	margin: 0 auto;
+	margin: 10px auto;
     padding: 10px 10px;
     border-radius: 10px;
     text-decoration: none;
     font-weight: 600;
     transition: 0.25s;
+	font-size: 15px;
 }
 
 button:hover{
-  background: #E6CCC8;
+  background: #70d2e2d4;
   color: #333333;
+}
+
+.modify-bottom{
+	text-align: center;
 }
 
