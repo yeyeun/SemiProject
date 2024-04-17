@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.raon.domain.Board;
+import com.raon.domain.Criteria;
 import com.raon.mapper.BoardMapper;
 
 import lombok.Setter;
@@ -22,6 +23,10 @@ public class BoardService {
 		return mapper.getList();
 	}
 	
+	public List<Board> getListPaging(Criteria cri){
+		return mapper.getListPaging(cri);
+	}
+		
 	public void write(Board board) {
 		log.info("write....." + board.getBno());
 		mapper.insertSelectKey(board);

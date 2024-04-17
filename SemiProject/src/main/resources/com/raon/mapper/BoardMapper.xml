@@ -8,6 +8,11 @@
          select * from boardtable where bno > 0
       </select>
       
+      <select id="getListPaging" resultType="com.raon.domain.Board">
+      	select * from boardtable <!-- WHERE #{searchField} LIKE #{searchWord} -->
+      	ORDER BY bno DESC LIMIT #{skip},#{amount}
+      </select>
+      
       <insert id="insert">
       	insert into boardtable(btype,title,content,writer)
       	values(#{btype},#{title},#{content},#{writer})

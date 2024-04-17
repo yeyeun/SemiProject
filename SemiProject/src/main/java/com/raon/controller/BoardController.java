@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.raon.domain.Board;
+import com.raon.domain.Criteria;
+import com.raon.domain.PageDTO;
 import com.raon.service.BoardService;
 
 import lombok.AllArgsConstructor;
@@ -25,10 +27,11 @@ public class BoardController {
 	private BoardService service;
 	
 	@GetMapping("/list")
-	public void list(Model model) { //Model: 데이터를 담고 있는 객체
+	public void list(Model model, Criteria cri) { //Model: 데이터를 담고 있는 객체
 		log.info("list");
-		model.addAttribute("bList", service.getList());
+		model.addAttribute("bList", service.getListPaging(cri));
 	}
+	
 	
 	@PostMapping("/write")
 	public String register(Board board, RedirectAttributes rttr, HttpSession session) {

@@ -1,5 +1,7 @@
 package com.raon.mapper;
 
+import java.util.List;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +9,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.raon.domain.Board;
+import com.raon.domain.Criteria;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -62,6 +65,14 @@ public class BoardMapperTest {
 		board.setContent("수정한 내용입니다");
 		int count = mapper.update(board);
 		log.info("UPDATE COUNT : " + count);
+	}
+	
+	/* 페이징 적용 테스트 */
+	@Test
+	public void testGetListPaging() {
+		Criteria cri = new Criteria(1,10);
+		List list = mapper.getListPaging(cri);
+		list.forEach(board -> log.info(""+board));
 	}
 	
 }
