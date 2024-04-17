@@ -63,7 +63,7 @@
 					<td>${board.btype}</td>
 					<td align="left"><a href="${contextPath}/board/read?bno=${board.bno}">${board.title}</a></td>
 					<td align="center">${board.writer}</td>
-					<td align="center">${board.regDate}</td>
+					<td><fmt:formatDate pattern="yyyy/MM/dd" value="${board.regDate}"/></td>
 					<td align="center">${board.hit}</td>
 				</tr>
 			</c:forEach>
