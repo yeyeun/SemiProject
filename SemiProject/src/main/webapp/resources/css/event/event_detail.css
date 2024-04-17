@@ -140,10 +140,12 @@
 	flex-wrap: wrap;
 }
 .detailInfoList li{
-	 margin-bottom: 15px;
+	margin-bottom: 15px;
 	width: calc(100%/2);
 }
-
+.ttext{
+	width: 90%;
+}
 
 
 

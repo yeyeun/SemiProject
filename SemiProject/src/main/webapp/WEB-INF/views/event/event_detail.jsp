@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@page import="java.util.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -9,28 +8,17 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <c:set var="contextPath" value='${pageContext.request.contextPath}' />
-<script src="https://code.jquery.com/jquery-3.7.1.js"
-	integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
-	crossorigin="anonymous"></script>
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-	rel="stylesheet"
-	integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-	crossorigin="anonymous">
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-	integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-	crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
 <link rel="stylesheet" href="${contextPath }/resources/css/event/event_detail.css">
 </head>
 <body>
 	<%
-	String contentid = request.getParameter("contentid");
 	String title = request.getParameter("title");
 	String eventstartdate = request.getParameter("eventstartdate");
 	String eventenddate = request.getParameter("eventenddate");
-	String posterurl = "";
 	%>
 
 	<div class="headerContainer">
@@ -45,6 +33,21 @@
 		</div>
 		<div class="poster">
 			<!-- 포스터 추가 -->
+			<c:if test="${empty posterImageList}">
+				<!-- 만약 posterImageList가 비어 있다면 기본 이미지를 표시합니다 -->
+				<a href="#"> <img src="../../resources/images/noposterimg.png" class="posterImg">
+				</a>
+				<p id="posterClick">
+					<b>이미지 클릭해서 크게 보기</b>
+				</p>
+			</c:if>
+			<c:forEach items="${posterImageList}" var="poster">
+				<a href="${poster}" target="_blank"> <img src="${poster}" class="posterImg" onerror="this.src='../../resources/images/noposterimg.png'">
+				</a>
+				<p id="posterClick">
+					<b>이미지 클릭해서 크게 보기</b>
+				</p>
+			</c:forEach>
 		</div>
 		<!-- 상세정보영역 -->
 		<div class="basicInfo">
@@ -52,30 +55,65 @@
 				<b>상세정보</b>
 			</p>
 			<hr style="border: none; height: 6px; background: black; opacity: 1;">
+			<c:if test="${empty infotextList}">
+				<!-- 만약 infotextList가 비어 있다면 -->
+					<p id="infotext">행사 정보가 없습니다.</p>
+			</c:if>
+			<c:forEach items="${infotextList}" var="infotext">
+				<p id="infotext">${infotext}</p>
+			</c:forEach>
 		</div>
 		<!-- 상세정보영역 -->
 		<div class="carousel_container">
-			<div id="carouselExampleDark" class="carousel carousel-dark slide"
-				data-bs-ride="carousel" data-bs-interval="0">
+			<div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel" data-bs-interval="0">
 
 				<div class="carousel-inner">
 					<!-- Carousel 아이템 영역 -->
+					<c:if test="${empty eventImageList}">
+						<!-- 만약 posterImageList가 비어 있다면 기본 이미지를 표시합니다 -->
+						<a href="#"> <img src="../../resources/images/noeventimg.png" class="posterImg">
+						</a>
+						<p id="posterClick">
+							<b>이미지 클릭해서 크게 보기</b>
+						</p>
+					</c:if>
+					<c:forEach items="${eventImageList}" var="event">
+						<div class="carousel-item">
+							<img src="${event}" class="d-block w-100 custom-carousel-img" onerror="this.src='../../resources/images/noeventimg.png">
+						</div>
+					</c:forEach>
 				</div>
-				<button class="carousel-control-prev" type="button"
-					data-bs-target="#carouselExampleDark" data-bs-slide="prev">
-					<span class="carousel-control-prev-icon" aria-hidden="true">&lt;</span>
-					<span class="visually-hidden">Previous</span>
+				<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+					<span class="carousel-control-prev-icon" aria-hidden="true">&lt;</span> <span class="visually-hidden">Previous</span>
 				</button>
-				<button class="carousel-control-next" type="button"
-					data-bs-target="#carouselExampleDark" data-bs-slide="next">
-					<span class="carousel-control-next-icon" aria-hidden="true">&gt;</span>
-					<span class="visually-hidden">Next</span>
+				<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
+					<span class="carousel-control-next-icon" aria-hidden="true">&gt;</span> <span class="visually-hidden">Next</span>
 				</button>
 			</div>
 		</div>
 		<div class="detailInfo">
 			<ul class="detailInfoList">
 				<!-- 	상세정보 동적 추가 영역 -->
+<%-- 				<c:if test="${empty detailIntroList}"> --%>
+<!-- 						<p>상세정보가 존재하지 않습니다.</p> -->
+<%-- 				</c:if> --%>
+				<c:forEach items="${detailIntroList}" var="intro">
+				<li><p class="ttext" id="eventPlace"><b>행사 장소: </b>${intro.eventplace}</p></li>
+				<li><p class="ttext"><b>행사 시간: </b>${intro.playtime}</p></li>
+				<li><p class="ttext"><b>이용 요금: </b>${intro.usetimefestival}</p></li>
+				<li><p class="ttext"><b>행사 지원: </b>${intro.sponsor1}&nbsp;&nbsp;&nbsp;${intro.sponsor2}</p></li>
+				</c:forEach>
+<%-- 				<c:if test="${empty detailCommonList}"> --%>
+<!-- 						<p>상세정보가 존재하지 않습니다.</p> -->
+<%-- 				</c:if> --%>
+				<c:forEach items="${detailCommonList}" var="common">
+					<p id="mapx" style="display: none;">${common.mapx }<p>
+					<p id="mapy" style="display: none;">${common.mapy }<p>
+					<p id="mlevel" style="display: none;">${common.mlevel }<p>
+					<li><p class="ttext"><b>홈페이지: </b>${common.homepage}</p></li>
+                	<li><p class="ttext"><b>주최: </b>${common.telname}</p></li>
+                	<li><p class="ttext"><b>문의 전화: </b>${common.tel}</p></li>
+                </c:forEach>
 			</ul>
 		</div>
 		<div class="mapInfo" style="margin-top: 50px;">
@@ -86,129 +124,137 @@
 			<div id="map" style="width: 100%; height: 450px; border: 1px solid black;"></div>
 		</div>
 	</div>
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b179d98657949b7bb8bb0c0d1b9f2844"></script>
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b179d98657949b7bb8bb0c0d1b9f2844"></script>
 	<script>
 	$(document).ready(function(){
         let carouselInner = $(".carousel-inner");
 		let poster = $(".poster");
         let basicInfo = $(".basicInfo");
         let detailInfo =$(".detailInfo ul");
+
+        
+        $('.carousel-item:first').addClass('active');
+        var locationName = document.getElementById("eventPlace").innerText;
+        var mappx = document.getElementById("mapx").innerText;
+        var mappy = document.getElementById("mapy").innerText;
+        var mlevel = document.getElementById("mlevel").innerText;
 	    // detailImage1
-	    $.ajax({
-	        url: "https://apis.data.go.kr/B551011/KorService1/detailImage1?MobileOS=etc&MobileApp=test&_type=json&contentId="+<%=contentid%>+"&imageYN=Y&subImageYN=Y&numOfRows=999999&serviceKey=KR1eLnI5BrfL8EDf5l8G3OTQakbgTZ0izb4KANg0SWhwqnP1wHHQQRb%2BrbP1N2a5lnEtjR%2BBvLqfZKaKSZELLQ%3D%3D",
-	        async: false,
-	        success: function(data){
-	            // Ajax 요청 성공시 실행되는 함수
-	            var items = data.response.body.items.item;
-	            var posterurl;
-	            let isFirstImg = true; // 첫번째 이미지 처리
-	            // 각 아이템을 돌면서 케러셀 아이템과 인디케이터를 추가합니다.
-	            items.forEach(function(item, index) {
-	                // 포스터인 경우 변수에만 저장
-	                if (item.imgname.includes("포스터")) {  	
-	                	posterurl = item.originimgurl;
-	                    return; // 다음 아이템으로 넘어감
-	                }
+// 	    $.ajax({
+<%-- 	        url: "https://apis.data.go.kr/B551011/KorService1/detailImage1?MobileOS=etc&MobileApp=test&_type=json&contentId="+<%=contentId%>+"&imageYN=Y&subImageYN=Y&numOfRows=999999&serviceKey=KR1eLnI5BrfL8EDf5l8G3OTQakbgTZ0izb4KANg0SWhwqnP1wHHQQRb%2BrbP1N2a5lnEtjR%2BBvLqfZKaKSZELLQ%3D%3D", --%>
+// 	        async: false,
+// 	        success: function(data){
+// 	            // Ajax 요청 성공시 실행되는 함수
+// 	            var items = data.response.body.items.item;
+// 	            console.log("items: "+items[0]);
+// 	            var posterurl;
+// 	            let isFirstImg = true; // 첫번째 이미지 처리
+// 	            // 각 아이템을 돌면서 케러셀 아이템과 인디케이터를 추가합니다.
+// 	            items.forEach(function(item, index) {
+// 	            	console.log("item: "+item);
+// 	                // 포스터인 경우 변수에만 저장
+// 	                if (item.imgname.includes("포스터")) {  	
+// 	                	posterurl = item.originimgurl;
+// 	                    return; // 다음 아이템으로 넘어감
+// 	                }
 				
-	                var activeClass = isFirstImg ? "active" : ""; // 첫 번째 아이템에는 active 클래스를 부여
-	                isFirstImg = false; // 부여 되면 다음 아이템은 firstimg가 아님
-	                console.log(index+"!@#!@#"+item.originimgurl);
-	                if(item.originimgurl == null){
-						carouselInner.append(`
-								<img src="../images/noeventimg.png" class="d-block w-100 custom-carousel-img" alt="../images/noeventimg.png">
-						`);
-					} else{
-	                // 케러셀 아이템을 추가합니다.
-	                carouselInner.append(`
-	                	    <div class="carousel-item \${activeClass}">
-	                	        <img src="\${item.originimgurl}" class="d-block w-100 custom-carousel-img" alt="../images/noeventimg.png">
-	                	    </div>
-	                	`);
-					}
+// 	                var activeClass = isFirstImg ? "active" : ""; // 첫 번째 아이템에는 active 클래스를 부여
+// 	                isFirstImg = false; // 부여 되면 다음 아이템은 firstimg가 아님
+// 	                if(item.originimgurl == null){
+// 						carouselInner.append(`
+// 								<img src="../../resources/images/noeventimg.png" class="d-block w-100 custom-carousel-img" alt="../images/noeventimg.png">
+// 						`);
+// 					} else{
+// 	                // 케러셀 아이템을 추가합니다.
+// 	                carouselInner.append(`
+// 	                	    <div class="carousel-item \${activeClass}">
+// 	                	        <img src="\${item.originimgurl}" class="d-block w-100 custom-carousel-img" alt="../images/noeventimg.png">
+// 	                	    </div>
+// 	                	`);
+// 					}
 
-	            });
-	            if(posterurl == null){
-	            	poster.append(`
-		            		<img src="../images/noposterimg.png" class="posterImg" alt="../images/noposterimg.png">
+// 	            });
+// 	            if(posterurl == null){
+// 	            	poster.append(`
+// 		            		<img src="../../resources/images/noposterimg.png" class="posterImg">
 
-		            		`);
-	            }else{
-	            poster.append(`
-	            		<a href="\${posterurl}" target="_blank"><img src="\${posterurl}" class="posterImg" alt="../images/noposterimg.png"></a>
-	            		<p id="posterClick"><b>이미지 클릭해서 크게 보기</b></p>
-	            		`);
+// 		            		`);
+// 	            }else{
+// 	            poster.append(`
+// 	            		<a href="\${posterurl}" target="_blank"><img src="\${posterurl}" class="posterImg" alt="../images/noposterimg.png"></a>
+// 	            		<p id="posterClick"><b>이미지 클릭해서 크게 보기</b></p>
+// 	            		`);
 	            
-	            }
-	        }
-	    });
+// 	            }
+// 	        }
+// 	    });
 	    
 	    //detailInfo
-	    $.ajax({
-	        url: "https://apis.data.go.kr/B551011/KorService1/detailInfo1?MobileOS=etc&MobileApp=test&_type=json&contentId="+<%=contentid%>+"&contentTypeId=15&numOfRows=999999&serviceKey=KR1eLnI5BrfL8EDf5l8G3OTQakbgTZ0izb4KANg0SWhwqnP1wHHQQRb%2BrbP1N2a5lnEtjR%2BBvLqfZKaKSZELLQ%3D%3D",
-	        async: false,
-	        success: function(data){
-	            // Ajax 요청 성공시 실행되는 함수
-	            let items = data.response.body.items.item;
+// 	    $.ajax({
+<%-- 	        url: "https://apis.data.go.kr/B551011/KorService1/detailInfo1?MobileOS=etc&MobileApp=test&_type=json&contentId="+<%=contentId%>+"&contentTypeId=15&numOfRows=999999&serviceKey=KR1eLnI5BrfL8EDf5l8G3OTQakbgTZ0izb4KANg0SWhwqnP1wHHQQRb%2BrbP1N2a5lnEtjR%2BBvLqfZKaKSZELLQ%3D%3D", --%>
+// 	        async: false,
+// 	        success: function(data){
+// 	            // Ajax 요청 성공시 실행되는 함수
+// 	            let items = data.response.body.items.item;
 				
 
-                $.each(items, (index, item) => {
-	                basicInfo.append(`
-	                		<p id="infotext">\${item.infotext}</p>
-	                	`);
-	            });
-	        }
-	    });
+//                 $.each(items, (index, item) => {
+// 	                basicInfo.append(`
+// 	                		<p id="infotext">\${item.infotext}</p>
+// 	                	`);
+// 	            });
+// 	        }
+// 	    });
 	    //detailCommon
-	    $.ajax({
-	        url: "https://apis.data.go.kr/B551011/KorService1/detailCommon1?MobileOS=etc&MobileApp=test&_type=json&contentId="+<%=contentid%>+"&contentTypeId=15&defaultYN=Y&firstImageYN=Y&areacodeYN=Y&catcodeYN=Y&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y&numOfRows=999999&serviceKey=KR1eLnI5BrfL8EDf5l8G3OTQakbgTZ0izb4KANg0SWhwqnP1wHHQQRb%2BrbP1N2a5lnEtjR%2BBvLqfZKaKSZELLQ%3D%3D",
-	        async: false,
-	        success: function(data){
-	            // Ajax 요청 성공시 실행되는 함수
-	            let items = data.response.body.items.item;
+// 	    $.ajax({
+<%-- 	        url: "https://apis.data.go.kr/B551011/KorService1/detailCommon1?MobileOS=etc&MobileApp=test&_type=json&contentId="+<%=contentId%>+"&contentTypeId=15&defaultYN=Y&firstImageYN=Y&areacodeYN=Y&catcodeYN=Y&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y&numOfRows=999999&serviceKey=KR1eLnI5BrfL8EDf5l8G3OTQakbgTZ0izb4KANg0SWhwqnP1wHHQQRb%2BrbP1N2a5lnEtjR%2BBvLqfZKaKSZELLQ%3D%3D", --%>
+// 	        async: false,
+// 	        success: function(data){
+// 	            // Ajax 요청 성공시 실행되는 함수
+// 	            let items = data.response.body.items.item;
 
-                $.each(items, (index, item) => {
-                	mappx = item.mapx;
-                	mappy = item.mapy; //좌표저장
+//                 $.each(items, (index, item) => {
+//                 	mappx = item.mapx;
+//                 	mappy = item.mapy; //좌표저장
                 	
 
-                	detailInfo.append(`
-                			<li><p><b>홈페이지: </b>\${item.homepage}</p></li>
-                			<li><p><b>주최: </b>\${item.telname}</p></li>
-                			<li><p><b>문의 전화: </b>\${item.tel}</p></li>
-	                	`);
-	            });
-	        }
-	    });
+//                 	detailInfo.append(`
+//                 			<li><p><b>홈페이지: </b>\${item.homepage}</p></li>
+//                 			<li><p><b>주최: </b>\${item.telname}</p></li>
+//                 			<li><p><b>문의 전화: </b>\${item.tel}</p></li>
+// 	                	`);
+// 	            });
+// 	        }
+// 	    });
 	    //detailIntro
-	    $.ajax({
-	        url: "https://apis.data.go.kr/B551011/KorService1/detailIntro1?MobileOS=etc&MobileApp=test&_type=json&contentId="+<%=contentid%>+"&contentTypeId=15&numOfRows=99999&serviceKey=KR1eLnI5BrfL8EDf5l8G3OTQakbgTZ0izb4KANg0SWhwqnP1wHHQQRb%2BrbP1N2a5lnEtjR%2BBvLqfZKaKSZELLQ%3D%3D",
-	        async: false,
-	        success: function(data){
-	            // Ajax 요청 성공시 실행되는 함수
-	            let items = data.response.body.items.item;
+// 	    $.ajax({
+<%-- 	        url: "https://apis.data.go.kr/B551011/KorService1/detailIntro1?MobileOS=etc&MobileApp=test&_type=json&contentId="+<%=contentId%>+"&contentTypeId=15&numOfRows=99999&serviceKey=KR1eLnI5BrfL8EDf5l8G3OTQakbgTZ0izb4KANg0SWhwqnP1wHHQQRb%2BrbP1N2a5lnEtjR%2BBvLqfZKaKSZELLQ%3D%3D", --%>
+// 	        async: false,
+// 	        success: function(data){
+// 	            // Ajax 요청 성공시 실행되는 함수
+// 	            let items = data.response.body.items.item;
 
 
-                $.each(items, (index, item) => {
-                	locationName = item.eventplace;
-                	detailInfo.append(`
-                			<li><p><b>행사 장소: </b>\${item.eventplace}</p></li>
-                			<li><p><b>행사 시간: </b>\${item.playtime}</p></li>
-                			<li><p><b>이용 요금: </b>\${item.usetimefestival}</p></li>
-                			<li><p><b>행사 지원: </b>\${item.sponsor1}&nbsp;&nbsp;&nbsp;\${item.sponsor2}</p></li>
+//                 $.each(items, (index, item) => {
+//                 	locationName = item.eventplace;
+//                 	detailInfo.append(`
+//                 			<li><p><b>행사 장소: </b>\${item.eventplace}</p></li>
+//                 			<li><p><b>행사 시간: </b>\${item.playtime}</p></li>
+//                 			<li><p><b>이용 요금: </b>\${item.usetimefestival}</p></li>
+//                 			<li><p><b>행사 지원: </b>\${item.sponsor1}&nbsp;&nbsp;&nbsp;\${item.sponsor2}</p></li>
                 			
                 			
                 			
-	                	`);
-	            });
-	        }
-	    });
-	    console.log(mappx+"@@"+mappy);
+// 	                	`);
+// 	            });
+// 	        }
+// 	    });
+	    
 // 	    지도 추가
 
 		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 		    mapOption = { 
 		        center: new kakao.maps.LatLng(mappy, mappx), // 지도의 중심좌표
-		        level: 4 // 지도의 확대 레벨
+		        level: mlevel // 지도의 확대 레벨
 		    };    
 
 		var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다

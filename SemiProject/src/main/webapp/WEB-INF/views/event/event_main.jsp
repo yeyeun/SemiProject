@@ -40,10 +40,10 @@
 						<c:forEach items="${eventList}" var="event">
 							<div class="col">
 								<div class="card h-100">
-									<a href="event_detail.jsp?contentid=\${event.contentid}&title=\${event.title}&eventstartdate=\${startDate}&eventenddate=\${endDate}"><img src=${event.firstimage} class="img-fluid rounded-start" alt="..." onerror="this.src='../../resources/images/image_none.png'"></a>
+									<a href="/event/detail?contentId=${event.contentid}&title=${event.title}&eventstartdate=${event.eventstartdate}&eventenddate=${event.eventenddate}"><img src=${event.firstimage } class="img-fluid rounded-start" alt="..." onerror="this.src='../../resources/images/image_none.png'"></a>
 									<div class="card-body">
 										<h5 class="card-title">
-											<a href="event_detail.jsp?contentid=\${event.contentid}&title=\${event.title}&eventstartdate=\${startDate}&eventenddate=\${endDate}" class="item-title"><h5 class="card-title">${event.title}</h5></a>
+											<a href="/event/detail?contentId=${event.contentid}&title=${event.title}&eventstartdate=${event.eventstartdate}&eventenddate=${event.eventenddate}" class="item-title">${event.title}</a>
 										</h5>
 										<p class="card-text">${event.addr1}</p>
 
@@ -54,7 +54,7 @@
 								</div>
 							</div>
 							<!-- 						카드 추가 부분 -->
-							</c:forEach>
+						</c:forEach>
 					</div>
 					<br>
 					<!-- 					<div class="pagination"> -->
@@ -70,84 +70,82 @@
 
 	</div>
 	<script>
-// 	$(document).ready(function(){ 
-//   		let result = $(".row.row-cols-2.row-cols-md-3.g-4");
-// 		let str="";
-		
-// 		let currentDate = new Date();
-//         let year = currentDate.getFullYear();
-//         let month = ('0' + (currentDate.getMonth() + 1)).slice(-2);
-//         let day = ('0' + currentDate.getDate()).slice(-2);
+		// 	$(document).ready(function(){ 
+		//   		let result = $(".row.row-cols-2.row-cols-md-3.g-4");
+		// 		let str="";
 
-//         let currentDateStr = year + month + day;
-		
-        
+		// 		let currentDate = new Date();
+		//         let year = currentDate.getFullYear();
+		//         let month = ('0' + (currentDate.getMonth() + 1)).slice(-2);
+		//         let day = ('0' + currentDate.getDate()).slice(-2);
 
-//         $.ajax({
-//             url: `https://apis.data.go.kr/B551011/KorService1/searchFestival1?MobileOS=etc&MobileApp=a&_type=json&arrange=Q&eventStartDate=\${currentDateStr}&areaCode=39&serviceKey=KR1eLnI5BrfL8EDf5l8G3OTQakbgTZ0izb4KANg0SWhwqnP1wHHQQRb%2BrbP1N2a5lnEtjR%2BBvLqfZKaKSZELLQ%3D%3D`,
-//             success: function(data) {
-//                 console.log('items', data.response.body.items);
-//                 let items = data.response.body.items.item;
-//                 $.each(items, (index, item) => {
-                    
-//                     let startDate = formatDate(item.eventstartdate);
-//                     let endDate = formatDate(item.eventenddate);
-//                     let firstItemInfotext;
-//                     str += `
-//                         <div class="col">
-//                         <div class="card h-100">
-//                         <a href="event_detail.jsp?contentid=\${item.contentid}&title=\${item.title}&eventstartdate=\${startDate}&eventenddate=\${endDate}"><img src="\${item.firstimage}" class="img-fluid rounded-start" alt="..." onerror="this.src='../images/image_none.png'"></a>
-//                             <div class="card-body">
-//                                 <h5 class="card-title"><a href="event_detail.jsp?contentid=\${item.contentid}&title=\${item.title}&eventstartdate=\${startDate}&eventenddate=\${endDate}" class="item-title"><h5 class="card-title">\${item.title}</h5></a></h5>
-//                                 <p class="card-text">\${item.addr1}</p>
+		//         let currentDateStr = year + month + day;
 
-//                             </div>
-//                             <div class="card-footer">
-//                                 <small class="card-text">\${startDate}~\${endDate}</small></small>
-//                             </div>
-//                         </div>
-//                     </div>
-//                     `;
-//                 });
-//                 result.append(str);
-//                 $('body').append(data);
-//             }
-//         });
-		   
-// 	});
-// 	//날짜 형식 변환
-// 	function formatDate(dateString) {
-// 	    let year = dateString.substring(0, 4);
-// 	    let month = dateString.substring(4, 6);
-// 	    let day = dateString.substring(6, 8);
-// 	    return `\${year}.\${month}.\${day}`;
-// 	}
-	function changeItem(buttonId){
-// 		클릭된 버튼 표시
-	    $("ul#arealist li button").removeClass("active");
-	    $("#" + buttonId + " button").addClass("active");
-	    
-	    let areatext = document.getElementById(buttonId).textContent.trim();
-	    let items = $(".row.row-cols-2.row-cols-md-3.g-4").find(".col");
+		//         $.ajax({
+		//             url: `https://apis.data.go.kr/B551011/KorService1/searchFestival1?MobileOS=etc&MobileApp=a&_type=json&arrange=Q&eventStartDate=\${currentDateStr}&areaCode=39&serviceKey=KR1eLnI5BrfL8EDf5l8G3OTQakbgTZ0izb4KANg0SWhwqnP1wHHQQRb%2BrbP1N2a5lnEtjR%2BBvLqfZKaKSZELLQ%3D%3D`,
+		//             success: function(data) {
+		//                 console.log('items', data.response.body.items);
+		//                 let items = data.response.body.items.item;
+		//                 $.each(items, (index, item) => {
 
-	    // "전체" 버튼 클릭 시 모든 아이템 표시
-	    if(areatext === "전체") {
-	        items.show();
-	    } else {
-	        // 그 외 버튼 클릭 시 해당 지역 아이템만 표시
-	        items.each(function() {
-	            let itemAddress = $(this).find(".card-text").text();
-	            if(areatext === "서귀포시" && itemAddress.includes("서귀포시")) {
-	                $(this).show();
-	            } else if(areatext === "제주시" && itemAddress.includes("제주시")) {
-	                $(this).show();
-	            } else {
-	                $(this).hide();
-	            }
-	        });
-	    }
-	}
+		//                     let startDate = formatDate(item.eventstartdate);
+		//                     let endDate = formatDate(item.eventenddate);
+		//                     let firstItemInfotext;
+		//                     str += `
+		//                         <div class="col">
+		//                         <div class="card h-100">
+		//                         <a href="event_detail.jsp?contentid=\${item.contentid}&title=\${item.title}&eventstartdate=\${startDate}&eventenddate=\${endDate}"><img src="\${item.firstimage}" class="img-fluid rounded-start" alt="..." onerror="this.src='../images/image_none.png'"></a>
+		//                             <div class="card-body">
+		//                                 <h5 class="card-title"><a href="event_detail.jsp?contentid=\${item.contentid}&title=\${item.title}&eventstartdate=\${startDate}&eventenddate=\${endDate}" class="item-title"><h5 class="card-title">\${item.title}</h5></a></h5>
+		//                                 <p class="card-text">\${item.addr1}</p>
 
+		//                             </div>
+		//                             <div class="card-footer">
+		//                                 <small class="card-text">\${startDate}~\${endDate}</small></small>
+		//                             </div>
+		//                         </div>
+		//                     </div>
+		//                     `;
+		//                 });
+		//                 result.append(str);
+		//                 $('body').append(data);
+		//             }
+		//         });
+
+		// 	});
+		// 	//날짜 형식 변환
+		// 	function formatDate(dateString) {
+		// 	    let year = dateString.substring(0, 4);
+		// 	    let month = dateString.substring(4, 6);
+		// 	    let day = dateString.substring(6, 8);
+		// 	    return `\${year}.\${month}.\${day}`;
+		// 	}
+		function changeItem(buttonId) {
+			// 		클릭된 버튼 표시
+			$("ul#arealist li button").removeClass("active");
+			$("#" + buttonId + " button").addClass("active");
+
+			let areatext = document.getElementById(buttonId).textContent.trim();
+			let items = $(".row.row-cols-2.row-cols-md-3.g-4").find(".col");
+
+			// "전체" 버튼 클릭 시 모든 아이템 표시
+			if (areatext === "전체") {
+				items.show();
+			} else {
+				// 그 외 버튼 클릭 시 해당 지역 아이템만 표시
+				items.each(function() {
+					let itemAddress = $(this).find(".card-text").text();
+					if (areatext === "서귀포시" && itemAddress.includes("서귀포시")) {
+						$(this).show();
+					} else if (areatext === "제주시"
+							&& itemAddress.includes("제주시")) {
+						$(this).show();
+					} else {
+						$(this).hide();
+					}
+				});
+			}
+		}
 	</script>
 </body>
 </html>
