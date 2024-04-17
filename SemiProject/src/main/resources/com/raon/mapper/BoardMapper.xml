@@ -57,6 +57,10 @@
       	delete from boardtable where bno=#{bno}
       </delete>
       
+      <delete id="deleteComment">
+      	delete from comment where bno=#{bno}
+      </delete>
+       
       <update id="update">
       	update boardtable
       	set title=#{title}, content=#{content}

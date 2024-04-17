@@ -112,6 +112,26 @@
 	<input type="hidden" name='searchWord' value='${pagingDTO.cri.searchWord}'>
 
 </form>
+
+	<div class="modal fade" tabindex="-1" id="myModal">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">알림</h5>	
+					</div>
+					<div class="modal-body">
+						<p>처리가 완료됐습니다</p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-info" data-bs-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+
+
 </div>
 <script>
 	var actionFrm = $("#actionFrm");
@@ -140,21 +160,21 @@
 		
 		//체크
 		let result = '<c:out value="${result}"/>';
-		console.log('result:',result);
-		checkChange(result);
-		function checkChange(result){
-			if(result === '')
-				{return;}
+		console.log('result :', result);
+		checkModal(result);
+		function checkModal(result) {
+			if (result === '') { return; }
 			if(parseInt(result)>0){
-				alert("게시글 " + parseInt(result) + "번이 등록되었습니다");
+				$('.modal-body > p').text("게시글이 등록되었습니다");
 			}
-			if(result==="modify"){
-				alert("수정이 완료되었습니다");
-			}
-			if(result==="remove"){
-				alert("삭제가 완료되었습니다");
-			}
-		}
+	   		if (result === "modify") {
+	       		$('.modal-body > p').text('수정되었습니다');
+	   		}
+	   		if (result === "remove") {
+	       		$('.modal-body > p').text('삭제되었습니다');
+	       	} 
+	   		$("#myModal").modal("show");
+	   	}
 
 
 	});

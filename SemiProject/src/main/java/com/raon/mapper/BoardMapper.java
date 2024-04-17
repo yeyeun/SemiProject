@@ -17,5 +17,6 @@ public interface BoardMapper {
 	public Board read(Integer bno);
 	public void increaseHit(Integer bno);
 	public int delete(Integer bno);
+	public int deleteComment(Integer bno);
 	public int update(Board board);
 }

@@ -160,3 +160,11 @@ select {
 select::-ms-expand { /* for IE 11 */
     display: none;
 }
+
+.modal-body p{
+	margin: 0 auto;
+}
+
+.modal-content{
+	border-radius: 20px;
+}

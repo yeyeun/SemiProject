@@ -71,7 +71,7 @@
 				<h4>Comments</h4>
 				<div class="comment-header">
 				<input type="text" id="content"/>
-				<button type="button" id="registerBtn">댓글 달기</button>
+				<button type="button" id="registerBtn">댓글 등록</button>
                 <hr/>
                 </div>
 				<ul class="comments">
@@ -234,8 +234,11 @@ $(document).ready(function(){
 					<li class="clearfix" data-commentid="\${item.commentid}">
 					  <img src="${resourceurl}/images/user-icon.png" class="avatar" alt="">
 					  <div class="post-comments">
-					      <p class="meta"><span class="id">\${item.id}</span>\${displayTime(item.regDate)}<i class="pull-right">
-					      <a href="#"><small>수정하기</small></a><a href="#"><small>삭제하기</small></a></i></p>
+				     	 <div class="comment-button">
+				      		<button type="button" id="modifyBtn">수정하기</button>
+				      		<button type="button" id="removeBtn">삭제하기</button>
+				      	</div>
+					      <p class="meta"><span class="id">\${item.id}</span>\${displayTime(item.regDate)}</p>
 					      <p id="comment-content">
 					      \${item.content}
 					      </p>
@@ -267,7 +270,7 @@ $(document).ready(function(){
 		}
 	}
 	
-
+	let modifyBtn = $("#modifyBtn");
 	let loginId = '<%=(String)session.getAttribute("loginId")%>';
 	
 	//새로운 댓글 처리
@@ -290,8 +293,39 @@ $(document).ready(function(){
 			showList(1);
 		});
 	});
+	
+	//특정 댓글 수정
+	$(document).on("click","#modifyBtn",function(){
+		var idData = document.querySelector(".clearfix"); //.clearfix의 data 속성 가져오기
+		
+		
+		
+		$(".comment-content").css("display","none");
+		
+		
+		
+		
+/* 		var comment = {commentid:idData, content:modalInputReply.val()};
+		update(comment,function(result){
+			alert("수정되었습니다");
+			modal.modal("hide");
+			showList(1);
+		}); */
+	});
+	
+	//특정 댓글 삭제
+	$(document).on("click","#removeBtn",function(){
+		var idData = document.querySelector(".clearfix"); //.clearfix의 data 속성 가져오기
+		var commentid = idData.dataset.commentid;
+		remove(commentid,function(result){
+			alert("삭제되었습니다");
+			showList(1);
+		});
+	});
 
 });
+
+
 </script>
 </body>
 </html>

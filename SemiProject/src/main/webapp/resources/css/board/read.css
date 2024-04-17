@@ -181,3 +181,18 @@ a {
 	text-align: center;
 	width:100%;
 }
+
+.comment-button{
+	margin-bottom: 5px;
+	float: right;
+}
+.comment-button button{
+	background: #dadada;
+	padding: 5px;
+	font-size: 12px;
+	margin-left: 5px;
+}
+
+.comment-button button:hover{
+	background: #a5d8ff;
+}

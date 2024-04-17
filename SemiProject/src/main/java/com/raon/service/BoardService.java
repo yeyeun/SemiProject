@@ -51,4 +51,9 @@ public class BoardService {
 		log.info("remove....."+bno);
 		return mapper.delete(bno)==1;
 	}
+	
+	public boolean removeComment(Integer bno) {
+		log.info("remove comments....." + bno);
+		return mapper.deleteComment(bno)>=0;
+	}
 }
