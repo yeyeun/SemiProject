@@ -50,7 +50,7 @@
  				<c:choose>
 					<c:when test="${sessionScope.loginId == board.writer }">
 						<button data-oper='modify' type="button" onclick="location.href='/board/modify?bno=<c:out value="${board.bno}"/>'">수정하기</button>
-						<button data-oper='delete' type="button" onclick="location.href='/board/deleteProc?bno=<c:out value="${board.bno}"/>'">삭제하기</button>
+						<button data-oper='remove' type="button" onclick="location.href='/board/remove?bno=<c:out value="${board.bno}"/>'">삭제하기</button>
 						<button type="button" onclick="location.href='/board/list'">목록 보기</button>
 					</c:when>
 					<c:otherwise>
