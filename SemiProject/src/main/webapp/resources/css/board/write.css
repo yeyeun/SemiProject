@@ -37,7 +37,7 @@ border: 1px solid rgba(0,0,0,.1);
 
 
 button{
-	background: #D7CCC8;
+	background: #96C7ED;
 	color: #333333;
 	border: none;
 	margin: 0 auto;
@@ -49,7 +49,7 @@ button{
 }
 
 button:hover{
-  background: #E6CCC8;
+  background: #70d2e2d4;
   color: #333333;
 }
 
