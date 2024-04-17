@@ -9,13 +9,27 @@
       </select>
       
       <select id="getListPaging" resultType="com.raon.domain.Board">
-      	select * from boardtable <!-- WHERE #{searchField} LIKE #{searchWord} -->
+      	select * from boardtable
+      	<if test="searchWord != null">
+      		<choose>
+      			<when test="searchField == 'title'">
+      				where title like concat('%',#{searchWord},'%')
+      			</when>
+      			<when test="searchField == 'content'">
+      				where content like concat('%',#{searchWord},'%')
+      			</when>
+      		</choose>
+      		
+      	</if>
       	ORDER BY bno DESC LIMIT #{skip},#{amount}
       </select>
       
       <!-- 게시물 총 갯수 -->
       <select id="getTotal" resultType="int">
       	select count(*) from boardtable
+      	<if test="searchWord != null">
+      		where #{searchField} like concat('%',#{searchWord},'%')
+      	</if>
       </select>
       
       <insert id="insert">

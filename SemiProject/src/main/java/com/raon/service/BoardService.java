@@ -27,9 +27,9 @@ public class BoardService {
 		return mapper.getListPaging(cri);
 	}
 	
-	public int getTotal() {
+	public int getTotal(Criteria cri) {
 		log.info("getTotal......");
-		return mapper.getTotal();
+		return mapper.getTotal(cri);
 	}
 		
 	public void write(Board board) {

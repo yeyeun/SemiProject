@@ -108,6 +108,9 @@
 <form id="actionFrm" method="get">
 	<input type="hidden" name='pageNum' value='${pagingDTO.cri.pageNum}'>
 	<input type="hidden" name='amount' value='${pagingDTO.cri.amount}'>
+	<input type="hidden" name='searchField' value='${pagingDTO.cri.searchField}'>
+	<input type="hidden" name='searchWord' value='${pagingDTO.cri.searchWord}'>
+
 </form>
 </div>
 <script>
