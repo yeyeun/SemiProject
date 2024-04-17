@@ -67,7 +67,7 @@ public class BoardController {
 	public String modify(Board board, RedirectAttributes rttr) {
 		log.info("modify : " + board);
 		if(service.modify(board)) {
-			rttr.addFlashAttribute("result","success");
+			rttr.addFlashAttribute("result","modify");
 		}
 		return "redirect:/board/list";
 	}
@@ -75,8 +75,8 @@ public class BoardController {
 	@GetMapping("/remove")
 	public String remove(@RequestParam("bno") Integer bno, RedirectAttributes rttr) {
 		log.info("remove....." + bno);
-		if(service.remove(bno)) {
-			rttr.addFlashAttribute("result","success");
+		if(service.remove(bno) && service.removeComment(bno)) {
+			rttr.addFlashAttribute("result","remove");
 		}
 		return "redirect:/board/list";
 	}

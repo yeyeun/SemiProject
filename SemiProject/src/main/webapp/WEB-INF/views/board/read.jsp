@@ -242,10 +242,10 @@ $(document).ready(function(){
 					      <p id="comment-content">
 					      \${item.content}
 					      </p>
+					      <p id="modifycomment"><input type="hidden" value="\${item.content}"></p>
 					  </div>
 					</li>
-					
-					
+				
 					`;
 				}); //forEach
 				replyUL.html(str);
@@ -288,8 +288,7 @@ $(document).ready(function(){
 		};
 		add(comment,function(result){
 			alert("댓글이 등록되었습니다");
-			/* document.getElementById('content').innerText = ""; //댓글 등록이 되면, 텍스트 내용을 지움 */
-			$('#content').val("");
+			$('#content').val(""); //댓글 등록이 되면, 텍스트 내용을 지움
 			showList(1);
 		});
 	});
@@ -297,10 +296,12 @@ $(document).ready(function(){
 	//특정 댓글 수정
 	$(document).on("click","#modifyBtn",function(){
 		var idData = document.querySelector(".clearfix"); //.clearfix의 data 속성 가져오기
-		
-		
-		
-		$(".comment-content").css("display","none");
+		$(this).attr('hidden',true);
+		$(this).next().attr('hidden',true);
+		$(this).parent().append('<button type="button" id="updateBtn" style="margin:0">수정완료</button>');
+		$(this).parent().next().next().attr('hidden',true);
+		$(this).parent().next().next().next().attr('hidden',false);
+		//$(".comment-content").css("display","none");
 		
 		
 		
