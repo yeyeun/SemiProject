@@ -27,11 +27,14 @@
     </select>
 
     <update id="updatePassword" parameterType="com.raon.domain.Members">
-        UPDATE MEMBERTABLE SET PWD = #{pwd} WHERE ID = #{id}
+        UPDATE MEMBERTABLE SET PWD = #{pwd} WHERE ID = #{id} AND EMAIL=#{email}
     </update>
     <select id="selectId" resultType="boolean">
 		SELECT COUNT(*)
 		  FROM MEMBERTABLE
 		 WHERE ID = #{id}
 	</select>
+	<select id="rePwdInfo" resultType="boolean">
+        SELECT COUNT(*) FROM MEMBERTABLE WHERE ID = #{id} AND EMAIL = #{email}
+    </select>
 </mapper>

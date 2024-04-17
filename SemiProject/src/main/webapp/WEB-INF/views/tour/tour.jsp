@@ -49,7 +49,7 @@
 						
 								<div class="m-1">
 									<div class="card" style="width:24rem;" align="center">
-				        				<img src="${item.firstimage}" class="card-img-top" alt="1" onerror="this.src='../images/tour_none_image.png'" style="height: 300px">
+				        				<img src="${item.firstimage}" class="card-img-top" alt="1" onerror="this.src='../../resources/images/tour_none_image.png'" style="height: 300px">
 				        				<div class="card-body">
 				        					<p class="card-title">${item.title}</p><br/>
 				            				<p class="card-text" style="font-size: 14px">${item.addr1} ${item.addr2}</p>
@@ -78,7 +78,7 @@
 <%-- <jsp:include page="footer.jsp"/> --%>
 
 <script>
-	$(document).ready(function(){
+	/* $(document).ready(function(){
 		
 		let result = $(".row"); //bootstrap 추가
 		let str="";
@@ -100,7 +100,7 @@
 		});
 		
 	   
-	});
+	}); */
 	var actionFrm = $("#actionFrm");
 	$(".pagination a").on("click",function(e){
 		e.preventDefault();

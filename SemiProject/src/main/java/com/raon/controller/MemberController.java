@@ -72,7 +72,7 @@ public class MemberController {
     @PostMapping("/updatePwd")
     public String updatePwd(Members member) {
         memberService.updatePassword(member);
-        return "redirect:home/main";
+        return "redirect:/home/main";
     }
 
     @GetMapping("/login")
@@ -120,6 +120,27 @@ public class MemberController {
   				result = false;
   			} else {
   				result = true;
+  			}
+  		}
+  		
+  		return new ResponseEntity<>(result, HttpStatus.OK);
+  	}
+  //Id와 email 확인
+  	@PostMapping("/confirmPwd")
+  	@ResponseBody
+  	public ResponseEntity<Boolean> confirmPwd(@RequestParam String id, @RequestParam String email) {
+  		log.info("Confirm Id,email.........");
+  		log.info("id : " + id + "email: "+email);
+  		boolean result = true;
+  		
+  		if(id.trim().isEmpty()||email.trim().isEmpty()) {
+  			log.info("id : " + id+ ", email : " + email);
+  			result = false;
+  		} else {
+  			if (memberService.rePwdInfo(id, email)) {
+  				result = true;
+  			} else {
+  				result = false;
   			}
   		}
   		

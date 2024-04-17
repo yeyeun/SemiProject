@@ -18,4 +18,5 @@ public interface MemberMapper {
     public boolean isUser(@Param("id")String id, @Param("pwd")String pwd);
     public void updatePassword(Members member);
     public boolean selectId(String id); //중복 Id 검색
+    public boolean rePwdInfo(@Param("id")String id, @Param("email")String email);
 }

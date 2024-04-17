@@ -56,4 +56,7 @@ public class MemberService {
 		log.info("Service :: selectId...................");
 		return mapper.selectId(id);
 	}
+	public boolean rePwdInfo(@RequestParam("id")String id, @RequestParam("email") String email) {
+		return mapper.rePwdInfo(id, email);
+	}
 }

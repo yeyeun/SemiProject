@@ -20,7 +20,7 @@
 	
 </head>
 
-<link rel="stylesheet" href="${contextPath }/resources/css/login/login.css">
+<link rel="stylesheet" href="${contextPath }/resources/css/login/login.css?after">
 
 <body>
 
@@ -61,7 +61,7 @@
       </div>
     </div>
   </div>
-  <form  action="${contextPath}/login/rePwd.action" method="Post">
+  
   <div class="modal fade" id="exampleModal" tabindex="-1"
 				aria-labelledby="exampleModalLabel" aria-hidden="true">
 				<div class="modal-dialog modal-dialog-centered">
@@ -69,20 +69,34 @@
 						<div class="modal-header">
 							<h1 class="modal-title fs-5" id="exampleModalLabel">아이디를 입력하세요</h1>
 						</div>
+						
 						<div class="modal-body">
-							<input type="text" name="id" placeholder="아이디 입력" class="input_id"/>
-							<input type="text" name="name" placeholder="이름 입력" class="input_name"/>
-						</div>
-						<div class="modal-footer">
-							<button type="submit" class="btn btn-primary">확인</button>
-							<button type="button" class="btn btn-secondary"
+						<form  action="${contextPath}/login/confirmPwd" method="Post">
+							<div id = "inputInfo">
+								<input type="text" id="checkId" name="id" placeholder="아이디 입력" class="input_id"/><label id="labelId"></label>
+								<input type="text" id="checkEmail" name="email" placeholder="이메일 입력" class="input_email"/><label id="labelEmail"></label>
+								<div class="modal-footer">
+									<button type="submit" id="confirmInfo" class="btn btn-primary">확인</button>
+									<button type="button" class="btn btn-secondary"
 								data-bs-dismiss="modal">닫기</button>
+								</div>
+							</div>
+						</form>
+							<div id="newPasswordDiv" style="display: none;">
+    							<input type="password" id="newPassword" name="newPassword" placeholder="새 비밀번호"/>
+    							<div class="modal-footer">
+									<button type="submit" id="confirmPw" class="btn btn-primary" onclick="location.href='${contextPath}/login/updatePwd'">확인</button>
+										<button type="button" class="btn btn-secondary"
+											data-bs-dismiss="modal">닫기</button>
+								</div>
+							</div>
 						</div>
+							
+						</div>
+						
 					</div>
 				</div>
 	</div>
-	</form>
-</div>
 
 
 
@@ -112,36 +126,70 @@ secondForm.addEventListener("submit", (e) => e.preventDefault());
 			var button = $(event.relatedTarget); // 클릭시 눌려진 버튼을 참조하고 싶을때 event.relatedTarget 사용
 			var modal = $(this);
 
-			});
+		});
+		//비밀번호 재설정시 id와 email 확인
+		$("#confirmInfo").on("click", function() {
+    		
+    		var id = $("#checkId").val();
+    		var email = $("#checkEmail").val();
+    		if(id == '' || id.length == 0) {
+    			$("#labelId").css("color", "red").text("Id를 입력해주세요.");
+    			return false;
+    		}
+    		if(email == '' || email.length == 0) {
+    			$("#labelEmail").css("color", "red").text("Email을 입력해주세요.");
+    			return false;
+    		}
+        	//Ajax로 전송
+        	$.ajax({
+        		url : './confirmPwd',
+        		data : {
+        			id : id,
+        			email : email
+        		},
+        		type : 'POST',
+        		dataType : 'json',
+        		success : function(result) {
+        			if (result == true) {
+        				$("#newPasswordDiv").show();
+        				$("#inputInfo").hide();
+        			}
+        		}
+        	}); //End Ajax
+    	});
 		//ID 중복 확인
     	//id를 입력할 수 있는 input text 영역을 벗어나면 동작한다.
     	$("#id").on("focusout", function() {
     		
     		var id = $("#id").val();
     		
-    		if(id == '' || id.length == 0) {
+    		if(id == null || id.length == 0) {
     			$("#label1").css("color", "red").text("공백은 ID로 사용할 수 없습니다.");
     			return false;
     		}
-    		
-        	//Ajax로 전송
-        	$.ajax({
-        		url : './ConfirmId',
-        		data : {
-        			id : id
-        		},
-        		type : 'POST',
-        		dataType : 'json',
-        		success : function(result) {
-        			if (result == true) {
-        				$("#label1").css("color", "black").text("사용 가능한 ID 입니다.");
-        			} else{
-        				$("#label1").css("color", "red").text("사용 불가능한 ID 입니다.");
-        				$("#id").val('');
-        			}
-        		}
-        	}); //End Ajax
+    		else{
+    			//Ajax로 전송
+            	$.ajax({
+            		url : './ConfirmId',
+            		data : {
+            			id : id
+            		},
+            		type : 'POST',
+            		dataType : 'json',
+            		success : function(result) {
+            			if (result == true) {
+            				$("#label1").css("color", "black").text("사용 가능한 ID 입니다.");
+            			} else{
+            				$("#label1").css("color", "red").text("사용 불가능한 ID 입니다.");
+            				$("#id").val('');
+            			}
+            		}
+            	}); //End Ajax
+    		}
+        	
     	});
+		
+		
 });
  function checkSignUp(){
 		var id= document.getElementById("id").value;
@@ -149,7 +197,7 @@ secondForm.addEventListener("submit", (e) => e.preventDefault());
 		var email=document.getElementById("email").value;
 		var password=document.getElementById("pwd").value;
 		var phoneNo=document.getElementById("phoneNo").value;
-		if(!id||!name||!email||!password||!phoneNo||isNaN(phoneNo.value)){
+		if(!id||!name||!email||!password||!phoneNo||isNaN(phoneNo)){
 			alert("정보를 입력하세요.");
 			return false;
 		}else{

@@ -43,7 +43,7 @@
 
     <div class="header-right">
       <a href="${contextPath}/header/main" class="nav-item nav-active">홈</a>
-      <a href="${contextPath}/header/tour" class="nav-item">여행지</a>
+      <a href="${contextPath}/tour/list" class="nav-item">여행지</a>
        <a href="${contextPath}/header/course" class="nav-item">여행코스</a>
       <a href="${contextPath}/event/list" class="nav-item">축제/행사</a>
       <a href="${contextPath}/board/list" class="nav-item">게시판</a>
