@@ -74,12 +74,14 @@
 
 <div class="pagination-wrapper">
 	<div class="pagination">
+		<!-- 이전 페이지 버튼 -->
 		<c:if test="${pagingDTO.prev}">
 			<a href="${pagingDTO.start-1}" tabindex="-1">&laquo;</a>
 		</c:if>
+		<!-- 각 번호 페이지 버튼 -->
 		<c:forEach var="num" begin="${pagingDTO.start}" end="${pagingDTO.end}">
 			<c:choose>
-			 <c:when test="${pageNum==num}">
+			 <c:when test="${pagingDTO.cri.pageNum==num}">
 			 	<a href="${num}" class="active">${num}</a>
 			 </c:when>
 			 <c:otherwise>
@@ -87,9 +89,13 @@
 			 </c:otherwise>
 			</c:choose>
 		</c:forEach>
+		<!-- 다음 페이지 버튼 -->
 		<c:if test="${pagingDTO.next}">
 			<a href="${pagingDTO.end+1}">&raquo;</a>
 		</c:if>
+		
+		
+		
 	</div>
 </div>
 
@@ -99,7 +105,7 @@
 	</tr>
 </table>
 
-<form action="${pageContext.request.contextPath}/board/board.bo" id="actionFrm">
+<form id="actionFrm" method="get">
 	<input type="hidden" name='pageNum' value='${pagingDTO.cri.pageNum}'>
 	<input type="hidden" name='amount' value='${pagingDTO.cri.amount}'>
 </form>
@@ -110,6 +116,7 @@
 		e.preventDefault();
 		//console.log('click');
 		actionFrm.find("input[name='pageNum']").val($(this).attr("href"));
+		actionFrm.attr("action","/board/list")
 		actionFrm.submit();
 	});
 	

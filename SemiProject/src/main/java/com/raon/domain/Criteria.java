@@ -20,6 +20,16 @@ public class Criteria {
 		this.amount = amount;
 		this.skip = (pageNum-1) * amount;
 	}
+	
+	public void setPageNum(Integer pageNum) {
+		this.skip = (pageNum-1) * this.amount;
+		this.pageNum = pageNum;
+	}
+	
+	public void setAmount(int amount) {
+		this.skip = (this.pageNum-1) * amount;
+		this.amount = amount;
+	}
 
 
 	

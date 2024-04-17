@@ -26,6 +26,11 @@ public class BoardService {
 	public List<Board> getListPaging(Criteria cri){
 		return mapper.getListPaging(cri);
 	}
+	
+	public int getTotal() {
+		log.info("getTotal......");
+		return mapper.getTotal();
+	}
 		
 	public void write(Board board) {
 		log.info("write....." + board.getBno());

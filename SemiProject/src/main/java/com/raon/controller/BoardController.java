@@ -30,6 +30,9 @@ public class BoardController {
 	public void list(Model model, Criteria cri) { //Model: 데이터를 담고 있는 객체
 		log.info("list");
 		model.addAttribute("bList", service.getListPaging(cri));
+		int total = service.getTotal();
+		PageDTO dto = new PageDTO(cri,total);
+		model.addAttribute("pagingDTO",dto);
 	}
 	
 	

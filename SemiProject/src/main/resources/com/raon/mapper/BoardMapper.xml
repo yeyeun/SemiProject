@@ -13,6 +13,11 @@
       	ORDER BY bno DESC LIMIT #{skip},#{amount}
       </select>
       
+      <!-- 게시물 총 갯수 -->
+      <select id="getTotal" resultType="int">
+      	select count(*) from boardtable
+      </select>
+      
       <insert id="insert">
       	insert into boardtable(btype,title,content,writer)
       	values(#{btype},#{title},#{content},#{writer})

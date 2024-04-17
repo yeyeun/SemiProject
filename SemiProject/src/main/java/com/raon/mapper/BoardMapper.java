@@ -11,6 +11,7 @@ public interface BoardMapper {
 	/* @Select("select * from board where bno>0") */
 	public List<Board> getList();
 	public List<Board> getListPaging(Criteria cri);
+	public int getTotal();
 	public int insert(Board board);
 	public void insertSelectKey(Board board);
 	public Board read(Integer bno);
