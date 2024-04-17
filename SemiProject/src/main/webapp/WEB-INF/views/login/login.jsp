@@ -17,8 +17,11 @@
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
 	integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
 	crossorigin="anonymous"></script>
-	<link rel="stylesheet" href="${contextPath }/resources/css/login/login.css">
+	
 </head>
+
+<link rel="stylesheet" href="${contextPath }/resources/css/login/login.css">
+
 <body>
 
 <jsp:include page="${contextPath }/WEB-INF/views/include/header.jsp"></jsp:include>
@@ -27,7 +30,7 @@
   <div class="container__form container--signup">
     <form action="${contextPath}/login/signUp" method="Post"class="form" id="form1">
       <h2 class="form__title">Sign Up</h2>
-      <input type="text" id="id" name="id" placeholder="UserId" class="input" />
+       <input type="text" id="id" name="id" placeholder="UserId" class="input" /><label id="label1"></label>
       <input type="text" id="name" name="name" placeholder="Name" class="input" />
       <input type="email" id="email"name="email" placeholder="Email" class="input" />
       <input type="password" id="pwd"name="pwd" placeholder="Password" class="input" />
@@ -40,8 +43,8 @@
   <div class="container__form container--signin">
     <form action="${contextPath}/login/login" method="Post" class="form" id="form2">
       <h2 class="form__title">Sign In</h2>
-      <input type="text" name="id" placeholder="UserId" class="input" />
-      <input type="password" name="pwd" placeholder="Password" class="input" />
+      <input type="text" id="id" name="id" placeholder="UserId" class="input" />
+      <input type="password" id="pwd" name="pwd" placeholder="Password" class="input" />
       <a href="#exampleModal" id="findPwd" data-bs-toggle="modal">Forgot your password?</a>
       <button type="submit" class="btn">Sign In</button>
     </form>
@@ -110,14 +113,43 @@ secondForm.addEventListener("submit", (e) => e.preventDefault());
 			var modal = $(this);
 
 			});
-	});
+		//ID 중복 확인
+    	//id를 입력할 수 있는 input text 영역을 벗어나면 동작한다.
+    	$("#id").on("focusout", function() {
+    		
+    		var id = $("#id").val();
+    		
+    		if(id == '' || id.length == 0) {
+    			$("#label1").css("color", "red").text("공백은 ID로 사용할 수 없습니다.");
+    			return false;
+    		}
+    		
+        	//Ajax로 전송
+        	$.ajax({
+        		url : './ConfirmId',
+        		data : {
+        			id : id
+        		},
+        		type : 'POST',
+        		dataType : 'json',
+        		success : function(result) {
+        			if (result == true) {
+        				$("#label1").css("color", "black").text("사용 가능한 ID 입니다.");
+        			} else{
+        				$("#label1").css("color", "red").text("사용 불가능한 ID 입니다.");
+        				$("#id").val('');
+        			}
+        		}
+        	}); //End Ajax
+    	});
+});
  function checkSignUp(){
-		var id= document.getElementById("id");
-		var name=document.getElementById("name");
-		var email=document.getElementById("email");
-		var password=document.getElementById("pwd");
-		var phoneNo=document.getElementById("phoneNo");
-		if(id==null|| name==null || email==null || password==null || phoneNo.value.length==0||isNaN(phoneNo.value)){
+		var id= document.getElementById("id").value;
+		var name=document.getElementById("name").value;
+		var email=document.getElementById("email").value;
+		var password=document.getElementById("pwd").value;
+		var phoneNo=document.getElementById("phoneNo").value;
+		if(!id||!name||!email||!password||!phoneNo||isNaN(phoneNo.value)){
 			alert("정보를 입력하세요.");
 			return false;
 		}else{

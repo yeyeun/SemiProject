@@ -44,12 +44,16 @@ public class MemberService {
     }
 
 
-    public int isUser(@RequestParam("id")String id, @RequestParam("pwd") String pwd) {
+    public boolean isUser(@RequestParam("id")String id, @RequestParam("pwd") String pwd) {
         return mapper.isUser(id, pwd);
     }
 
-
+    
     public void updatePassword(Members member) {
     	mapper.updatePassword(member);
     }
+	public boolean selectId(String id) {
+		log.info("Service :: selectId...................");
+		return mapper.selectId(id);
+	}
 }

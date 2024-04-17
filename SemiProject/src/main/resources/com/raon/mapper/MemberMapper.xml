@@ -22,11 +22,16 @@
         DELETE FROM MEMBERTABLE WHERE ID = #{id}
     </delete>
 
-    <select id="isUser" resultType="int" parameterType="hashMap">
+    <select id="isUser" resultType="boolean" parameterType="hashMap">
         SELECT COUNT(*) FROM MEMBERTABLE WHERE ID = #{id} AND PWD = #{pwd}
     </select>
 
     <update id="updatePassword" parameterType="com.raon.domain.Members">
         UPDATE MEMBERTABLE SET PWD = #{pwd} WHERE ID = #{id}
     </update>
+    <select id="selectId" resultType="boolean">
+		SELECT COUNT(*)
+		  FROM MEMBERTABLE
+		 WHERE ID = #{id}
+	</select>
 </mapper>

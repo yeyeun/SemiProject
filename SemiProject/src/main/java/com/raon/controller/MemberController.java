@@ -8,6 +8,8 @@ import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -81,7 +83,7 @@ public class MemberController {
     
     @PostMapping("/login")
     public String login(HttpSession session, @RequestParam String id, @RequestParam String pwd) {
-        if (memberService.isUser(id, pwd)==1) {
+        if (memberService.isUser(id, pwd)) {
         	log.info("login....");
             session.setAttribute("loginId", id);
             return "redirect:/header/main";
@@ -102,4 +104,25 @@ public class MemberController {
         session.invalidate();
         return "redirect:/";
     }
+  //Id 중복 확인
+  	@PostMapping("/ConfirmId")
+  	@ResponseBody
+  	public ResponseEntity<Boolean> confirmId(String id) {
+  		log.info("ConfirmId.........");
+  		log.info("id : " + id);
+  		boolean result = true;
+  		
+  		if(id.trim().isEmpty()) {
+  			log.info("id : " + id);
+  			result = false;
+  		} else {
+  			if (memberService.selectId(id)) {
+  				result = false;
+  			} else {
+  				result = true;
+  			}
+  		}
+  		
+  		return new ResponseEntity<>(result, HttpStatus.OK);
+  	}
 }

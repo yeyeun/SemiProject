@@ -15,6 +15,7 @@ public interface MemberMapper {
     public void registerMember(Members member);
     public void updateMember(Members member);
     public void deleteMember(String id);
-    public int isUser(@Param("id")String id, @Param("pwd")String pwd);
+    public boolean isUser(@Param("id")String id, @Param("pwd")String pwd);
     public void updatePassword(Members member);
+    public boolean selectId(String id); //중복 Id 검색
 }
