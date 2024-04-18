@@ -37,18 +37,21 @@ public class CourseController {
 	private CourseService service;
 	
 	@GetMapping("/allList")
-	public String allList(Model model) {
+	public void allList(Model model) {
 		List<Course> allList = service.getList(); 
 		model.addAttribute("allList",allList);
-		return "course/course_main";
 	}
 	
 	@GetMapping("/detail")
-	public String detail(@RequestParam("contentid") String contentid, Model model) {
+	public void detail(@RequestParam("contentid") String contentid, Model model) {
 		log.info("----course 상세조회----");
 		model.addAttribute("course", service.detail(contentid));
-		return "course/course_detail";
 	}
+	
+	@GetMapping("/write")
+	public void wrtie() {
+		
+	};
 	
 	@GetMapping("/list")
 	public String list(Model model) { // 코드 전체 정보 중 5개만 추출해서 List형식으로 리턴
