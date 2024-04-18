@@ -33,6 +33,11 @@ public class CourseService {
         return mapper.getList();
     }
     
+	public Course detail(String contentid) {
+		log.info("Service->detail():"+contentid);
+		return mapper.detail(contentid);
+	}
+	
     public Map<String, List<?>> getTitleList(List<String> contentIds) throws IOException{ //여행코스에 해당하는 여행지 이름 불러오기
     	List<String> titleList = new ArrayList<>();
 		List<Integer> titleLength = new ArrayList<Integer>();
