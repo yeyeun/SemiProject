@@ -14,4 +14,7 @@ public interface CourseMapper {
     
     @Select("SELECT * FROM course WHERE contentid=#{contentid}")
     Course detail(String contentid);
+    
+    @Select("SELECT subcontentid FROM course WHERE contentid=#{contentid}")
+    String getSubContents(String contentid);
 }

@@ -44,10 +44,16 @@ public class CourseController {
 	
 	@GetMapping("/detail")
 	public void detail(@RequestParam("contentid") String contentid, Model model) {
-		log.info("----course 상세조회----");
-		model.addAttribute("course", service.detail(contentid));
+		log.info("----course " + contentid + "상세조회----");
+		try {
+			List<String> list = service.getSubContents(contentid); //해당 코스의 subcontentid값 배열로 받아오기
+	       	service.getDetailInfo(list);
+		} catch (IOException e) {
+			log.info("----course 상세조회 실패----");		
+			e.printStackTrace();
+		}
 	}
-	
+
 	@GetMapping("/write")
 	public void wrtie() {
 		
