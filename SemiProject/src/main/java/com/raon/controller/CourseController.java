@@ -21,6 +21,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.raon.domain.Course;
 import com.raon.service.CourseService;
@@ -40,6 +41,13 @@ public class CourseController {
 		List<Course> allList = service.getList(); 
 		model.addAttribute("allList",allList);
 		return "course/course_main";
+	}
+	
+	@GetMapping("/detail")
+	public String detail(@RequestParam("contentid") String contentid, Model model) {
+		log.info("----course 상세조회----");
+		model.addAttribute("course", service.detail(contentid));
+		return "course/course_detail";
 	}
 	
 	@GetMapping("/list")
