@@ -34,7 +34,14 @@ import lombok.extern.log4j.Log4j;
 @RequestMapping("/course/*")
 public class CourseController {
 	private CourseService service;
-
+	
+	@GetMapping("/allList")
+	public String allList(Model model) {
+		List<Course> allList = service.getList(); 
+		model.addAttribute("allList",allList);
+		return "course/course_main";
+	}
+	
 	@GetMapping("/list")
 	public String list(Model model) { // 코드 전체 정보 중 5개만 추출해서 List형식으로 리턴
 		log.info("course_list");

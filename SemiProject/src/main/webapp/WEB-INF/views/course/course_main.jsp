@@ -40,14 +40,14 @@
 				<div class="row-wrapper">
 					<div class="row justify-content-center">
 						<c:choose>
-							<c:when test="${empty cList}">
+							<c:when test="${empty allList}">
 								<p>등록된 여행코스가 없습니다</p>
 							</c:when>
 							<c:otherwise>
-								<c:forEach items="${cList}" var="course">
+								<c:forEach items="${allList}" var="course">
 									<div class="col-4 cards">
 										<img class="images" src="${course.firstimage}" alt="..."
-											onerror="this.src='../images/nocourseimg.png'" />
+											onerror="this.src='../../resources/images/nocourseimg.png'" />
 										<p class="title">${course.title}</p>
 										<div class="overlay"></div>
 										<div class="buttons">

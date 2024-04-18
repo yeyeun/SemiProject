@@ -44,7 +44,7 @@
     <div class="header-right">
       <a href="${contextPath}/home/" class="nav-item nav-active">홈</a>
       <a href="${contextPath}/tour/list" class="nav-item">여행지</a>
-       <a href="${contextPath}/header/course" class="nav-item">여행코스</a>
+       <a href="${contextPath}/course/allList" class="nav-item">여행코스</a>
       <a href="${contextPath}/event/list" class="nav-item">축제/행사</a>
       <a href="${contextPath}/board/list" class="nav-item">게시판</a>
     </div>
@@ -79,8 +79,8 @@
               $('.nav-item[href="${contextPath}/event/list"]').addClass('nav-active');
           } else if (currentPage.startsWith("${contextPath}/tour")) {
               $('.nav-item[href="${contextPath}/tour/list"]').addClass('nav-active');
-          } else if (currentPage.startsWith("${contextPath}/header/course")) {
-              $('.nav-item[href="${contextPath}/header/course"]').addClass('nav-active');
+          } else if (currentPage.startsWith("${contextPath}/course")) {
+              $('.nav-item[href="${contextPath}/course/allList"]').addClass('nav-active');
           } 
           else if (currentPage.startsWith("${contextPath}/board")) {
               $('.nav-item[href="${contextPath}/board/list"]').addClass('nav-active');
