@@ -14,9 +14,11 @@
 <link rel="stylesheet" href="${contextPath }/resources/css/tour/tour_detail.css">
 
 <script src="https://kit.fontawesome.com/3a115195d8.js" crossorigin="anonymous"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8deee40fc2ece1fd05f3fe901e66a41b"></script>   
 </head>
 <body>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+  <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 <%
 	String contentid = request.getParameter("contentid");
 	String title = request.getParameter("title");
@@ -55,16 +57,26 @@
 			 <c:forEach items="${detailList}" var="item">
 			<div class="col">
 			
-				<div class="description"><p id="explain">상세 설명</p>
-						            <hr style="border: none; width: 40%; height: 3px; background: black; opacity: 1;">
-						            <p>${item.overview}</p><br/>
-						            <p><b>홈페이지: </b>${item.homepage}</p><br/>
-						            <p><b>전화번호: </b>${item.tel }</p>
+				<div class="description">
+					
+						<p id="explain">상세 설명</p>
+						<hr style="border: none; width: 40%; height: 3px; background: black; opacity: 1;">
+					<ul>
+						<li><p>${item.overview}</p><br/></li>
+						<li><p><b>홈페이지: </b>${item.homepage }</li><br/>
+						<li><p><b>전화번호: </b>${item.tel }</p></li>
+					</ul>
+					
 				</div>
 			
 			</div>
 			</c:forEach>
 			<br/>
+			<c:forEach items="${detailList}" var="common">
+					<p id="mapx" style="display: none;">${common.mapx }<p>
+					<p id="mapy" style="display: none;">${common.mapy }<p>
+					<p id="mlevel" style="display: none;">${common.mlevel }<p>
+			</c:forEach>
 			<div class="map_info">
 				<p id="explain">위치</p>
 				<hr style="border: none; width: 30%; height: 3px; background: black; opacity: 1;">
@@ -75,7 +87,7 @@
         
         <div id="block" style="width:100%; height: 200px;"></div>       
      </div>
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8c21d4e024682dd160eb186f02ced1e1"></script>     
+  
 <script>
 $(document).ready(function(){
 		var contentid = '<%= request.getParameter("contentid") %>';
@@ -85,9 +97,9 @@ $(document).ready(function(){
 		let carouselIndicators = $(".carousel-indicators");
 		let str="";
 		let items=[];
-		var mappx = '<%=request.getParameter("mapx")%>';
-        var mappy = '<%=request.getParameter("mapy")%>';
-        var mlevel = '<%=request.getParameter("mlevel")%>';
+		var mappx = document.getElementById("mapx").innerText;
+        var mappy = document.getElementById("mapy").innerText;
+        var mlevel = document.getElementById("mlevel").innerText;
         console.log(mapx, mapy);
 		$.ajax({
 			url: "https://apis.data.go.kr/B551011/KorService1/detailImage1?MobileOS=ETC&MobileApp=raon&contentId="+contentid+"&imageYN=Y&subImageYN=Y&serviceKey=b7k%2B9H2DZnNoOhZSPNTopjx1cG%2F8y74JvA2aFmp4dlvoRTGzmxGL976Dcdg0PTLdbegGkqm466WbLV5PHNOwmw%3D%3D&_type=json",
@@ -104,7 +116,7 @@ $(document).ready(function(){
 						if(item.originimgurl == null){
 							if(firstimage.equals("")){
 								carouselInner.append(`
-										<img src='<%=request.getParameter("firstimage")%>' class="d-block w-100" alt="../../resources/images/tour_none_image.png">			
+										<img src=<%=request.getParameter("firstimage")%> class="d-block w-100" alt="this.src= '../../resources/images/tour_none_image.png'">			
 								`);
 							}
 							else{
@@ -126,7 +138,7 @@ $(document).ready(function(){
 							
 							carouselInner.append(`
 								<div class="carousel-item \${active}">
-									<img src="\${item.originimgurl}" class="d-block w-100"alt="1" onerror="this.src='../../resources/images/tour_none_image.png'" >	
+									<img src="\${item.originimgurl}" class="d-block w-100" alt="1" onerror="this.src='../../resources/images/tour_none_image.png'" >	
 			    				</div>
 						`);
 						}
@@ -135,7 +147,7 @@ $(document).ready(function(){
 				}
 				else{
 					carouselInner.append(`
-							<img src= <%=request.getParameter("firstimage")%> class="d-block w-100" alt="1" onerror="this.src='../../resources/images/tour_none_image.png" >			
+							<img src= <%=request.getParameter("firstimage")%> class="d-block w-100" style="height: 450px;" alt="1" onerror="this.src='../../resources/images/tour_none_image.png'" >			
 					`);
 				}
 				
