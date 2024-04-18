@@ -42,7 +42,7 @@
     </div>
 
     <div class="header-right">
-      <a href="${contextPath}/header/main" class="nav-item nav-active">홈</a>
+      <a href="${contextPath}/home/" class="nav-item nav-active">홈</a>
       <a href="${contextPath}/tour/list" class="nav-item">여행지</a>
        <a href="${contextPath}/header/course" class="nav-item">여행코스</a>
       <a href="${contextPath}/event/list" class="nav-item">축제/행사</a>
@@ -53,32 +53,43 @@
 
   <script>
   $(document).ready(function() {
-	   // 페이지 로드 시 active 클래스 설정
-	    setActiveClass();
-	   //Spring에서 아래 href코드 때문에 이 코드를 실행하면 홈홤년에 있는 nav-active클래스가 삭제되고 잇음
+      // 페이지 로드 시 active 클래스 설정
+      setActiveClass();
 
-	    // 네비게이션 클릭 시 active 클래스 설정
-	    $('.nav-item').click(function(event) {
-	        var href = $(this).attr('href');
-	        $('.nav-item').removeClass('nav-active');
-	        $(this).addClass('nav-active');
-	        setActiveClass(); // active 클래스 설정
-	    });
+      // 네비게이션 클릭 시 active 클래스 설정
+      $('.nav-item').click(function(event) {
+          var href = $(this).attr('href');
+          $('.nav-item').removeClass('nav-active');
+          $(this).addClass('nav-active');
+          setActiveClass(); // active 클래스 설정
+      });
 
-	    // 브라우저의 상태(뒤로/앞으로) 변경 시 active 클래스 설정
-	    $(window).on('popstate', function() {
-	        setActiveClass();
-	    });
+      // 브라우저의 상태(뒤로/앞으로) 변경 시 active 클래스 설정
+      $(window).on('popstate', function() {
+          setActiveClass();
+      });
 
-	    // 현재 페이지에 해당하는 링크에 active 클래스 설정하는 함수
-	    function setActiveClass() {
-	        var currentPage = location.pathname;
-	        $('.nav-item').removeClass('nav-active');
-	        $('.nav-item[href="' + currentPage + '"]').addClass('nav-active');
-	    }
-	    
+      // 현재 페이지에 해당하는 링크에 active 클래스 설정하는 함수
+      function setActiveClass() {
+          var currentPage = location.pathname;
+          $('.nav-item').removeClass('nav-active');
 
-	});
+          // 각 탭의 URL 경로와 현재 페이지의 경로 비교하여 active 클래스 부여
+          if (currentPage.startsWith("${contextPath}/event")) {
+              $('.nav-item[href="${contextPath}/event/list"]').addClass('nav-active');
+          } else if (currentPage.startsWith("${contextPath}/tour")) {
+              $('.nav-item[href="${contextPath}/tour/list"]').addClass('nav-active');
+          } else if (currentPage.startsWith("${contextPath}/header/course")) {
+              $('.nav-item[href="${contextPath}/header/course"]').addClass('nav-active');
+          } 
+          else if (currentPage.startsWith("${contextPath}/board")) {
+              $('.nav-item[href="${contextPath}/board/list"]').addClass('nav-active');
+          } else if (currentPage.startsWith("${contextPath}/home")) {
+              $('.nav-item[href="${contextPath}/home/"]').addClass('nav-active');
+          }
+          // 추가 탭 있으면 아래에 같은 방식으로 추가, 여행지 여행코스 링크 추후 수정
+      }
+  });
 	 // 스크롤 이벤트 감지
 	    $(window).scroll(function() {
 	        // 헤더 요소 선택

@@ -81,7 +81,7 @@
 			spaceBetween : 30,
 			loop : true,
 			autoplay : {
-				delay : 700000,
+				delay : 7000,
 			},
 			pagination : {
 				el : ".swiper-pagination",
