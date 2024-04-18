@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -100,9 +101,18 @@ public class MemberController {
     }
 
     @GetMapping("/logout")
-    public String logout(HttpSession session) {
-        session.invalidate();
-        return "redirect:/";
+    public String logout(HttpServletRequest request) {
+        // 세션 무효화
+        request.getSession().invalidate();
+        
+        // 이전 페이지 URL 가져오기
+        String referer = request.getHeader("referer");
+        
+        // 이전 페이지 URL이 없으면 기본적으로 홈 페이지로 리디렉션
+        String redirectUrl = (referer != null) ? referer : "/";
+        
+        // 기존 페이지로 리디렉션
+        return "redirect:" + redirectUrl;
     }
   //Id 중복 확인
   	@PostMapping("/ConfirmId")

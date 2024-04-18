@@ -23,7 +23,7 @@
       <div class="login-user-menu" style="display:none;">
       	<ul>
     		<li><a href="${contextPath}/mypage">마이페이지</a></li>
-    		<li><a href="${contextPath}/login/logout.action">로그아웃</a></li>
+    		<li><a href="${contextPath}/login/logout">로그아웃</a></li>
     	</ul>
     	</div>
     </div>
