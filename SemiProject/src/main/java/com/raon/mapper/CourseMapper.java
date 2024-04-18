@@ -11,4 +11,7 @@ import com.raon.domain.Course;
 public interface CourseMapper {
     @Select("SELECT * FROM course")
     List<Course> getList();
+    
+    @Select("SELECT * FROM course WHERE contentid=#{contentid}")
+    Course detail(String contentid);
 }
