@@ -14,6 +14,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -25,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.raon.domain.Course;
 import com.raon.service.CourseService;
+import com.raon.service.MypageService;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
@@ -35,6 +39,7 @@ import lombok.extern.log4j.Log4j;
 @RequestMapping("/course/*")
 public class CourseController {
 	private CourseService service;
+	private MypageService mypageservice;
 	
 	@GetMapping("/allList")
 	public void allList(Model model) {
@@ -99,7 +104,11 @@ public class CourseController {
 	}
 	
 	@GetMapping("/course_write")
-	public String course_write() {
-		return "course/course_write";
+	public String course_write(HttpServletRequest request, HttpServletResponse response, Model model) throws IOException {
+		String loginId = (String) request.getSession().getAttribute("loginId");
+		model.addAttribute("mytourList", mypageservice.read(loginId));
+		log.info("@@@"+model.getAttribute("mytourlist"));
+//		mypageservice.getTourDetail(request, response, model);
+		return "course/write";
 	}
 }
