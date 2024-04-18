@@ -20,7 +20,6 @@ import org.springframework.ui.Model;
 
 import com.raon.domain.ContentDetail;
 import com.raon.domain.Course;
-import com.raon.domain.Event;
 import com.raon.mapper.CourseMapper;
 
 import lombok.extern.log4j.Log4j;
@@ -127,68 +126,56 @@ public class CourseService {
     	
 	//여행코스의 각 여행지 정보 조회
     public void getDetailInfo(List<String> list, Model model) throws IOException{
-//    	List<String> titleList = new ArrayList<>();
-//    	List<String> firstimageList = new ArrayList<>();
-//    	List<String> contentidList = new ArrayList<>();
-		List<ContentDetail> contentdetailList = new ArrayList<ContentDetail>();
-		
+    	List<ContentDetail> contentdetailList = new ArrayList<ContentDetail>();
 		// 리스트 안의 subcontentid 반복문 실행
 		for (String subcontent : list) {
-			int itemCount = 0; // 각 API 호출 이후에 추가된 항목의 개수를 저장
-			
 			//API 호출
-			StringBuilder urlBuilder = new StringBuilder(
-					"https://apis.data.go.kr/B551011/KorService1/detailCommon1"); //api URL
+			StringBuilder urlBuilder = new StringBuilder("https://apis.data.go.kr/B551011/KorService1/detailCommon1"); //api URL
 			urlBuilder.append("?" + URLEncoder.encode("MobileOS", "UTF-8") + "=" + URLEncoder.encode("ETC", "UTF-8"));
 			urlBuilder.append("&" + URLEncoder.encode("MobileApp", "UTF-8") + "=" + URLEncoder.encode("raon", "UTF-8"));
-			urlBuilder.append("&" + URLEncoder.encode("contentId", "UTF-8") + "=" + URLEncoder.encode("ddd", "UTF-8")); //여행코스 id
+			urlBuilder.append("&" + URLEncoder.encode("contentId", "UTF-8") + "=" + URLEncoder.encode(subcontent.trim(), "UTF-8")); //여행코스 id
 			urlBuilder.append("&" + URLEncoder.encode("defaultYN", "UTF-8") + "=" + URLEncoder.encode("Y", "UTF-8")); //기본정보 조회여부
 			urlBuilder.append("&" + URLEncoder.encode("firstImageYN", "UTF-8") + "=" + URLEncoder.encode("Y", "UTF-8")); //이미지 조회여부
 			urlBuilder.append("&" + URLEncoder.encode("mapinfoYN", "UTF-8") + "=" + URLEncoder.encode("Y", "UTF-8")); //좌표 조회여부
 			urlBuilder.append("&" + URLEncoder.encode("overviewYN", "UTF-8") + "=" + URLEncoder.encode("Y", "UTF-8")); //설명 조회여부
-			urlBuilder.append("&" + URLEncoder.encode("serviceKey", "UTF-8") + "mu4MvO6eUoXAtU8dp%2Bdwyt%2B%2F24GYekx10foLVqNhtViQi60IGrp26ujspnFxZvJc5EZ0UhX99Q6eQ%2FdE2pRwiA"); //서비스키
+			urlBuilder.append("&" + URLEncoder.encode("serviceKey", "UTF-8") + "=mu4MvO6eUoXAtU8dp%2Bdwyt%2B%2F24GYekx10foLVqNhtViQi60IGrp26ujspnFxZvJc5EZ0UhX99Q6eQ%2FdE2pRwiA"); //서비스키
 			urlBuilder.append("&" + URLEncoder.encode("_type", "UTF-8") + "=" + URLEncoder.encode("json", "UTF-8")); //조회 타입
 
 			URL url = new URL(urlBuilder.toString());
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			conn.setRequestMethod("GET");
 			conn.setRequestProperty("Content-type", "application/json");
-			System.out.println("Response code: " + conn.getResponseCode());
-			BufferedReader rd;
-			if (conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
-				rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-			} else {
-				rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+			
+			
+			try (BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()))) {
+				StringBuilder response = new StringBuilder();
+				String line;
+				while ((line = rd.readLine()) != null) {
+					response.append(line);
+				}
+				System.out.println("response.toString========" + response.toString());
+
+				// JSON 형태의 응답에서 title 값을 추출하여 리스트에 저장
+				JSONObject jsonObject = new JSONObject(response.toString());
+				jsonObject = jsonObject.getJSONObject("response").getJSONObject("body").optJSONObject("items");
+				JSONArray jsonArray = jsonObject.optJSONArray("item");
+				for (int i = 0; i < jsonArray.length(); i++) {
+					contentdetailList.add(
+							new ContentDetail(
+							jsonArray.getJSONObject(i).getString("title"),jsonArray.getJSONObject(i).getString("contentid"),
+							jsonArray.getJSONObject(i).getString("firstimage"),jsonArray.getJSONObject(i).getString("mapx"),
+							jsonArray.getJSONObject(i).getString("mapy"),jsonArray.getJSONObject(i).getString("mlevel"),
+							jsonArray.getJSONObject(i).getString("overview")
+						));
+				}
+			} catch (JSONException e) {
+				System.out.println("여행코스 세부조회 오류");
 			}
 			
-			StringBuilder sb = new StringBuilder();
-			String line;
-			while ((line = rd.readLine()) != null) {
-				sb.append(line);
-			}
-			rd.close();
-			conn.disconnect();
-			System.out.println(sb.toString());
-			JSONObject jsonObject = new JSONObject(sb.toString());
-
-			jsonObject = jsonObject.getJSONObject("response").getJSONObject("body").getJSONObject("items");
-			JSONArray jsonArray = jsonObject.getJSONArray("item");
-			for (int i = 0; i < jsonArray.length(); i++) {
-				contentdetailList.add(
-						new ContentDetail(
-						jsonArray.getJSONObject(i).getString("title"),jsonArray.getJSONObject(i).getString("contentid"),
-						jsonArray.getJSONObject(i).getString("firstimage"),jsonArray.getJSONObject(i).getString("mapx"),
-						jsonArray.getJSONObject(i).getString("mapy"),jsonArray.getJSONObject(i).getString("mlevel"),
-						jsonArray.getJSONObject(i).getString("overview")
-						));
-			}
 		}
 		
-
-		
-		
-		log.info("EventService -> getList success");
 		model.addAttribute("contentdetailList",contentdetailList);
     }
+    
 
 }

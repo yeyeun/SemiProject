@@ -9,7 +9,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <c:set var="contextPath" value='${pageContext.request.contextPath}'/>
-
+<c:set value="${pageContext.request.contextPath}/resources" var="resourceurl" scope="application"/>
 <script src="https://code.jquery.com/jquery-3.7.1.js"
         integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -44,8 +44,25 @@
 			<section style="background-color: #F0F2F5;">
 				<div class="container py-5">
 					<div class="main-timeline-2">
-					
-					<!-- ajax 반복문 -->
+					<c:choose>
+						<c:when test="${empty contentdetailList}">
+						여행지 목록이 없습니다.
+						</c:when>
+						<c:otherwise>
+							<c:forEach items="${contentdetailList}" var="contentdetail">
+							<div class="timeline-2">
+								<div class="card">
+									<img src="${contentdetail.firstimage}" alt="..." onerror="this.src='${resourceurl}/images/nocourseimg.png'" class="card-img-top"/>
+									<div class="card-body p-4">              
+										<h4 class="fw-bold mb-4">
+										<a href="${contextPath}/tour/tour_detail?contentid=${contentdetail.contentid}&title=${contentdetail.title}&mapy=${contentdetail.mapy}&mapx=${contentdetail.mapx}">${contentdetail.title}</a>
+										</h4>
+									</div>
+								</div>
+							</div>
+							</c:forEach>
+						</c:otherwise>
+					</c:choose>
 					</div>
 				</div>
 			</section>
