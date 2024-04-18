@@ -51,7 +51,7 @@
 										<p class="title">${course.title}</p>
 										<div class="overlay"></div>
 										<div class="buttons">
-											<a href="${contextPath}/course/detail.course?contentid=${course.contentid}"> 상세보기 </a>
+											<a href="${contextPath}/course/detail?contentid=${course.contentid}"> 상세보기 </a>
 										</div>
 									</div>
 								</c:forEach>
