@@ -3,6 +3,7 @@ package com.raon.controller;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -59,11 +60,6 @@ public class CourseController {
 		}
 	}
 
-	@GetMapping("/write")
-	public void wrtie() {
-		
-	};
-	
 	@GetMapping("/list")
 	public String list(Model model) { // 코드 전체 정보 중 5개만 추출해서 List형식으로 리턴
 		log.info("course_list");
@@ -103,12 +99,21 @@ public class CourseController {
 		return "home/slider_2";
 	}
 	
-	@GetMapping("/course_write")
-	public String course_write(HttpServletRequest request, HttpServletResponse response, Model model) throws IOException {
+	@GetMapping("/write")
+	public void course_write(HttpServletRequest request, HttpServletResponse response, Model model) throws Exception {
+		if(request.getSession().getAttribute("loginId") == null) { //로그인 여부 확인
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			out.println("<script>");
+			out.println("alert('로그인 후 이용해주세요')");
+			out.println("history.back()");
+			out.println("</script>");
+			out.flush();
+			throw new Exception();
+		}
 		String loginId = (String) request.getSession().getAttribute("loginId");
 		model.addAttribute("mytourList", mypageservice.read(loginId));
 		log.info("@@@"+model.getAttribute("mytourList"));
 //		mypageservice.getTourDetail(request, response, model);
-		return "course/write";
 	}
 }

@@ -52,7 +52,7 @@
 							<c:forEach items="${contentdetailList}" var="contentdetail">
 							<div class="timeline-2">
 								<div class="card">
-									<img src="${contentdetail.firstimage}" alt="..." onerror="this.src='../../../resources/images/image_none.png'" class="card-img-top"/>
+									<img src="${contentdetail.firstimage}" alt="..." onerror="this.src='../../../resources/images/nocourseimg.png'" class="card-img-top"/>
 									<div class="card-body p-4">              
 										<h4 class="fw-bold mb-4">
 										<a href="${contextPath}/tour/tour_detail?contentid=${contentdetail.contentid}&title=${contentdetail.title}&mapy=${contentdetail.mapy}&mapx=${contentdetail.mapx}">${contentdetail.title}</a>
@@ -68,7 +68,10 @@
 			</section>
   			
   		</div>
- 
+  		
+  		<div id="map-wrapper">
+  		
+  		</div>
 		</div>
 	</div>
 
