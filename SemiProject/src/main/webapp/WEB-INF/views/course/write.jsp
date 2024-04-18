@@ -59,20 +59,25 @@
 			<div class="modal fade" id="exampleModal" tabindex="-1"
 				aria-labelledby="exampleModalLabel" aria-hidden="true">
 				<div class="modal-dialog modal-dialog-centered modal-lg">
-					<div class="modal-content">
+					<div class="modal-content" style="width: 700px;">
 						<div class="modal-header">
 							<h1 class="modal-title fs-5" id="exampleModalLabel">모달 타이틀</h1>
 						</div>
-						<div class="modal-body">
-						<p>사라봉공원</p>
-						<p>용두암</p>
-						<p>관덕정</p>
-						<p>어영공원</p>
+						<div class="modal-body" style="height: 465px; overflow-y: auto;">
+							<ul>
+							<c:forEach items="${mytourList }" var = "tour">
+								<li class="cartItem" onclick="saveContentId('${tour.contentid}')">
+									<span class="cartcontentid">${tour.contentid }</span>
+									<img src="${tour.firstimage}" alt="Tour Image" class="cartimage">
+            						<span class="carttitle">${tour.title}</span>
+								</li>
+							</c:forEach>
+							</ul>
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-primary">가져오기</button>
 							<button type="button" class="btn btn-secondary"
-								data-bs-dismiss="modal">닫기</button>
+								data-bs-dismiss="modal"onclick="clearSelectedItems()">닫기</button>
 
 						</div>
 					</div>
@@ -81,6 +86,17 @@
 		</div>
 	</div>
 <script>
+var selectedContentIds = [];
+
+function saveContentId(contentId) {
+    selectedContentIds.push(contentId);
+    console.log(selectedContentIds); // 선택한 contentId 배열을 콘솔에 출력
+}
+function clearSelectedItems() { //닫기 버튼 누르면 배열 초기화
+    // 배열 초기화
+    selectedContentIds = [];
+}
+
 $(document).ready(function() {
 	// show.bs.modal : 모달 팝업 시 발생하는 이벤트
 	$('#exampleModal').on('show.bs.modal', function (event) {

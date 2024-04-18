@@ -107,7 +107,7 @@ public class CourseController {
 	public String course_write(HttpServletRequest request, HttpServletResponse response, Model model) throws IOException {
 		String loginId = (String) request.getSession().getAttribute("loginId");
 		model.addAttribute("mytourList", mypageservice.read(loginId));
-		log.info("@@@"+model.getAttribute("mytourlist"));
+		log.info("@@@"+model.getAttribute("mytourList"));
 //		mypageservice.getTourDetail(request, response, model);
 		return "course/write";
 	}

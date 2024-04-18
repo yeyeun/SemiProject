@@ -152,5 +152,17 @@ textarea {
   height: 30em;
 }
 
+/* Modal */
+.cartimage{
+	width: 150px;
+}
+.carttitle{
+	font-size: 16px;
+	font-weight: 600;
+	margin-top: 10px;
+}
+.cartcontentid{
+	display:none;
+}
 
 
