@@ -161,7 +161,7 @@ $(document).ready(function(){
         }
         
 // 	    지도 추가
-
+		let str1="";
 		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 		    mapOption = { 
 		        center: new kakao.maps.LatLng(mappy, mappx), // 지도의 중심좌표
