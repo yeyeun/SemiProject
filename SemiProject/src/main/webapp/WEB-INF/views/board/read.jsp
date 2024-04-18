@@ -103,7 +103,8 @@
 <script>
 $(document).ready(function(){
 	let bnoValue = '<c:out value="${board.bno}"/>';
-	
+	let sessionid = '<%=(String)session.getAttribute("loginId")%>';
+
 	/* ======댓글 함수 호출========= */
 	
 	//현재 게시글에 댓글 추가(테스트용)
@@ -229,21 +230,17 @@ $(document).ready(function(){
 					return;
 				}
 				list.forEach(function(item){
+					if(sessionid == item.id){
 					str+=`
 
 					<li class="clearfix" data-commentid="\${item.commentid}">
 					  <img src="${resourceurl}/images/user-icon.png" class="avatar" alt="">
 					  <div class="post-comments">
-					  <c:set var="thisid" value="\${item.id}"/>
-					  <c:if test="${sessionScope.loginId eq thisid}">
 				     	 <div class="comment-button">
 				      		<button type="button" id="modifyBtn">수정하기</button>
 				      		<button type="button" id="removeBtn">삭제하기</button>
 				      	</div>
-				      </c:if>
-				      
-				      	<p>로그인 아이디: ${sessionScope.loginId}</p>
-				      	<p>해당 댓글 아이디 : \${item.id}</p>
+
 					      <p class="meta"><span class="id">\${item.id}</span>\${displayTime(item.regDate)}</p>
 					      <p id="comment-content">
 					      \${item.content}
@@ -253,6 +250,24 @@ $(document).ready(function(){
 					</li>
 
 					`;
+						
+					}
+					else{
+					str+=`
+					<li class="clearfix" data-commentid="\${item.commentid}">
+						<img src="${resourceurl}/images/user-icon.png" class="avatar" alt="">
+						<div class="post-comments">
+							 <p class="meta"><span class="id">\${item.id}</span>\${displayTime(item.regDate)}</p>
+							 <p id="comment-content">
+							    \${item.content}
+							 </p>
+							 <p id="modifycomment"><input type="hidden" value="\${item.content}"></p>
+						</div>
+					</li>
+					`;	
+						
+					}
+
 				}); //forEach
 				replyUL.html(str);
 			}); //getList
