@@ -8,6 +8,30 @@
          select * from boardtable where bno > 0
       </select>
       
+      <select id="getListPaging" resultType="com.raon.domain.Board">
+      	select * from boardtable
+      	<if test="searchWord != null">
+      		<choose>
+      			<when test="searchField == 'title'">
+      				where title like concat('%',#{searchWord},'%')
+      			</when>
+      			<when test="searchField == 'content'">
+      				where content like concat('%',#{searchWord},'%')
+      			</when>
+      		</choose>
+      		
+      	</if>
+      	ORDER BY bno DESC LIMIT #{skip},#{amount}
+      </select>
+      
+      <!-- 게시물 총 갯수 -->
+      <select id="getTotal" resultType="int">
+      	select count(*) from boardtable
+      	<if test="searchWord != null">
+      		where #{searchField} like concat('%',#{searchWord},'%')
+      	</if>
+      </select>
+      
       <insert id="insert">
       	insert into boardtable(btype,title,content,writer)
       	values(#{btype},#{title},#{content},#{writer})
@@ -33,6 +57,10 @@
       	delete from boardtable where bno=#{bno}
       </delete>
       
+      <delete id="deleteComment">
+      	delete from comment where bno=#{bno}
+      </delete>
+       
       <update id="update">
       	update boardtable
       	set title=#{title}, content=#{content}

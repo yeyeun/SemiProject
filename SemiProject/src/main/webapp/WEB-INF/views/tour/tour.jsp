@@ -53,7 +53,7 @@
 				        				<div class="card-body">
 				        					<p class="card-title">${item.title}</p><br/>
 				            				<p class="card-text" style="font-size: 14px">${item.addr1} ${item.addr2}</p>
-				            				<p class="text-body-secondary"><a href="/MLP_SemiProject/front/detail.api?contentid=${item.contentid}&title=${item.title}&mapy=${item.mapy}&mapx=${item.mapx}" class="btn">세부 정보</a></p>
+				            				<p class="text-body-secondary"><a href="${contextPaht }/tour/detail?contentid=${item.contentid}&title=${item.title}&mapy=${item.mapy}&mapx=${item.mapx}&firstimage=${item.firstimage}" class="btn">세부 정보</a></p>
 				            			</div>
 
 				    				</div>
