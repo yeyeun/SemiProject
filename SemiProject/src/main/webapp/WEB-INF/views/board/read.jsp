@@ -234,10 +234,16 @@ $(document).ready(function(){
 					<li class="clearfix" data-commentid="\${item.commentid}">
 					  <img src="${resourceurl}/images/user-icon.png" class="avatar" alt="">
 					  <div class="post-comments">
+					  <c:set var="thisid" value="\${item.id}"/>
+					  <c:if test="${sessionScope.loginId eq thisid}">
 				     	 <div class="comment-button">
 				      		<button type="button" id="modifyBtn">수정하기</button>
 				      		<button type="button" id="removeBtn">삭제하기</button>
 				      	</div>
+				      </c:if>
+				      
+				      	<p>로그인 아이디: ${sessionScope.loginId}</p>
+				      	<p>해당 댓글 아이디 : \${item.id}</p>
 					      <p class="meta"><span class="id">\${item.id}</span>\${displayTime(item.regDate)}</p>
 					      <p id="comment-content">
 					      \${item.content}
@@ -245,7 +251,7 @@ $(document).ready(function(){
 					      <p id="modifycomment"><input type="hidden" value="\${item.content}"></p>
 					  </div>
 					</li>
-				
+
 					`;
 				}); //forEach
 				replyUL.html(str);
@@ -293,25 +299,27 @@ $(document).ready(function(){
 		});
 	});
 	
-	//특정 댓글 수정
+	//댓글 수정버튼 클릭시 input 활성화
 	$(document).on("click","#modifyBtn",function(){
-		var idData = document.querySelector(".clearfix"); //.clearfix의 data 속성 가져오기
 		$(this).attr('hidden',true);
 		$(this).next().attr('hidden',true);
-		$(this).parent().append('<button type="button" id="updateBtn" style="margin:0">수정완료</button>');
-		$(this).parent().next().next().attr('hidden',true);
-		$(this).parent().next().next().next().attr('hidden',false);
-		//$(".comment-content").css("display","none");
-		
-		
-		
-		
-/* 		var comment = {commentid:idData, content:modalInputReply.val()};
+		$(this).parent().append('<button type="button" id="updateBtn" style="margin:0; background:#FF8383">수정완료</button>');
+		$(this).parent().next().next().attr('hidden',true); //댓글 감추기
+		$(this).parent().next().next().next().children().prop("type","text"); //input type 변경
+	});
+	
+	//특정 댓글 수정
+	$(document).on("click","#updateBtn",function(){
+		var idData = document.querySelector(".clearfix"); //.clearfix의 data 속성 가져오기
+		var commentid = idData.dataset.commentid; //해당 댓글의 id값 가져오기
+		var modifycomment = $(this).parent().next().next().next().children();
+		//console.log("댓글id값====="+commentid);
+		//console.log("수정내용======"+modifycomment);
+  		var comment = {commentid:commentid, content:modifycomment.val()};
 		update(comment,function(result){
 			alert("수정되었습니다");
-			modal.modal("hide");
 			showList(1);
-		}); */
+		});
 	});
 	
 	//특정 댓글 삭제
