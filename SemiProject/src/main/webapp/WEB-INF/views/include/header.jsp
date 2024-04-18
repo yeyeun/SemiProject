@@ -22,7 +22,7 @@
       <span>${sessionScope.loginId}님이 로그인 중입니다</span><img src="${resourceurl }/images/user-icon.png">
       <div class="login-user-menu" style="display:none;">
       	<ul>
-    		<li><a href="${contextPath}/mypage">마이페이지</a></li>
+    		<li><a href="${contextPath}/mypage/mypage">마이페이지</a></li>
     		<li><a href="${contextPath}/login/logout">로그아웃</a></li>
     	</ul>
     	</div>

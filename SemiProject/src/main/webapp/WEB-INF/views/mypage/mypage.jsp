@@ -49,19 +49,19 @@
             <div class="menu">
                 <ul class="menu-links">
                     <li class="nav-link active">
-                        <a href="#" onclick="loadContent('myprofile.jsp')">
+                        <a href="#" onclick="loadContent('myprofile')">
                             <i class='bx bx-home-alt icon'></i>
                             <span class="text nav-text">내 정보 조회</span>
                         </a>
                     </li>
                     <li class="nav-link">
-                        <a href="#" onclick="loadContent('mywrite.jsp')">
+                        <a href="#" onclick="loadContent('mywrite')">
                             <i class='bx bx-bar-chart-alt-2 icon'></i>
                             <span class="text nav-text">내가 작성한 글</span>
                         </a>
                     </li>
                     <li class="nav-link">
-                        <a href="#" onclick="loadContent('mytour.jsp')">
+                        <a href="#" onclick="loadContent('mytour')">
                             <i class='bx bx-heart icon'></i>
                             <span class="text nav-text">관심 여행지</span>
                         </a>
@@ -87,7 +87,7 @@
 
 	<script>
     $(document).ready(function() {
-        loadContent('myprofile.jsp');
+        loadContent('myprofile');
     });
         const body = document.querySelector('body'),
             sidebar = body.querySelector('#mypage_nav'),
