@@ -142,23 +142,7 @@ $(document).ready(function(){
 			}
 		});
 		
-		var i = 0;
-        $('i').on('click',function(){
-            if(i==0){
-                $(this).attr('class','fa-solid fa-heart');
-                i++;
-                addToCart();
-            }else if(i==1){
-                $(this).attr('class','fa-regular fa-heart');
-                i--;
-            }
-
-        });
-        function addToCart(){
-        	if(confirm("상품을 장바구니에 추가하시겠습니까?")){
-        		document.addForm.submit();
-        	}else{document.addForm.reset();}
-        }
+		
         
 // 	    지도 추가
 		let str1="";
@@ -220,7 +204,23 @@ $(document).ready(function(){
 		// 마커 위에 인포윈도우를 표시합니다. 두번째 파라미터인 marker를 넣어주지 않으면 지도 위에 표시됩니다
 		infowindow.open(map, marker);
 	});
+var i = 0;
+$('i').on('click',function(){
+    if(i==0){
+        $(this).attr('class','fa-solid fa-heart');
+        i++;
+        addToCart();
+    }else if(i==1){
+        $(this).attr('class','fa-regular fa-heart');
+        i--;
+    }
 
+});
+function addToCart(){
+	if(confirm("상품을 장바구니에 추가하시겠습니까?")){
+		document.addForm.submit();
+	}else{document.addForm.reset();}
+}
     </script>
 </body>
 </html>
