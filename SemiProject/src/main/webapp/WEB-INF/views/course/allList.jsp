@@ -47,7 +47,9 @@
 								<c:forEach items="${allList}" var="course">
 									<div class="col-4 cards">
 										<img class="images" src="${course.firstimage}" alt="..."
-											onerror="this.src='../../resources/images/nocourseimg.png'" />
+											onerror="this.src='../../../resources/images/image_none.png'" />
+											
+										<!-- 	onerror="onErrorFn(this);" -->
 										<p class="title">${course.title}</p>
 										<div class="overlay"></div>
 										<div class="buttons">
@@ -100,6 +102,17 @@ $(".pagination a").on("click",function(e){
 	//console.log('click');
 	actionFrm.find("input[name='pageNum']").val($(this).attr("href"));
 	actionFrm.submit();
+});
+
+function setEmptyImage(img){
+	img.src='../../resources/images/image_none.png';
+}
+
+$(document).ready(function(){
+	function onErrorFn(_this){
+		
+	}
+	
 });
 </script>
 </div>

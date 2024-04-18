@@ -52,7 +52,7 @@
 							<c:forEach items="${contentdetailList}" var="contentdetail">
 							<div class="timeline-2">
 								<div class="card">
-									<img src="${contentdetail.firstimage}" alt="..." onerror="this.src='${resourceurl}/images/nocourseimg.png'" class="card-img-top"/>
+									<img src="${contentdetail.firstimage}" alt="..." onerror="this.src='../../../resources/images/image_none.png'" class="card-img-top"/>
 									<div class="card-body p-4">              
 										<h4 class="fw-bold mb-4">
 										<a href="${contextPath}/tour/tour_detail?contentid=${contentdetail.contentid}&title=${contentdetail.title}&mapy=${contentdetail.mapy}&mapx=${contentdetail.mapx}">${contentdetail.title}</a>
@@ -72,45 +72,7 @@
 		</div>
 	</div>
 
-		<script>
- 	$(document).ready(function(){
-		let result = $(".main-timeline-2"); //bootstrap 추가
-		let subcontentid = JSON.parse('${course.subcontentid}'); //subcontentid : 여행지 아이디가 담긴 배열
-		let str="";
-		let datas;
-        for(var i=0; i<subcontentid.length; i++){
-/*             (function(i){ */
-                let str="";
-                $.ajax({ //여행지 세부정보 조회
-                    url: "https://apis.data.go.kr/B551011/KorService1/detailCommon1?MobileOS=ETC&MobileApp=ETC&contentId="+ subcontentid[i] +"&defaultYN=Y&firstImageYN=Y&areacodeYN=Y&mapinfoYN=Y&overviewYN=Y&serviceKey=mu4MvO6eUoXAtU8dp%2Bdwyt%2B%2F24GYekx10foLVqNhtViQi60IGrp26ujspnFxZvJc5EZ0UhX99Q6eQ%2FdE2pRwiA%3D%3D&_type=json",
-                    async:false,
-                    success: function(data){
-                        let detailInfos = data.response.body.items.item[0];
-                        str = `
-                        
- 
-              			<div class="timeline-2">
-              	        <div class="card">
-              	          <img src="\${detailInfos.firstimage}" alt="..." onerror="this.src='../images/nocourseimg.png'" class="card-img-top"/>
-              	          <div class="card-body p-4">
-              	            <h4 class="fw-bold mb-4">
-              	          	<a href="${contextPath}/front/tour_detail.jsp?contentid=\${detailInfos.contentid}&title=\${detailInfos.title}&mapy=\${detailInfos.mapy}&mapx=\${detailInfos.mapx}">\${detailInfos.title}</a>
-              	            </h4>
-              	          </div>
-              	        </div>
-              	      </div>
-
-                        `;
-                        
-                        
-                        result.append(str);
-                    }
-                });
-                
-/*             })(i); */
-            
-        }//for문 끝
-	});
+	<script>
 	</script>
 </div>
 </body>

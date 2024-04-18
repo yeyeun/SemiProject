@@ -23,11 +23,4 @@ public class CourseServiceTest {
 	@Setter(onMethod_= {@Autowired})
 	private CourseMapper mapper;
 	
-	@Test
-    public List<String> testGetSubContents(String contentid) {
-    	String sub = mapper.getSubContents("1855198");
-    	log.info("contentid : " + contentid);
-    	log.info("subcontentid : " + sub);
-    	return null;
-    }
 }
