@@ -80,4 +80,9 @@ public class CourseController {
 
 		return "home/slider_2";
 	}
+	
+	@GetMapping("/course_write")
+	public String course_write() {
+		return "course/course_write";
+	}
 }
