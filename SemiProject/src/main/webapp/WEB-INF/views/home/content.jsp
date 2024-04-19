@@ -32,7 +32,7 @@
   </div>
   <div class="carousel-inner">
 			<div class="carousel-caption d-none d-md-block">
-				<div class="content">
+				<div class="content1">
 					<h2><b>Jeju Island</b></h2>
 					<h2><b>Jeju Island</b></h2>
 				</div>

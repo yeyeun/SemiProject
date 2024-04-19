@@ -9,6 +9,7 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -30,8 +31,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
+import com.raon.domain.Board;
 import com.raon.domain.Course;
 import com.raon.domain.Event;
+import com.raon.service.BoardService;
 import com.raon.service.EventService;
 
 import lombok.AllArgsConstructor;
@@ -44,6 +47,8 @@ import lombok.extern.log4j.Log4j;
 public class EventController {
 	@Autowired
 	private EventService service;
+	@Autowired
+	private BoardService service2;
 	
 	@GetMapping("/list")
 	public String list(Model model) {
@@ -62,10 +67,21 @@ public class EventController {
 	public String listhome(Model model) {
 		try {			
 			service.getList(model);
+
+			List<Board> boards = service2.getList(); // 서비스에서 리스트를 가져옴
+
+			// bno 속성을 기준으로 내림차순으로 정렬
+			boards.sort(Comparator.comparing(Board::getBno).reversed());
+
+			// 처음부터 5개의 요소를 추출하여 selectedBoards 리스트에 저장
+			List<Board> selectedBoards = boards.subList(0, Math.min(6, boards.size()));
+			
+			
 			List<Event> temp = (List<Event>) model.getAttribute("eventList");
 			Collections.shuffle(temp);
 			List<Event> selectedEvents = temp.subList(0, Math.min(5, temp.size()));
 			log.info("controller -> list success");
+			model.addAttribute("selectedBoards",selectedBoards);
 			model.addAttribute("selectedEvents",selectedEvents);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
