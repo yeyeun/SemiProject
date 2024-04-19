@@ -25,7 +25,7 @@
             <div class="boardList">
                 <ul id="ul1">
                 <c:forEach items="${selectedEvents }" var="item">
-                    <li id="festivalTitle"><mark><a href="#" onmouseover="changeImage('${item.firstimage}')"><b>${item.title}</b></a></mark></li>
+                    <li id="festivalTitle"><mark><a href="${pageContext.request.contextPath}/event/detail?contentId=${item.contentid}&title=${item.title}&eventstartdate=${item.eventstartdate}&eventenddate=${item.eventenddate}" onmouseover="changeImage('${item.firstimage}')"><b>${item.title}</b></a></mark></li>
                     <li id="festivalDate">&nbsp;&nbsp;&nbsp;&nbsp;${item.eventstartdate}~${item.eventenddate}</li>
                     <hr class="myhr">
                 </c:forEach>                     
