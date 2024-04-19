@@ -94,7 +94,7 @@ html, body {
 	overflow-x: hidden;
 	overflow-y: scroll;
 	height: 90%;
-	width: 100%;
+	width: 80%;
 }
 
 
@@ -116,7 +116,7 @@ html, body {
 }
 
 .overview-text{
-	width:80%;
+	width:100%;
 	margin:0 auto;
 }
 
@@ -270,4 +270,10 @@ html, body {
 	text-decoration: none;
 	color: black;
 	
+}
+
+.subtitle{
+	margin-top: 10px;
+	margin-bottom: 10px;
+	font-weight: 500;
 }

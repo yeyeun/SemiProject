@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.raon.mapper.CourseMapper">
+<!-- id값은 Interface에서 선언한 메소드와 이름 일치시켜야 함 -->
+
+      <select id="getListPaging" resultType="com.raon.domain.Course">
+      	select * from course
+      	<if test="searchWord != null">
+      		<choose>
+      			<when test="searchField == 'title'">
+      				where title like concat('%',#{searchWord},'%')
+      			</when>
+      			<when test="searchField == 'overview'">
+      				where overview like concat('%',#{searchWord},'%')
+      			</when>
+      		</choose>
+      		
+      	</if>
+      	LIMIT #{skip},#{amount}
+      </select>
+      
+      <!-- 여행코스 총 갯수 -->
+      <select id="getTotal" resultType="int">
+      	select count(*) from course
+      	<if test="searchWord != null">
+      		where #{searchField} like concat('%',#{searchWord},'%')
+      	</if>
+      </select>
+</mapper>

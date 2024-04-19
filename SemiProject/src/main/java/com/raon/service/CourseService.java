@@ -18,10 +18,10 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.raon.domain.ContentDetail;
 import com.raon.domain.Course;
+import com.raon.domain.Criteria;
 import com.raon.mapper.CourseMapper;
 
 import lombok.extern.log4j.Log4j;
@@ -32,10 +32,23 @@ public class CourseService {
     @Autowired
     private CourseMapper mapper;
     
-    public List<Course> getList(){ //여행코스 전체 리스트 불러오기
+    
+    //여행코스 전체 리스트 불러오기
+    public List<Course> getList(){
         log.info("Service->getList()");
         return mapper.getList();
     }
+    
+    
+    //여행코스 전체 리스트 불러오기 (페이징 기능 추가)
+	public List<Course> getListPaging(Criteria cri) {
+		return mapper.getListPaging(cri);
+	}
+	
+	public int getTotal(Criteria cri) {
+		return mapper.getTotal(cri);
+	}
+	
     
 	public Course detail(String contentid) {
 		log.info("Service->detail():"+contentid);
@@ -182,6 +195,5 @@ public class CourseService {
 		
 		model.addAttribute("contentdetailList",contentdetailList);
     }
-    
 
 }
