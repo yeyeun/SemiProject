@@ -62,41 +62,27 @@
 			</c:forEach>
 			</div> 
 		</div>
-    	<div class="pagination">
-    			<hr style="margin-bottom: 10px">
-    			 <a href="${contextPath }/tour/list?page=${pageNumber}" data-page="1" class="page-link">&laquo;</a>
+<div class="pagination">
+    <hr style="margin-bottom: 10px">
+    <!-- 이전 페이지로 이동하는 버튼 -->
+    <c:if test="${page > 10}">
+        <a href="${contextPath}/tour/list?page=${page - 10}" data-page="${page - 10}" class="page-link">&laquo; Prev</a>
+    </c:if>
     <!-- 페이지 링크를 동적으로 생성 -->
     <!-- totalPages가 1 이상일 때만 페이지 링크를 생성합니다. -->
     <c:if test="${totalPages > 0}">
-    <c:forEach var="pageNumber" begin="1" end="${totalPages}">
-        <!-- 페이지 번호가 10개를 초과하는 경우, 1, 2, ..., 현재페이지-2, 현재페이지-1, 현재페이지, 현재페이지+1, 현재페이지+2, ..., totalPages 형식으로 표시 -->
-        <c:choose>
-            <c:when test="${pageNumber == page}">
-                <a href="${contextPath }/tour/list?page=${pageNumber}" data-page="${pageNumber}" class="page-link active">${pageNumber}</a>
-            </c:when>
-            <c:otherwise>
-              
-                <c:choose>
-                    <c:when test="${page <= 5 || totalPages < 10}">
-                        <a href="#" data-page="${pageNumber}" class="page-link">${pageNumber}</a>
-                    </c:when>
-                    <c:otherwise>
-                        <c:choose>
-                            <c:when test="${pageNumber == 1 || pageNumber == totalPages || (pageNumber >= page - 2 && pageNumber <= page + 2)}">
-                                <a href="${contextPath }/tour/list?page=${pageNumber}" data-page="${pageNumber}" class="page-link">${pageNumber}</a>
-                            </c:when>
-                            <c:otherwise>
-                                <span>...</span>
-                            </c:otherwise>
-                        </c:choose>
-                    </c:otherwise>
-                </c:choose>
-            </c:otherwise>
-        </c:choose>
-    </c:forEach>
-</c:if>
-    <a href="${contextPath }/tour/list?page=${pageNumber}" data-page="${totalPages}" class="page-link">&raquo;</a>
-		</div>
+        <c:forEach var="i" begin="${page}" end="${page + 9}" varStatus="loop">
+            <!-- 페이지 번호가 totalPages보다 작거나 같을 때만 페이지 번호를 표시합니다. -->
+            <c:if test="${i <= totalPages}">
+                <a href="${contextPath}/tour/list?page=${i}" data-page="${i}" class="page-link">${i}</a>
+            </c:if>
+        </c:forEach>
+    </c:if>
+    <!-- 다음 페이지로 이동하는 버튼 -->
+    <c:if test="${page + 10 <= totalPages}">
+        <a href="${contextPath}/tour/list?page=${page + 10}" data-page="${page + 10}" class="page-link">Next &raquo;</a>
+    </c:if>
+</div>
 	</div>
 </div>
 <%-- <jsp:include page="footer.jsp"/> --%>
@@ -104,7 +90,7 @@
 <script>
 	$(document).ready(function(){
 		
-		$('.page-link').click(function(event) {
+		$('.pagenation a').click(function(event) {
 	        event.preventDefault(); // 기본 링크 동작 방지
 	        var page = $(this).data('page'); // 클릭된 페이지 번호 가져오기
 	        fetchTourList(page); // 해당 페이지의 관광 정보 가져오기
@@ -112,13 +98,7 @@
 		
 	   
 	}); 
-	var actionFrm = $("#actionFrm");
-	$(".pagination a").on("click",function(e){
-		e.preventDefault();
-		//console.log('click');
-		actionFrm.find("input[name='pageNum']").val($(this).attr("href"));
-		actionFrm.submit();
-	});
+
 	function fetchTourList(page) {
 	    $.ajax({
 	        url: '/list', // 서버의 해당 엔드포인트로 설정

@@ -89,7 +89,7 @@ public class TourService {
 
 		}
 		model.addAttribute("tList", tList);
-		 model.addAttribute("totalPages", totalPages);
+		model.addAttribute("totalPages", totalPages);
 	
 			
 	}
