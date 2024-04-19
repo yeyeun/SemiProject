@@ -39,6 +39,7 @@ public class BoardService {
 	
 	public Board read(Integer bno) {
 		log.info("get....."+bno);
+		mapper.increaseHit(bno);
 		return mapper.read(bno);
 	}
 	
