@@ -30,14 +30,12 @@ html, body {
 	padding: 30px;
 	text-align: center;
 	margin-top: 100px;
-	z-index:-9999;
 }
 .tour_title{
 	padding: 20px;
     font-size: 24px;
     width: 100%;
     margin-bottom: 20px;
-    z-index: -9999;
 }
 blockquote{
 	display:block;
@@ -51,12 +49,11 @@ blockquote{
 .detail-image{
 	margin-top: 20px;
 	width: 100%;
-	z-index:-9999;
 }
 #explain{
 	font-size: 24px;
 	text-align: left;
-	z-index:-9999;
+
 }
 .description {
 	position: relative;
@@ -66,7 +63,7 @@ blockquote{
     border-radius: 10px;
     width: 100%;
     text-align: left;
-    z-index:-9999;
+
 }
 
 #map {
@@ -75,7 +72,7 @@ blockquote{
     padding: 20px;
     background-color: #fff;
     border-radius: 10px;
-    z-index:-9999;
+
 }
 .map_info{
 	margin-top: 20px;

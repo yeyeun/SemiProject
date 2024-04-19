@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import com.raon.domain.Cart;
+import com.raon.domain.Members;
 import com.raon.domain.Mytourpage;
 import com.raon.domain.TourDetailInfo;
 import com.raon.mapper.MypageMapper;
@@ -36,6 +37,20 @@ public class MypageService {
 		log.info("Mypage -> read");
 		return mapper.read(id);
 	}
+	
+	 public void insertCart(Cart cart) {
+	    	mapper.insertCart(cart);
+	    }
+	 
+	 public int isItemInCart(String id, String contentid) {
+		 int result = mapper.isItemInCart(id, contentid);
+		 if(result>=1) {
+			 result = 1;
+		 }else {
+			 result = 0;
+		 }
+		 return result;
+	 }
 	
 	public void getTourDetail(HttpServletRequest request, HttpServletResponse response, Model model)
 			throws IOException {

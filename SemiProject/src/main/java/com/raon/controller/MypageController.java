@@ -9,7 +9,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,12 +23,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mysql.cj.Session;
 import com.raon.domain.Cart;
 import com.raon.domain.Members;
 import com.raon.domain.Mytourpage;
 import com.raon.domain.TourDetailInfo;
+import com.raon.mapper.MypageMapper;
 import com.raon.service.MemberService;
 import com.raon.service.MypageService;
 import com.raon.service.TourService;
@@ -41,6 +46,7 @@ import lombok.extern.log4j.Log4j;
 public class MypageController {
 	private MypageService mypageservice;
 	private MemberService memberService;
+	private MypageMapper mypagemapper;
 
 	@GetMapping("/mypage")
 	public String mypage() {
@@ -78,5 +84,25 @@ public class MypageController {
 		mypageservice.getTourDetail(request, response, model);
 
 		return "mypage/mytour";
+	}
+	
+	@GetMapping("/write")
+	public String write(HttpServletRequest request, Model model, Cart cart) {
+		log.info("mypageController->write");
+		mypageservice.insertCart(cart);
+		log.info("insert cart success");
+		String referer = request.getHeader("referer");
+		return "redirect:" + referer;
+	}
+	
+	@GetMapping("/checkCartItem")
+	@ResponseBody
+	public String checkCartItem(@RequestParam("id") String id, 
+	                                         @RequestParam("contentid") String contentid,Model model ) {
+	    log.info("checkCartItem run" + id + "@@@@" + contentid);	  
+	    
+	    int isItemInCart = mypagemapper.isItemInCart(id, contentid);
+	    String result = isItemInCart >= 1 ? "1" : "0";
+	    return result;
 	}
 }

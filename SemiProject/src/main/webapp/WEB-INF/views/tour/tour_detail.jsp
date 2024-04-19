@@ -20,8 +20,10 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
   <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 <%
+	String id = (String)session.getAttribute("loginId");
 	String contentid = request.getParameter("contentid");
 	String title = request.getParameter("title");
+	String firstimage = request.getParameter("firstimage");
 %>
 <c:set var="contextPath" value="<%=request.getContextPath()%>" scope="application"></c:set>
 <div class="menu">
@@ -29,10 +31,16 @@
 </div>
 	 <div class="container">
 	  	<div class="tour_title" style="display:inline; white-space:nowrap;">
-	  	<form name="addForm" action="${contextPath}/front/add.pro?contentid=${contentid}">
-	  		<blockquote><h2><%=title %><button type="button" class="like" onclick="click()"><i class="fa-regular fa-heart" style="color: #7E57C2; margin-left:10px;"></i></button></h2>
+	  	<form name="addForm" action="${pageContext.request.contextPath}/mypage/write">
+	  		<blockquote><h2><%=title %><button type="button" class="like" onclick="click()">
 	  		
-	  		</blockquote>
+	  		<i id="heartzone" class="fa-regular fa-heart" style="color: #7E57C2; margin-left:10px;"></i>
+	  		
+	  		</button></h2></blockquote>
+	  				<input id="contentidInput" name="contentid" type="text" value="<%=contentid %>" style="display: none;" /> 
+					<input id="firstimageInput" name="firstimage" type="text" value="<%=firstimage %>" style="display: none;" />
+					<input id="titleInput" name="title" type="text" value="<%=title %>" style="display: none;" />
+					<input id="idInput" name="id" type="text" value="<%=id %>" style="display: none;" />
 	  	</form>
         </div>
        
@@ -62,12 +70,12 @@
 						<p id="explain">상세 설명</p>
 						<hr style="border: none; width: 40%; height: 3px; background: black; opacity: 1;">
 					<ul>
-						<li><p>${item.overview}</p><br/></li>
-						<li><p><b>홈페이지: </b>${item.homepage }</li><br/>
+						<li><p>${item.overview}</p></li>
+						<li><p><b>홈페이지: </b>${item.homepage}</p></li>
 						<li><p><b>전화번호: </b>${item.tel }</p></li>
 					</ul>
 					
-				</div>
+				</div> 
 			
 			</div>
 			</c:forEach>
@@ -80,7 +88,7 @@
 			</c:forEach>
 			<div class="map_info">
 				<p id="explain">위치</p>
-				<hr style="border: none; width: 30%; height: 3px; background: black; opacity: 1;">
+				<hr style="border: none; width: 100%; height: 3px; background: black; opacity: 1;">
 				<div id="map" style="width: 60%; height: 450px; border: 1px solid black;"></div>
 			</div>
 			
@@ -90,9 +98,11 @@
      </div>
   
 <script>
+var i = 0;
 $(document).ready(function(){
 		var contentid = '<%= request.getParameter("contentid") %>';
 		var firstimage = '<%= request.getParameter("firstimage") %>';
+		var id = '<%=id %>'
 		let description = $(".description"); //bootstrap 추가
 		let carouselInner = $(".carousel-inner");
 		let carouselIndicators = $(".carousel-indicators");
@@ -103,6 +113,36 @@ $(document).ready(function(){
         var mappy = document.getElementById("mapy").innerText;
         var mlevel = document.getElementById("mlevel").innerText;
         console.log(mapx, mapy);
+		
+	       $.ajax({
+	            type: "GET",
+	            url: "/mypage/checkCartItem", // 컨트롤러의 엔드포인트 URL
+	            data: { id: id, contentid: contentid }, // 요청 파라미터 설정
+	            success: function(response) {
+	            	console.log("성공성공@@@@@");	            	 
+	            	console.log(response);
+	            	if(response == "1"){
+	            		i = 1;
+	            		$('#heartzone').attr('class','fa-solid fa-heart');
+	            		
+	            		; 
+	            	}else{
+	            		i = 0;
+	            		$('#heartzone').attr('class','fa-regular fa-heart');
+	            	}
+	            	
+	            	
+	            	
+	                // 요청이 성공하면 실행될 코드
+	                // 서버에서 보내온 응답(response)을 처리
+	                // 예를 들어, 장바구니에 여행지가 있는지 여부에 따라 화면 표시를 변경하는 등의 작업 수행
+	            },
+	            error: function(xhr, status, error) {
+	                // 요청이 실패하면 실행될 코드
+	                console.error("AJAX request failed:", status, error);
+	            }
+	        });
+
 		$.ajax({
 			url: "https://apis.data.go.kr/B551011/KorService1/detailImage1?MobileOS=ETC&MobileApp=raon&contentId="+contentid+"&imageYN=Y&subImageYN=Y&serviceKey=b7k%2B9H2DZnNoOhZSPNTopjx1cG%2F8y74JvA2aFmp4dlvoRTGzmxGL976Dcdg0PTLdbegGkqm466WbLV5PHNOwmw%3D%3D&_type=json",
 			success: function(data){
@@ -152,6 +192,7 @@ $(document).ready(function(){
 			}
 		});
 		
+
 		
         
 // 	    지도 추가
@@ -214,7 +255,7 @@ $(document).ready(function(){
 		// 마커 위에 인포윈도우를 표시합니다. 두번째 파라미터인 marker를 넣어주지 않으면 지도 위에 표시됩니다
 		infowindow.open(map, marker);
 	});
-var i = 0;
+
 $('i').on('click',function(){
     if(i==0){
         $(this).attr('class','fa-solid fa-heart');
@@ -227,10 +268,28 @@ $('i').on('click',function(){
 
 });
 function addToCart(){
-	if(confirm("상품을 장바구니에 추가하시겠습니까?")){
-		document.addForm.submit();
-	}else{document.addForm.reset();}
+    // 세션에 저장된 "loginId" 확인
+    var loginId = "<%= session.getAttribute("loginId") %>";
+    console.log(loginId+"@@@@@@@@@@");
+    
+    // 만약 "loginId"가 없다면 알림창을 띄우고 함수를 호출하지 않음
+    if(loginId == "null"){
+        alert("로그인 후 이용해주세요.");
+        $('i').attr('class','fa-regular fa-heart');
+        i = 0; // 'i' 변수 초기화
+        return;
+    }
+    
+    if(confirm("상품을 장바구니에 추가하시겠습니까?")){
+        document.addForm.submit();
+    } else {
+         // 알림창에서 '취소'를 눌렀을 때 아이콘 클래스 변경
+        $('i').attr('class','fa-regular fa-heart');
+        i = 0; // 'i' 변수 초기화
+        document.addForm.reset();
+    }
 }
+
     </script>
 </body>
 </html>
