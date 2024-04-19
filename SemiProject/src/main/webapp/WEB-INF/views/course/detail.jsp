@@ -1,5 +1,4 @@
 <%@page import="java.util.*"%>
-<%@page import="com.raon.domain.MapInfo" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -20,9 +19,6 @@
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=247193dfa28ad4e983e0bea6bc9fd614"></script>
 </head>
 <body>
-<%
-ArrayList<MapInfo> maplist = new ArrayList<MapInfo>();
-%>
 <jsp:include page="${contextPath }/WEB-INF/views/include/header.jsp"></jsp:include>
 <div id="course_detail_wrapper">
 	<div class="left_box">
@@ -83,12 +79,6 @@ ArrayList<MapInfo> maplist = new ArrayList<MapInfo>();
 
 
 <script>
-$(document).ready(function(){
-	var object = ${contentdetailList};
-	var contents = objects.map(object => {
-		console.log("!!!!!!!!!!"+object)
-	})
-});
 
 
 
