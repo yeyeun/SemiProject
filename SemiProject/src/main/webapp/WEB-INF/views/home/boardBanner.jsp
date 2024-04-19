@@ -24,8 +24,11 @@
             <div id="tab1_img1"></div>
             <div class="boardList">
                 <ul id="ul1">
-                    <!-- <li><a href="#">축제행사1</a></li>
-                <li><a href="#">축제행사2</a></li> -->
+                <c:forEach items="${selectedEvents }" var="item">
+                    <li id="festivalTitle"><mark><a href="#" onmouseover="changeImage('${item.firstimage}')"><b>${item.title}</b></a></mark></li>
+                    <li id="festivalDate">&nbsp;&nbsp;&nbsp;&nbsp;${item.eventstartdate}~${item.eventenddate}</li>
+                    <hr class="myhr">
+                </c:forEach>                     
                 </ul>
             </div>
         </div>
@@ -71,63 +74,13 @@
                 openTab2(event, 'Tab1');
             };
 
-            $(document).ready(function () {
-                let result = $("#ul1");
-                let str = "";
-
-				let temp = 0;
-                let currentDate = new Date();
-                let year = currentDate.getFullYear();
-                let month = ('0' + (currentDate.getMonth() + 1)).slice(-2);
-                let day = ('0' + currentDate.getDate()).slice(-2);
-
-                let currentDateStr = year + month + day;
-
-
-
-                $.ajax({
-                    url: `https://apis.data.go.kr/B551011/KorService1/searchFestival1?MobileOS=etc&MobileApp=a&_type=json&arrange=Q&eventStartDate=\${currentDateStr}&areaCode=39&serviceKey=KR1eLnI5BrfL8EDf5l8G3OTQakbgTZ0izb4KANg0SWhwqnP1wHHQQRb%2BrbP1N2a5lnEtjR%2BBvLqfZKaKSZELLQ%3D%3D`,
-                    success: function (data) {
-                        console.log('items', data.response.body.items);
-                        let items = data.response.body.items.item;
-                        // 배열을 섞고
-                        items.sort(() => Math.random() - 0.5);
-                        // 핸덤 5개 추출
-                        let selectedItems = items.slice(0, 5);
-                        $.each(selectedItems, (index, item) => {
-                        	
-                            
-                            // 날짜 형식 변경
-                            let startDate = formatDate(item.eventstartdate);
-                            let endDate = formatDate(item.eventenddate);
-                            str += `                            	
-                            <li id="festivalTitle"><a href="#" onmouseover="changeImage('\${item.firstimage}')"><b>\${item.title}</b></a></li>
-                            <li id="festivalDate">&nbsp;&nbsp;&nbsp;&nbsp;\${startDate}~\${endDate}</li>                     
-                        `;
-                        //마지막 항목이 아니면 <hr>추가
-                         if (index < selectedItems.length - 1) {
-     						   str += `<hr>`;
-    }
-                        });
-                        //console.log(str);
-                        result.append(str);
-                    }
-                });
-            });
             function changeImage(imageSrc) {
                 $("#tab1_img1").fadeOut('fast', function() {
                     $(this).css("background-image", `url('\${imageSrc}')`).fadeIn('fast');
                 });
             }
          // 날짜 형식 변경 
-            function formatDate(dateString) {
-                // 문자열에서 연, 월, 일 추출
-                let year = dateString.substring(0, 4);
-                let month = dateString.slice(4, 6);
-                let day = dateString.slice(6, 8);
-                // 변경된 형식으로 반환
-                return `\${month}월 \${day}일`;
-            }
+
 
         </script>
 

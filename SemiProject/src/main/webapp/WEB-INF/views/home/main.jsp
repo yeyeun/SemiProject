@@ -33,8 +33,8 @@ background: white;
 		<div style="height: 900px; margin-top: 100px; background: antiquewhite;">
 			<jsp:include page="${contextPath }/WEB-INF/views/home/slider_1.jsp"></jsp:include>
 		</div>
-		<div style="height: 800px">
-			<jsp:include page="${contextPath }/WEB-INF/views/home/boardBanner.jsp"></jsp:include>
+		<div id="eventContainer" style="height: 800px">
+			<jsp:include page="${contextPath }/event/listhome"></jsp:include>
 		</div>
 		<div>
 		<jsp:include page="${contextPath }/WEB-INF/views/include/footer.jsp"></jsp:include>
@@ -49,6 +49,12 @@ background: white;
                 $("#slider2Container").html(response); // 서블릿에서 받은 데이터를 slider2Container에 넣음
             }
         });
+//         $.ajax({
+//             url: "/event/listhome",
+//             success: function(response){
+//                 $("#eventContainer").html(response); // 서블릿에서 받은 데이터를 slider2Container에 넣음
+//             }
+//         });
     });
 </script>
 

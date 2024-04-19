@@ -8,6 +8,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -29,6 +30,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
+import com.raon.domain.Course;
 import com.raon.domain.Event;
 import com.raon.service.EventService;
 
@@ -54,6 +56,23 @@ public class EventController {
 		}
 		
 		return "event/event_main";
+	}
+	
+	@GetMapping("/listhome")
+	public String listhome(Model model) {
+		try {			
+			service.getList(model);
+			List<Event> temp = (List<Event>) model.getAttribute("eventList");
+			Collections.shuffle(temp);
+			List<Event> selectedEvents = temp.subList(0, Math.min(5, temp.size()));
+			log.info("controller -> list success");
+			model.addAttribute("selectedEvents",selectedEvents);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			log.info("controller -> list fail");
+		}
+		
+		return "home/boardBanner";
 	}
 	@GetMapping("/detail")
 	public String detail(@RequestParam("contentId") String contentId, Model model) {

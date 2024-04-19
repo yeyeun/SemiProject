@@ -57,10 +57,13 @@
    
 }
 #ul1 hr {
-	background: rgb(242,252,255) !important;
-	height: 10px !important;
-	border: 0 !important;
-	opacity: 100 !important;
+	background: rgb(242,252,255);
+	height: 10px ;
+	border: 0 ;
+	opacity: 100 ;
+}
+.myhr:last-child{
+	display: none;
 }
 
 #festivalTitle{
@@ -74,6 +77,7 @@
 #festivalDate{
 	list-style-type: none;
 	font-size: 19px;
+/* 	margin-top: 15px; */
 	margin-bottom: 17px;
 }
 .tabcontent .boardList {

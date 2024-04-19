@@ -16,7 +16,7 @@
 	<div class="container-fluid scrollable">
 
 		<!-- Page Heading -->
-		<h1 class="h3 mb-2 text-gray-800" style="text-align: center; font-size: 45px;">즐겨찾기 여행지</h1>
+		<h1 class="h3 mb-2 text-gray-800" style="text-align: center; font-size: 45px;">관심 여행지</h1>
 		<p class="mb-4"></p>
 
 		<!-- DataTales Example -->
