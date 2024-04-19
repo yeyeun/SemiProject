@@ -153,8 +153,14 @@ textarea {
 }
 
 /* Modal */
+.cartItem{
+	margin-bottom: 35px;	
+}
 .cartimage{
 	width: 150px;
+}
+ .cartItem:last-child {
+        margin-bottom: 0;
 }
 .carttitle{
 	font-size: 16px;
@@ -164,5 +170,7 @@ textarea {
 .cartcontentid{
 	display:none;
 }
-
+.cartCheckbox{
+	width: 13px;
+}
 

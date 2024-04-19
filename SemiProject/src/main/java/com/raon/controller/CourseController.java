@@ -100,7 +100,7 @@ public class CourseController {
 	}
 	
 	@GetMapping("/write")
-	public void course_write(HttpServletRequest request, HttpServletResponse response, Model model) throws Exception {
+	public String course_write(HttpServletRequest request, HttpServletResponse response, Model model) throws Exception {
 		if(request.getSession().getAttribute("loginId") == null) { //로그인 여부 확인
 			response.setContentType("text/html; charset=UTF-8");
 			PrintWriter out = response.getWriter();
@@ -115,5 +115,15 @@ public class CourseController {
 		model.addAttribute("mytourList", mypageservice.read(loginId));
 		log.info("@@@"+model.getAttribute("mytourList"));
 //		mypageservice.getTourDetail(request, response, model);
+		return "course/write";
 	}
+	
+	@GetMapping("/add")
+	public String addCourse(@RequestParam("contentid") String contentId, @RequestParam("firstimage") String firstimage, @RequestParam("subcontentid") String subcontentid, @RequestParam("id") String id, @RequestParam("title") String title, @RequestParam("overview") String overview, Model model) {
+		String modifiedSubcontentid = "[\"" + subcontentid.replace(",", "\",\"") + "\"]";
+		service.add(contentId, firstimage, modifiedSubcontentid, id, title, overview);
+//		log.info("!!!!!!"+contentId+firstimage+subcontentid+title+overview+id);
+		return "redirect:/course/allList";
+	}
+	
 }

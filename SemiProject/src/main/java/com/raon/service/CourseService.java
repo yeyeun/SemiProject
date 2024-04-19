@@ -11,12 +11,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.raon.domain.ContentDetail;
 import com.raon.domain.Course;
@@ -38,6 +40,10 @@ public class CourseService {
 	public Course detail(String contentid) {
 		log.info("Service->detail():"+contentid);
 		return mapper.detail(contentid);
+	}
+	
+	public void add(@Param("contentid") String contentid, @Param("firstimage") String firstimage, @Param("subcontentid") String subcontentid, @Param("id") String id, @Param("title") String title, @Param("overview") String overview) {
+	    mapper.add(contentid, firstimage, subcontentid, id, title, overview);
 	}
 	
     public Map<String, List<?>> getTitleList(List<String> contentIds) throws IOException{ //여행코스에 해당하는 여행지 이름 불러오기
