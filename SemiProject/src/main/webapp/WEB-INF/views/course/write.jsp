@@ -19,7 +19,7 @@
 	<div id="course_write_wrapper">
 		<div class="left_box">
 			<div class="side_tab">
-				<a href="${contextPath}/course/allList"><span class="spread-underline">여행코스 검색</span></a><br> <a href="${contextPath}/course/add"><span class="spread-underline checked">여행코스 만들기</span></a>
+				<a href="${contextPath}/course/allList"><span class="spread-underline">여행코스 검색</span></a><br> <a href="${contextPath}/course/write"><span class="spread-underline checked">여행코스 만들기</span></a>
 			</div>
 		</div>
 		<div class="right_box">
