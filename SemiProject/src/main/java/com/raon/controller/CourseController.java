@@ -26,6 +26,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.raon.domain.Course;
 import com.raon.service.CourseService;
@@ -119,9 +120,12 @@ public class CourseController {
 	}
 	
 	@GetMapping("/add")
-	public String addCourse(@RequestParam("contentid") String contentId, @RequestParam("firstimage") String firstimage, @RequestParam("subcontentid") String subcontentid, @RequestParam("id") String id, @RequestParam("title") String title, @RequestParam("overview") String overview, Model model) {
+	public String addCourse(@RequestParam("contentid") String contentId, @RequestParam("firstimage") String firstimage, @RequestParam("subcontentid") String subcontentid, @RequestParam("id") String id, @RequestParam("title") String title, @RequestParam("overview") String overview, Model model, RedirectAttributes rttr) {
 		String modifiedSubcontentid = "[\"" + subcontentid.replace(",", "\",\"") + "\"]";
+		firstimage = firstimage.equals("undefined") ? null : firstimage;
+		modifiedSubcontentid = modifiedSubcontentid.equals("[\"\"]") ? null : modifiedSubcontentid;
 		service.add(contentId, firstimage, modifiedSubcontentid, id, title, overview);
+		rttr.addFlashAttribute("result","write");
 //		log.info("!!!!!!"+contentId+firstimage+subcontentid+title+overview+id);
 		return "redirect:/course/allList";
 	}

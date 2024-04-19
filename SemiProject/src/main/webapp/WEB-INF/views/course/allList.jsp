@@ -47,7 +47,7 @@
 								<c:forEach items="${allList}" var="course">
 									<div class="col-4 cards">
 										<img class="images" src="${course.firstimage}" alt="..."
-											onerror="this.src='../../../resources/images/image_none.png'" />
+											onerror="this.src='../../resources/images/nocourseimg.png'" />
 											
 										<!-- 	onerror="onErrorFn(this);" -->
 										<p class="title">${course.title}</p>
@@ -92,6 +92,21 @@
 					<input type="hidden" name='amount' value='${pagingDTO.cri.amount}'>
 				</form>
 			</div>
+				<div class="modal fade" tabindex="-1" id="myModal">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">알림</h5>	
+					</div>
+					<div class="modal-body">
+						<p>처리가 완료됐습니다</p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-info" data-bs-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
 
 		</div>
 
@@ -109,9 +124,23 @@ function setEmptyImage(img){
 }
 
 $(document).ready(function(){
-	function onErrorFn(_this){
-		
-	}
+	//체크
+	let result = '<c:out value="${result}"/>';
+	console.log('result :', result);
+	checkModal(result);
+	function checkModal(result) {
+		if (result === '') { return; }
+		if(result === "write"){
+			$('.modal-body > p').text("여행코스가 등록되었습니다");
+		}
+   		if (result === "modify") {
+       		$('.modal-body > p').text('수정되었습니다');
+   		}
+   		if (result === "remove") {
+       		$('.modal-body > p').text('삭제되었습니다');
+       	} 
+   		$("#myModal").modal("show");
+   	}
 	
 });
 </script>
