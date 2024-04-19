@@ -66,11 +66,5 @@
       	set title=#{title}, content=#{content}
       	where bno=#{bno}
       </update>
-      
-      <update id="increaseHit">
-      	update boardtable
-      	set HIT=HIT+1
-      	where bno=#{bno}
-      </update>
 </mapper>
 
