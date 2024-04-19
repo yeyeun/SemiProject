@@ -31,7 +31,7 @@ background: white;
 <%-- 			<jsp:include page="${contextPath }/front/allCourse.course"></jsp:include> --%>
 		</div>
 		<div style="height: 900px; margin-top: 100px; background: antiquewhite;">
-			<jsp:include page="${contextPath }/WEB-INF/views/home/slider_1.jsp"></jsp:include>
+			<jsp:include page="${contextPath }/tour/slider1"></jsp:include>
 		</div>
 		<div id="eventContainer" style="height: 800px">
 			<jsp:include page="${contextPath }/event/listhome"></jsp:include>

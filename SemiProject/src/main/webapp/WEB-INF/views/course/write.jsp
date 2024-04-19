@@ -134,15 +134,18 @@
 			tourList.innerHTML = selectedTitles.join(' → ');
 		}
 		function sendData() {
-			console.log(firstImage);
-			console.log(selectedIds);
-			// 폼에 랜덤 id 값 삽입
-			var randomId = Math.floor(100000 + Math.random() * 900000);
-
-			document.getElementById("contentidInput").value = randomId;
-			document.getElementById("subcontentidInput").value = selectedIds;
-			document.getElementById("firstimageInput").value = firstImage;
-
+		    // 선택된 아이템이 없을 때 서브밋 막기
+		    if (selectedIds.length === 0) {
+		        alert("최소한 하나의 여행지를 선택해야 합니다.");
+		        event.preventDefault();
+		    }else{
+		    
+		    // 폼에 랜덤 id 값 삽입
+		    var randomId = Math.floor(100000 + Math.random() * 900000);
+		    document.getElementById("contentidInput").value = randomId;
+		    document.getElementById("subcontentidInput").value = selectedIds;
+		    document.getElementById("firstimageInput").value = firstImage;
+		    }
 		}
 
 		$(document).ready(

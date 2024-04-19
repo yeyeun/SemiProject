@@ -24,7 +24,7 @@
 		<div class="swiper-wrapper">
 			<!--제목, 소제목 위치 조정 필요-->
 			<c:forEach items="${courseList}" var="course">
-				<div class="swiper-slide">
+				<div class="swiper-slide slider2link" onclick="location.href='${contextPath}/course/detail?contentid=${course.getContentid()}';">
 					<img src="${course.getFirstimage()}" onerror="this.src='../../resources/images/nocourseimg.png';">
 					<p class="tour_slide_name">${course.getTitle()}</p>
 					<p class="tour_slide_subname">${course.getOverview()}</p>
@@ -33,7 +33,7 @@
 
 						</ul>
 					</div>
-				</div>
+				</div>			
 			</c:forEach>
 
 		</div>
@@ -81,7 +81,7 @@
 			spaceBetween : 30,
 			loop : true,
 			autoplay : {
-				delay : 7000,
+				delay : 8000,
 			},
 			pagination : {
 				el : ".swiper-pagination",

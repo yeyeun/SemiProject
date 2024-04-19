@@ -21,8 +21,8 @@
 							style="visibility: visible; animation-delay: 0.6s; animation-name: fadeInLeft;">
 							<h3 class="f-title f_600 t_color f_size_18">Resource</h3>
 							<ul class="list-unstyled f_list">
-								<li><a href="#">한국 관광 공사</a></li>
-								<li><a href="#">Tour API 4.0</a></li>
+								<li><a href="https://knto.or.kr/index">한국 관광 공사</a></li>
+								<li><a href="https://api.visitkorea.or.kr/#/">Tour API 4.0</a></li>
 							</ul>
 						</div>
 					</div>

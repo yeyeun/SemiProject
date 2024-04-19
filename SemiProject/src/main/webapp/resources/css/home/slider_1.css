@@ -100,31 +100,70 @@
 }
 
 .swiper1 .swiper-slide img {
-	position: absolute;
+    position: absolute;
     left: 50%;
     transform: translateX(-50%);
     top: 70px;
-	border-radius: 10px 10px 10px 10px;	
-	width: 300px;
-	height: 200px;
+    border-radius: 10px 10px 10px 10px;
+    width: 300px;
+    height: 200px;
+    margin-top: 28px;
 }
-
-.swiper1 .swiper-slide a {
-	text-decoration: none;
-	position: absoulte;
-	font-family: 'Noto Sans KR';
-	font-size: 30px;
-	color:rgb(101, 58, 5); 
+#mark1 {
+    font-size: 23px;
+    border-radius: 7px 7px 7px 7px;
+    background-color: #f89b00;
+    color: white;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-block;
+    position: relative;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+#mark1:after {    
+  background: none repeat scroll 0 0 transparent;
+  bottom: 0;
+  content: "";
+  display: block;
+  height: 3px;
+  left: 50%;
+  position: absolute;
+  background: #D74B76;
+  transition: width 0.3s ease 0s, left 0.3s ease 0s;
+  width: 0;
+}
+#mark1:hover:after { 
+  width: 100%; 
+  left: 0; 
+}
+.swiper1 .swiper-slide .slidetitle {
+    font-weight: 600;
+    text-decoration: none;
+    position: relative;
+    font-family: 'Noto Sans KR';
+    font-size: 28px;
+    color: rgb(101, 58, 5);
+    margin-top: 10px;
 }
 
 .swiper1 .swiper-slide span {
-	position: absolute;
-	left: 50%;
+	line-height: 35px;
+    width: 70%;
+    position: absolute;
+    left: 50%;
     transform: translateX(-50%);
-	top: 300px;
-	font-family: 'Noto Sans KR';
-	font-size: 20px;
-	color:black;
+    top: 300px;
+    font-family: 'Noto Sans KR';
+    font-size: 18px;
+    color: black;
+    margin-top: 70px;
+    overflow: hidden;
+  	white-space: normal;
+  	text-overflow: ellipsis;
+  	display: -webkit-box;
+  	-webkit-line-clamp: 6;
+  	-webkit-box-orient: vertical;
 }
 
 .swiper1 .swiper-button-next {

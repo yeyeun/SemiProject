@@ -74,6 +74,7 @@
 }
 
 #festivalTitle {
+	margin-top: 9px;
 	list-style-type: none;
 }
 
@@ -87,7 +88,6 @@
 	list-style-type: none;
 	font-size: 19px;
 	/* 	margin-top: 15px; */
-	margin-bottom: 17px;
 }
 
 .tabcontent .boardList {
@@ -129,6 +129,12 @@
  	list-style-type: none;
 }
 /* 게시판 카드 디자인 */
+#mark2 {
+    background-color: #f89b00;
+    color: white;
+    font-weight: 600;
+    border-radius: 5px 5px 5px 5px;
+}
 .card-big-shadow {
     max-width: 320px;
     position: relative;

@@ -6,6 +6,9 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class TourDetailInfo {
+	public TourDetailInfo(String overview) {
+		this.overview = overview;
+	}
 	private String title;
 	private String homepage;
 	private String overview;
