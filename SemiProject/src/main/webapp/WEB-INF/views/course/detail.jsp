@@ -1,4 +1,5 @@
 <%@page import="java.util.*"%>
+<%@page import="com.raon.domain.MapInfo" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -16,9 +17,12 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link rel="stylesheet" href="${contextPath}/resources/css/course/course_detail.css">
-
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=247193dfa28ad4e983e0bea6bc9fd614"></script>
 </head>
 <body>
+<%
+ArrayList<MapInfo> maplist = new ArrayList<MapInfo>();
+%>
 <jsp:include page="${contextPath }/WEB-INF/views/include/header.jsp"></jsp:include>
 <div id="course_detail_wrapper">
 	<div class="left_box">
@@ -70,13 +74,32 @@
   		</div>
   		
   		<div id="map-wrapper">
-  		
+  			<div id="map" style="width:500px;height:400px;"></div>
   		</div>
 		</div>
 	</div>
 
-	<script>
-	</script>
+
+
+
+<script>
+$(document).ready(function(){
+	var object = ${contentdetailList};
+	var contents = objects.map(object => {
+		console.log("!!!!!!!!!!"+object)
+	})
+});
+
+
+
+var container = document.getElementById('map');
+var options = {
+		center: new kakao.maps.LatLng(33.450701, 126.570667),
+		level: 3
+	};
+
+var map = new kakao.maps.Map(container, options);
+</script>
 </div>
 </body>
 </html>
