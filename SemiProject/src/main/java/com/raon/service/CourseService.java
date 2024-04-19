@@ -144,7 +144,7 @@ public class CourseService {
 			urlBuilder.append("&" + URLEncoder.encode("firstImageYN", "UTF-8") + "=" + URLEncoder.encode("Y", "UTF-8")); //이미지 조회여부
 			urlBuilder.append("&" + URLEncoder.encode("mapinfoYN", "UTF-8") + "=" + URLEncoder.encode("Y", "UTF-8")); //좌표 조회여부
 			urlBuilder.append("&" + URLEncoder.encode("overviewYN", "UTF-8") + "=" + URLEncoder.encode("Y", "UTF-8")); //설명 조회여부
-			urlBuilder.append("&" + URLEncoder.encode("serviceKey", "UTF-8") + "=mu4MvO6eUoXAtU8dp%2Bdwyt%2B%2F24GYekx10foLVqNhtViQi60IGrp26ujspnFxZvJc5EZ0UhX99Q6eQ%2FdE2pRwiA"); //서비스키
+			urlBuilder.append("&" + URLEncoder.encode("serviceKey", "UTF-8") + "=mu4MvO6eUoXAtU8dp%2Bdwyt%2B%2F24GYekx10foLVqNhtViQi60IGrp26ujspnFxZvJc5EZ0UhX99Q6eQ%2FdE2pRwiA%3D%3D"); //서비스키
 			urlBuilder.append("&" + URLEncoder.encode("_type", "UTF-8") + "=" + URLEncoder.encode("json", "UTF-8")); //조회 타입
 
 			URL url = new URL(urlBuilder.toString());
