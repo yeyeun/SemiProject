@@ -12,11 +12,13 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.ibatis.annotations.Param;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.raon.domain.Cart;
 import com.raon.domain.Members;
@@ -38,12 +40,28 @@ public class MypageService {
 		return mapper.read(id);
 	}
 	
-	 public void insertCart(Cart cart) {
-	    	mapper.insertCart(cart);
-	    }
+	 public int insertCart(@Param("id") String id,@Param("contentid") String contentid,@RequestParam("firstimage") String firstimage, @RequestParam("title") String title) {
+		 int result = mapper.insertCart(id, contentid, firstimage, title);
+		 if(result>=1) {
+			 result = 1;
+		 }else {
+			 result = 0;
+		 }
+		 return result;
+	 }
 	 
 	 public int isItemInCart(String id, String contentid) {
 		 int result = mapper.isItemInCart(id, contentid);
+		 if(result>=1) {
+			 result = 1;
+		 }else {
+			 result = 0;
+		 }
+		 return result;
+	 }
+	 
+	 public int deleteItemInCart(@Param("id") String id,@Param("contentid") String contentid) {
+		 int result = mapper.deleteItemInCart(id, contentid);
 		 if(result>=1) {
 			 result = 1;
 		 }else {

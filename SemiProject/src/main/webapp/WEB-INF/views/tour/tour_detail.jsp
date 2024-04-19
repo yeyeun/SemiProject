@@ -99,6 +99,10 @@
   
 <script>
 var i = 0;
+var contentids = '<%= request.getParameter("contentid") %>';
+var ids = '<%=id %>'
+var firstimages = '<%=firstimage %>';
+var titles = '<%= title %>';
 $(document).ready(function(){
 		var contentid = '<%= request.getParameter("contentid") %>';
 		var firstimage = '<%= request.getParameter("firstimage") %>';
@@ -119,15 +123,14 @@ $(document).ready(function(){
 	            url: "/mypage/checkCartItem", // 컨트롤러의 엔드포인트 URL
 	            data: { id: id, contentid: contentid }, // 요청 파라미터 설정
 	            success: function(response) {
-	            	console.log("성공성공@@@@@");	            	 
-	            	console.log(response);
+
 	            	if(response == "1"){
 	            		i = 1;
 	            		$('#heartzone').attr('class','fa-solid fa-heart');
 	            		
 	            		; 
 	            	}else{
-	            		i = 0;
+	            		i = 0 ;
 	            		$('#heartzone').attr('class','fa-regular fa-heart');
 	            	}
 	            	
@@ -146,7 +149,7 @@ $(document).ready(function(){
 		$.ajax({
 			url: "https://apis.data.go.kr/B551011/KorService1/detailImage1?MobileOS=ETC&MobileApp=raon&contentId="+contentid+"&imageYN=Y&subImageYN=Y&serviceKey=b7k%2B9H2DZnNoOhZSPNTopjx1cG%2F8y74JvA2aFmp4dlvoRTGzmxGL976Dcdg0PTLdbegGkqm466WbLV5PHNOwmw%3D%3D&_type=json",
 			success: function(data){
-				console.log('items',data.response.body.items);
+// 				console.log('items',data.response.body.items);
 				let first= true;
 				items = data.response.body.items.item;
 				if(items!=null){
@@ -154,7 +157,6 @@ $(document).ready(function(){
 						var active = first?"active":"";//첫번쨰 이미지에 active 부여
 						let idx=index;
 						first= false;
-						console.log(index+"!@#!@#"+item.originimgurl);
 						if(item.originimgurl == null){
 							if(firstimage.equals("")){
 								carouselInner.append(`
@@ -264,13 +266,14 @@ $('i').on('click',function(){
     }else if(i==1){
         $(this).attr('class','fa-regular fa-heart');
         i--;
+        deleteFromCart();
     }
 
 });
 function addToCart(){
     // 세션에 저장된 "loginId" 확인
     var loginId = "<%= session.getAttribute("loginId") %>";
-    console.log(loginId+"@@@@@@@@@@");
+
     
     // 만약 "loginId"가 없다면 알림창을 띄우고 함수를 호출하지 않음
     if(loginId == "null"){
@@ -280,13 +283,93 @@ function addToCart(){
         return;
     }
     
-    if(confirm("상품을 장바구니에 추가하시겠습니까?")){
-        document.addForm.submit();
+    if(confirm("여행지를 관심 여행지에 추가하시겠습니까?")){
+    	$.ajax({
+            type: "GET",
+            url: "/mypage/write", // 컨트롤러의 엔드포인트 URL
+            data: { id: ids, contentid: contentids, firstimage: firstimages, title: titles }, // 요청 파라미터 설정
+            success: function(response) {
+            	console.log("add cart success");	
+//	            	console.log(response);
+//	            	if(response == "1"){
+//	            		i = 1;
+//	            		$('#heartzone').attr('class','fa-solid fa-heart');
+            		
+//	            		; 
+//	            	}else{
+//	            		i = 0 ;
+//	            		$('#heartzone').attr('class','fa-regular fa-heart');
+//	            	}
+            	
+            	
+            	
+                // 요청이 성공하면 실행될 코드
+                // 서버에서 보내온 응답(response)을 처리
+                // 예를 들어, 장바구니에 여행지가 있는지 여부에 따라 화면 표시를 변경하는 등의 작업 수행
+            },
+            error: function(xhr, status, error) {
+                // 요청이 실패하면 실행될 코드
+                console.error("AJAX request failed:", status, error);
+            }
+        });
+   	 $('i').attr('class','fa-solid fa-heart');
+     i = 1; // 'i' 변수 초기화
     } else {
          // 알림창에서 '취소'를 눌렀을 때 아이콘 클래스 변경
         $('i').attr('class','fa-regular fa-heart');
         i = 0; // 'i' 변수 초기화
         document.addForm.reset();
+    }
+}
+function deleteFromCart(){
+    // 세션에 저장된 "loginId" 확인
+    var loginId = "<%= session.getAttribute("loginId") %>";
+
+    
+    // 만약 "loginId"가 없다면 알림창을 띄우고 함수를 호출하지 않음
+    if(loginId == "null"){
+        alert("로그인 후 이용해주세요.");
+        $('i').attr('class','fa-regular fa-heart');
+        i = 0; // 'i' 변수 초기화
+        return;
+    }
+    
+    if(confirm("여행지를 관심 여행지에서 제거하시겠습니까?")){
+    	console.log("delete");
+    	  $.ajax({
+	            type: "GET",
+	            url: "/mypage/deleteCartItem", // 컨트롤러의 엔드포인트 URL
+	            data: { id: ids, contentid: contentids }, // 요청 파라미터 설정
+	            success: function(response) {
+	            	console.log("delete cart success");	            	 
+// 	            	console.log(response);
+// 	            	if(response == "1"){
+// 	            		i = 1;
+// 	            		$('#heartzone').attr('class','fa-solid fa-heart');
+	            		
+// 	            		; 
+// 	            	}else{
+// 	            		i = 0 ;
+// 	            		$('#heartzone').attr('class','fa-regular fa-heart');
+// 	            	}
+	            	
+	            	
+	            	
+	                // 요청이 성공하면 실행될 코드
+	                // 서버에서 보내온 응답(response)을 처리
+	                // 예를 들어, 장바구니에 여행지가 있는지 여부에 따라 화면 표시를 변경하는 등의 작업 수행
+	            },
+	            error: function(xhr, status, error) {
+	                // 요청이 실패하면 실행될 코드
+	                console.error("AJAX request failed:", status, error);
+	            }
+	        });
+    } else {
+         // 알림창에서 '취소'를 눌렀을 때 아이콘 클래스 변경
+         console.log(contentids+"@@"+ids);
+         
+        $('i').attr('class','fa-solid fa-heart');
+        i = 1;
     }
 }
 

@@ -87,21 +87,32 @@ public class MypageController {
 	}
 	
 	@GetMapping("/write")
-	public String write(HttpServletRequest request, Model model, Cart cart) {
+	@ResponseBody
+	public String write(@RequestParam("id") String id, 
+            @RequestParam("contentid") String contentid,@RequestParam("firstimage") String firstimage, @RequestParam("title") String title, Model model ) {
 		log.info("mypageController->write");
-		mypageservice.insertCart(cart);
+		log.info(id+"@"+contentid+"@"+firstimage+"@"+title);
+		int addCartItem = mypageservice.insertCart(id, contentid, firstimage, title);
 		log.info("insert cart success");
-		String referer = request.getHeader("referer");
-		return "redirect:" + referer;
+		String result = addCartItem >= 1 ? "1" : "0";
+		return result;
 	}
 	
 	@GetMapping("/checkCartItem")
 	@ResponseBody
 	public String checkCartItem(@RequestParam("id") String id, 
-	                                         @RequestParam("contentid") String contentid,Model model ) {
-	    log.info("checkCartItem run" + id + "@@@@" + contentid);	  
+	                                         @RequestParam("contentid") String contentid,Model model ) { 
 	    
-	    int isItemInCart = mypagemapper.isItemInCart(id, contentid);
+	    int isItemInCart = mypageservice.isItemInCart(id, contentid);
+	    String result = isItemInCart >= 1 ? "1" : "0";
+	    return result;
+	}
+	@GetMapping("/deleteCartItem")
+	@ResponseBody
+	public String deleteCartItem(@RequestParam("id") String id, 
+	                                         @RequestParam("contentid") String contentid,Model model ) {	  
+	    
+	    int isItemInCart = mypageservice.deleteItemInCart(id, contentid);
 	    String result = isItemInCart >= 1 ? "1" : "0";
 	    return result;
 	}
