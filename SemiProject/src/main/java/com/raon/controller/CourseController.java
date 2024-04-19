@@ -1,16 +1,9 @@
 package com.raon.controller;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -18,9 +11,6 @@ import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.raon.domain.Course;
+import com.raon.domain.Criteria;
+import com.raon.domain.PageDTO;
 import com.raon.service.CourseService;
 import com.raon.service.MypageService;
 
@@ -44,9 +36,13 @@ public class CourseController {
 	private MypageService mypageservice;
 	
 	@GetMapping("/allList")
-	public void allList(Model model) {
-		List<Course> allList = service.getList(); 
+	public void allList(Model model, Criteria cri) {
+		List<Course> allList = service.getListPaging(cri); 
 		model.addAttribute("allList",allList);
+		int total = service.getTotal(cri);
+		PageDTO dto = new PageDTO(cri,total);
+		model.addAttribute("pagingDTO",dto);
+		
 	}
 	
 	@GetMapping("/detail")
