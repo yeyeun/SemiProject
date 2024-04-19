@@ -10,6 +10,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import com.raon.service.TourService;
 
 import lombok.AllArgsConstructor;
@@ -23,9 +25,9 @@ public class TourController {
 	private TourService service;
 	
 	@GetMapping("/list")
-	public String list(Model model) {
+	public String list(Model model,  @RequestParam(defaultValue = "1") int page) {
 		try {
-			service.getTourList(model);
+			service.getTourList(model, page);
 			log.info("controller -> list success");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

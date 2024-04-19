@@ -28,15 +28,14 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 @Service
 public class TourService {
-
-	public void getTourList(Model model) throws IOException {
+	public void getTourList(Model model, int page) throws IOException {
 		// TODO Auto-generated method stub
 		// 클라이언트에서 넘어온 페이지 번호와 페이지 크기를 받아옵니다.
 		StringBuilder urlBuilder = new StringBuilder(
 				"https://apis.data.go.kr/B551011/KorService1/areaBasedList1"); /* URL */
 		urlBuilder.append("?" + URLEncoder.encode("numOfRows", "UTF-8") + "="
 				+ URLEncoder.encode("12", "UTF-8")); /* 한 페이지 결과 수 */
-		urlBuilder.append("&" + URLEncoder.encode("pageNo", "UTF-8") + "=" + URLEncoder.encode("1", "UTF-8"));
+		urlBuilder.append("&" + URLEncoder.encode("pageNo", "UTF-8") + "=" + URLEncoder.encode(Integer.toString(page), "UTF-8"));
 		urlBuilder.append(
 				"&" + URLEncoder.encode("MobileOS", "UTF-8") + "=" + URLEncoder.encode("ETC", "UTF-8")); /* 조회시작일자 */
 		urlBuilder.append(
@@ -77,6 +76,9 @@ public class TourService {
 		List<TourInfo> tList = new ArrayList<TourInfo>();
 		jsonObject = jsonObject.getJSONObject("response").getJSONObject("body").getJSONObject("items");
 		JSONArray jsonArray = jsonObject.getJSONArray("item");
+		JSONObject jsonCount = new JSONObject(sb.toString());
+		int totalCnt = jsonCount.getJSONObject("response").getJSONObject("body").getInt("totalCount");
+		int totalPages = (totalCnt + 11) / 12;
 		for (int i = 0; i < jsonArray.length(); i++) {
 			tList.add(new TourInfo(jsonArray.getJSONObject(i).getString("title"),
 					jsonArray.getJSONObject(i).getString("addr1"), jsonArray.getJSONObject(i).getString("addr2"),
@@ -86,8 +88,10 @@ public class TourService {
 			));
 
 		}
-
 		model.addAttribute("tList", tList);
+		 model.addAttribute("totalPages", totalPages);
+	
+			
 	}
 
 	/*
