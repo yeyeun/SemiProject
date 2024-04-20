@@ -29,24 +29,24 @@
   <!-- Sign Up -->
   <div class="container__form container--signup">
     <form action="${contextPath}/login/signUp" method="Post"class="form" id="form1">
-      <h2 class="form__title">Sign Up</h2>
-       <input type="text" id="id" name="id" placeholder="UserId" class="input" /><label id="label1"></label>
-      <input type="text" id="name" name="name" placeholder="Name" class="input" />
-      <input type="email" id="email"name="email" placeholder="Email" class="input" />
-      <input type="password" id="pwd"name="pwd" placeholder="Password" class="input" />
-      <input type="text" id="phoneNo"name="phoneNo" placeholder="Phone" class="input" />
-      <button type="submit" class="btn" onclick="checkSignUp()">Sign Up</button>
+      <h2 class="form__title">회원가입</h2>
+       <input type="text" id="id" name="id" placeholder="아이디" class="input" /><label id="label1"></label>
+      <input type="text" id="name" name="name" placeholder="이름" class="input" />
+      <input type="email" id="email"name="email" placeholder="이메일" class="input" />
+      <input type="password" id="pwd"name="pwd" placeholder="비밀번호" class="input" />
+      <input type="text" id="phoneNo"name="phoneNo" placeholder="핸드폰 번호" class="input" />
+      <button type="submit" class="btn" onclick="checkSignUp()">회원가입</button>
     </form>
   </div>
 
   <!-- Sign In -->
   <div class="container__form container--signin">
     <form action="${contextPath}/login/login" method="Post" class="form" id="form2">
-      <h2 class="form__title">Sign In</h2>
-      <input type="text" id="id" name="id" placeholder="UserId" class="input" />
-      <input type="password" id="pwd" name="pwd" placeholder="Password" class="input" />
-      <a href="#exampleModal" id="findPwd" data-bs-toggle="modal">Forgot your password?</a>
-      <button type="submit" class="btn">Sign In</button>
+      <h2 class="form__title">로그인</h2>
+      <input type="text" id="id" name="id" placeholder="아이디" class="input" />
+      <input type="password" id="pwd" name="pwd" placeholder="비밀번호" class="input" />
+      <a href="#exampleModal" id="findPwd" data-bs-toggle="modal">비밀번호 찾기</a>
+      <button type="submit" class="btn">로그인</button>
     </form>
   </div>
 
@@ -54,10 +54,10 @@
   <div class="container__overlay">
     <div class="overlay">
       <div class="overlay__panel overlay--left">
-        <button class="btn" id="signIn">Sign In</button>
+        <button class="btn" id="signIn">로그인</button>
       </div>
       <div class="overlay__panel overlay--right">
-        <button class="btn" id="signUp">Sign Up</button>
+        <button class="btn" id="signUp">회원가입</button>
       </div>
     </div>
   </div>
