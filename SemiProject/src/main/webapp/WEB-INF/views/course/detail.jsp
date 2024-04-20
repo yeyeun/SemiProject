@@ -80,23 +80,29 @@
 
 <script>
 
-var mapInfos;
-var mapxList = new Array();
-var mapyList = new Array();
+
+var xList = new Array();
+var yList = new Array();
 var titleList = new Array();
 	
 <c:forEach items="${contentdetailList}" var="contentdetail">
-	mapxList.push("${contentdetail.mapx}");
-	mapyList.push("${contentdetail.mapy}");
-	titleList.push("${contentdetail.title}")
+	xList.push("${contentdetail.mapx}");
+	yList.push("${contentdetail.mapy}");
+	titleList.push("${contentdetail.title}");
 </c:forEach>
+
+//x,y 최대값, 최소값 구하기
+var maxXvalue = Math.max.apply(null,xList);
+var minXvalue = Math.min.apply(null,xList);
+var maxYvalue = Math.max.apply(null,yList);
+var minYvalue = Math.min.apply(null,yList);
+
+var centerX = (maxXvalue + minXvalue) / 2;
+var centerY = (maxYvalue + minYvalue) / 2;
 	
-console.log(mapInfos);
-
-
 var mapContainer = document.getElementById('map');
 var options = {
-		center: new kakao.maps.LatLng(33.3891248662, 126.8050373428),
+		center: new kakao.maps.LatLng(centerY, centerX),
 		level: 10
 	};
 
@@ -104,15 +110,12 @@ var map = new kakao.maps.Map(mapContainer, options);
 
 var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
 
-for(var i=0; i<mapxList.length; i++){
-	console.log(mapxList[i]);
-	console.log(mapyList[i]);
-	console.log(titleList[i]);
+for(var i=0; i<xList.length; i++){
 	var imageSize = new kakao.maps.Size(24, 35); // 마커 이미지 크기
 	var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); // 마커 이미지 생성
     var marker = new kakao.maps.Marker({ // 마커 생성
         map: map, // 마커를 표시할 지도
-        position: new kakao.maps.LatLng(mapyList[i], mapxList[i]),
+        position: new kakao.maps.LatLng(yList[i], xList[i]),
         title : titleList[i], // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
         image : markerImage // 마커 이미지 
     });
