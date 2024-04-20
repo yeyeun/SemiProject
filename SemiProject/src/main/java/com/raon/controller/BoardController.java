@@ -1,5 +1,9 @@
 package com.raon.controller;
 
+import java.io.PrintWriter;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -47,8 +51,19 @@ public class BoardController {
 	}
 	
 	@GetMapping("/write")
-	public void write() {
-		
+	public String write(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		if(request.getSession().getAttribute("loginId") == null) { //로그인 여부 확인
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			out.println("<script>");
+			out.println("alert('로그인 후 이용해주세요')");
+			out.println("location.href='/board/list';");
+			//out.println("history.back()");
+			out.println("</script>");
+			out.flush();
+			throw new Exception();
+		}
+		return "board/write";
 	}
 	
 	@GetMapping("/read")
