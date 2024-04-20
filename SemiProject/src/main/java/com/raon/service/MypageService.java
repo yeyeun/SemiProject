@@ -24,6 +24,7 @@ import com.raon.domain.Board;
 import com.raon.domain.Cart;
 import com.raon.domain.Course;
 import com.raon.domain.Members;
+import com.raon.domain.Mycourse;
 import com.raon.domain.Mytourpage;
 import com.raon.domain.TourDetailInfo;
 import com.raon.mapper.MypageMapper;
@@ -46,10 +47,14 @@ public class MypageService {
 		List<Board> myboardlist = mapper.myboard(writer);
 		return myboardlist;
 	}
-	public List<Course> mycourse(String id) {
+	public List<Mycourse> mycourse(String id) {
 		log.info("Mypage -> myboard");
-		List<Course> mycourselist = mapper.mycourse(id);
+		List<Mycourse> mycourselist = mapper.mycourse(id);
 		return mycourselist;
+	}
+	public List<Mycourse> countcomment(String id){
+		List<Mycourse> mycoursecomment = mapper.mycoursecomment(id);
+		return mycoursecomment;
 	}
 	
 	 public int insertCart(@Param("id") String id,@Param("contentid") String contentid,@RequestParam("firstimage") String firstimage, @RequestParam("title") String title) {

@@ -69,7 +69,8 @@
 								<h1>${course.title }</h1>
 							</div>
 							<div class="card-details">
-								<span><i class="fa fa-calendar"></i>${course.regDate}</span> <span><i class="fa fa-comment"></i>15</span>
+								<span><i class="fa fa-calendar"></i>${course.regDate}</span>
+								<span><i class="fa fa-comment"></i>${course.count }</span>
 							</div>
 							<div class="card-text">
 								<p>${course.overview }</p>

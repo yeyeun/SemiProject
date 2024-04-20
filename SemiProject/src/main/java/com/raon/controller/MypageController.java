@@ -30,7 +30,9 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.mysql.cj.Session;
 import com.raon.domain.Cart;
+import com.raon.domain.Course;
 import com.raon.domain.Members;
+import com.raon.domain.Mycourse;
 import com.raon.domain.Mytourpage;
 import com.raon.domain.TourDetailInfo;
 import com.raon.mapper.MypageMapper;
@@ -89,6 +91,26 @@ public class MypageController {
 		log.info("mywrite");
 		model.addAttribute("bList",mypageservice.myboard(loginId));
 		model.addAttribute("cList",mypageservice.mycourse(loginId));
+		model.addAttribute("count",mypageservice.countcomment(loginId));
+		
+		List<Mycourse> mycourselist = (List<Mycourse>) model.getAttribute("cList");
+		List<Mycourse> mycoursecomment = (List<Mycourse>) model.getAttribute("count");
+		
+		for (Mycourse course : mycourselist) {
+		    boolean found = false; // count를 찾았는지 여부를 나타내는 변수
+		    for (Mycourse comment : mycoursecomment) {
+		        if (course.getContentid().equals(comment.getContentid())) {
+		            course.setCount(comment.getCount());
+		            found = true;
+		            break;
+		        }
+		    }
+		    // count를 찾지 못한 경우 0으로 설정
+		    if (!found) {
+		        course.setCount("0");
+		    }
+		}		
+		
 		return "mypage/mywrite";
 	}
 

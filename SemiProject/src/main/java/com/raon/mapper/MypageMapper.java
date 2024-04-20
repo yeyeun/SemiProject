@@ -14,6 +14,7 @@ import com.raon.domain.Board;
 import com.raon.domain.Cart;
 import com.raon.domain.Comment;
 import com.raon.domain.Course;
+import com.raon.domain.Mycourse;
 
 @Mapper
 public interface MypageMapper {
@@ -35,5 +36,8 @@ public interface MypageMapper {
 	public List<Board> myboard(@Param("writer") String writer);
 	
 	@Select("select * from course where id = #{id}")
-	public List<Course> mycourse(@Param("id") String id);
+	public List<Mycourse> mycourse(@Param("id") String id);
+	
+    @Select("SELECT contentid, COUNT(*) AS count FROM commentcourse WHERE id = #{id} GROUP BY contentid")
+    public List<Mycourse> mycoursecomment(@Param("id") String id);
 }
