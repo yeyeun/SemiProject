@@ -71,7 +71,7 @@
     <!-- 페이지 링크를 동적으로 생성 -->
     <!-- totalPages가 1 이상일 때만 페이지 링크를 생성합니다. -->
     <c:if test="${totalPages > 0}">
-        <c:forEach var="i" begin="${page}" end="${page + 9}" varStatus="loop">
+        <c:forEach var="i" begin="1" end="10" varStatus="loop">
             <!-- 페이지 번호가 totalPages보다 작거나 같을 때만 페이지 번호를 표시합니다. -->
             <c:if test="${i <= totalPages}">
                 <a href="${contextPath}/tour/list?page=${i}" data-page="${i}" class="page-link">${i}</a>
