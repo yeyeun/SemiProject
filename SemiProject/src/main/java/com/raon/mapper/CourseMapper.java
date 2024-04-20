@@ -12,7 +12,7 @@ import com.raon.domain.Criteria;
 
 @Mapper
 public interface CourseMapper {
-    @Select("SELECT * FROM course")
+    @Select("SELECT * FROM course WHERE LENGTH(contentid) = 7")
     List<Course> getList();
     
     @Select("SELECT * FROM course WHERE contentid=#{contentid}")

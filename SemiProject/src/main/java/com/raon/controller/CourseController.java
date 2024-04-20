@@ -70,7 +70,6 @@ public class CourseController {
 		// Service쪽으로 ajax코드 옮겨야할지도?
 		Collections.shuffle(filteredList);
 		List<Course> selectedCourses = filteredList.subList(0, Math.min(5, filteredList.size()));
-
 		List<String> contentIds = new ArrayList<>(); // 추출된 5개 여행코스의 ID
 		for (Course course : selectedCourses) {
 			contentIds.add(course.getContentid());
