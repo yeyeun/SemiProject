@@ -79,7 +79,8 @@
 							</div>
 						</form>
 						<div id="newPasswordDiv" style="display: none;">
-							<input type="text" id="newPassword" name="newPassword" placeholder="새 비밀번호" />
+							<input type="text" id="newPassword" name="newPassword" placeholder="새 비밀번호" /><br>
+							<label id="newpwd">영문, 숫자, 특수문자 조합 8자리 이상을 입력해주세요.</label>
 							<div class="modal-footer">
 								<input type="button" id="confirmPw" class="btn btn-primary" onclick="updatepwd()" value="확인"/>
 								<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
@@ -110,6 +111,7 @@ var isValidphoneNo = 1;
 var isValidpwd = 1;
 var isfindid = 1;
 var isfindemail = 1;
+var isnewpwd = 1;
 
 
 signInBtn.addEventListener("click", () => {
@@ -154,7 +156,7 @@ secondForm.addEventListener("submit", (e) => e.preventDefault());
 			var modal = $(this);
 
 		});
-		$("#checkId").on("focusout", function() {
+		$("#checkId").on("input", function() {
     		var id = $("#checkId").val();
     		if(id == '' || id.length == 0) {
     			$("#labelId").show();
@@ -165,7 +167,7 @@ secondForm.addEventListener("submit", (e) => e.preventDefault());
     			isfindid = 1;
     		}
     	});
-		$("#checkEmail").on("focusout", function() {
+		$("#checkEmail").on("input", function() {
     		var email = $("#checkEmail").val();
     		if(email == '' || email.length == 0) {
     			$("#labelEmail").show();
@@ -178,6 +180,7 @@ secondForm.addEventListener("submit", (e) => e.preventDefault());
     	});
 		//비밀번호 재설정시 id와 email 확인
 		$("#confirmInfo").on("click", function() {
+			$("#newpwd").show();
     		var id = $("#checkId").val();
     		var email = $("#checkEmail").val();
     		if(isfindid === 0 || isfindemail === 0){
@@ -205,8 +208,8 @@ secondForm.addEventListener("submit", (e) => e.preventDefault());
     		}
     	});
 		//ID 중복 확인
-    	//id를 입력할 수 있는 input text 영역을 벗어나면 동작
-    	$("#id").on("focusout", function() {
+    	//id를 입력할 수 있는 input text 영역을 타이핑시
+    	$("#id").on("input", function() {
 //     		var regExp = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g;
 //     		var regExpId = /[a-z|A-Z|ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
     		var reg2 = /[^\w\s가-힣()0-9]/g;
@@ -248,7 +251,7 @@ secondForm.addEventListener("submit", (e) => e.preventDefault());
     		}
     	});
      	//이름 정규식
-    	$("#name").on("focusout", function() {
+    	$("#name").on("input", function() {
     		var regExpName = /^[가-힣]*$/;
     		//한글만 가능하도록 
     		var name = $("#name").val();
@@ -261,7 +264,7 @@ secondForm.addEventListener("submit", (e) => e.preventDefault());
     			isValidName=0;
     		}
     	});
-    	$("#email").on("focusout", function() {
+    	$("#email").on("input", function() {
     		var regExpEmail = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
     		//@포함 해야하고 마지막 . 다음에는 2,3개의 문자만 위치해야함
     		var email = $("#email").val();
@@ -274,7 +277,7 @@ secondForm.addEventListener("submit", (e) => e.preventDefault());
     			isValidEmail=0;
     		}
     	});
-    	$("#phoneNo").on("focusout", function() {
+    	$("#phoneNo").on("input", function() {
     		var regExpphoneNo = /^01([0|1|6|7|8|9]?)-?([0-9]{3,4})-?([0-9]{4})$/;
     		//핸드폰번호 (02같은 지역번호 고려X 핸드폰 번호 형식만)
     		var phoneNo = $("#phoneNo").val();
@@ -287,7 +290,7 @@ secondForm.addEventListener("submit", (e) => e.preventDefault());
     			isValidphoneNo=0;
     		}
     	});
-    	$("#pwd").on("focusout", function() {
+    	$("#pwd").on("input", function() {
     		var regExppwd = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,15}$/
     		//영문, 숫자, 비밀번호 조합 8자리 이상
     		var pwd = $("#pwd").val();
@@ -298,6 +301,21 @@ secondForm.addEventListener("submit", (e) => e.preventDefault());
     			$("#label5").show();
     			$("#label5").css("color", "red").text("영문, 숫자, 특수문자 조합 8자리 이상을 입력해주세요.");
     			isValidpwd=0;
+    		}
+    	});
+    	
+    	$("#newPassword").on("input", function() {
+    		var pwd2 = $("#newPassword").val();
+    		console.log(pwd2);
+    		var regExppwd2 = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,15}$/
+    		//영문, 숫자, 비밀번호 조합 8자리 이상
+    		if(regExppwd2.test(pwd2)){
+    			$("#newpwd").hide();
+    			isnewpwd=1;
+    		}else{
+    			$("#newpwd").show();
+    			$("#newpwd").css("color", "red").text("영문, 숫자, 특수문자 조합 8자리 이상을 입력해주세요.");
+    			isnewpwd=0;
     		}
     	});
      	
@@ -363,6 +381,7 @@ secondForm.addEventListener("submit", (e) => e.preventDefault());
 		$("#newPassword").val("");
 		$("#newPasswordDiv").hide();
 		$("#inputInfo").show();
+		$("#newpwd").css("color", "black").text("영문, 숫자, 특수문자 조합 8자리 이상을 입력해주세요.");
 		
 		isfindid = 0;
 		isfindemail = 0;
@@ -370,8 +389,13 @@ secondForm.addEventListener("submit", (e) => e.preventDefault());
 	function updatepwd(){
 		var id = $("#checkId").val();
 		var email = $("#checkEmail").val();
-		var pwd = $("#newPassword").val();
+		var pwd2 = $("#newPassword").val();
 		
+		if(isnewpwd===0 || pwd2 === ""){
+			$("#newpwd").css("color", "red").text("비밀번호 형식을 확인해주세요.");
+			return false;
+		}
+    	if(isnewpwd===1){
     	$.ajax({
     		url : '/login/updatePwd',
     		data : {
@@ -389,7 +413,9 @@ secondForm.addEventListener("submit", (e) => e.preventDefault());
     				alert("비밀번호 변경이 실패 했습니다.");
     			}
     		}
+    	
     	}); //End Ajax
+    	}
 	}
 </script>
 </body>
