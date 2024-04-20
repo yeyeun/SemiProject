@@ -34,7 +34,7 @@
 					<input id="subcontentidInput" name="subcontentid" type="text" value="" style="display: none;" />
 					<input id="idInput" name="id" type="text" value="<%=loginId %>" style="display: none;" />
 					<div class="form-row">
-						<span>제목</span><input name="title" type="text" placeholder="제목을 입력하세요" />
+						<span>제목</span><input name="title" type="text" minlength="5" maxlength="20" placeholder="제목을 입력하세요" />
 					</div>
 
 					<div class="form-row">
@@ -45,7 +45,7 @@
 
 					<div class="form-row">
 						<span>내용</span><br>
-						<textarea name="overview" placeholder="내용을 입력하세요"></textarea>
+						<textarea name="overview" minlength="10" maxlength="400" placeholder="내용을 입력하세요"></textarea>
 						<br>
 					</div>
 
@@ -134,6 +134,9 @@
 			tourList.innerHTML = selectedTitles.join(' → ');
 		}
 		function sendData() {
+			var titleValue = document.getElementByName("title").value;
+			var overviewValue = document.getElementByName("overview").value;
+			
 		    // 선택된 아이템이 없을 때 서브밋 막기
 		    if (selectedIds.length === 0) {
 		        alert("최소한 하나의 여행지를 선택해야 합니다.");
