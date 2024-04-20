@@ -43,15 +43,15 @@ public class CommentController {
 	}
 	
 	//댓글 조회
-	@GetMapping(value="/{rno}", produces= {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
+	@GetMapping(value="/{commentid}", produces= {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<Comment> get(@PathVariable("commentid") Integer commentid){
 		log.info("get : " + commentid);
 		return new ResponseEntity<> (service.read(commentid), HttpStatus.OK);
 	}
 	
 	//댓글 삭제
-	@DeleteMapping(value="/{rno}", produces= {MediaType.TEXT_PLAIN_VALUE})
-	public ResponseEntity<String> remove(@PathVariable("rno") Integer commentid){
+	@DeleteMapping(value="/{commentid}", produces= {MediaType.TEXT_PLAIN_VALUE})
+	public ResponseEntity<String> remove(@PathVariable("commentid") Integer commentid){
 		log.info("remove : " + commentid);
 		return service.delete(commentid)==1? new ResponseEntity<>("success", HttpStatus.OK)
 				:new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -59,10 +59,10 @@ public class CommentController {
 	
 	//댓글 수정
 	@RequestMapping(method={RequestMethod.PUT, RequestMethod.PATCH},
-			value="/{rno}", consumes="application/json", produces={MediaType.TEXT_PLAIN_VALUE})
-	public ResponseEntity<String> modify(@RequestBody Comment comment, @PathVariable("rno") Integer commentid){
+			value="/{commentid}", consumes="application/json", produces={MediaType.TEXT_PLAIN_VALUE})
+	public ResponseEntity<String> modify(@RequestBody Comment comment, @PathVariable("commentid") Integer commentid){
 		comment.setCommentid(commentid);
-		log.info("rno : " + commentid);
+		log.info("commentid : " + commentid);
 		log.info("modify : " + comment);
 		return service.update(comment)==1? new ResponseEntity<>("success", HttpStatus.OK)
 				:new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

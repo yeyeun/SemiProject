@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.raon.domain.Comment;
-import com.raon.mapper.BoardMapper;
 import com.raon.mapper.CommentMapper;
 
 import lombok.Setter;
