@@ -128,7 +128,6 @@ secondForm.addEventListener("submit", (e) => e.preventDefault());
  $(document).ready(function() {
 	 //로그인 실패해서 창으로 돌아올때
 	let isfail = '<c:out value="${loginfail}"/>';
-	console.log('isfail :', isfail);
 	checkFail(isfail);
 	function checkFail(isfail) {
 		if (isfail === '') {
@@ -140,7 +139,6 @@ secondForm.addEventListener("submit", (e) => e.preventDefault());
    	}
 	 //회원가입->로그인창 이동 시 alert창
 	 let result = '<c:out value="${result}"/>';
-	 console.log('result :', result);
 		isSignUp(result);
 		function isSignUp(result) {
 			if (result === '') { return; }
@@ -306,16 +304,17 @@ secondForm.addEventListener("submit", (e) => e.preventDefault());
     	
     	$("#newPassword").on("input", function() {
     		var pwd2 = $("#newPassword").val();
-    		console.log(pwd2);
     		var regExppwd2 = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,15}$/
     		//영문, 숫자, 비밀번호 조합 8자리 이상
     		if(regExppwd2.test(pwd2)){
     			$("#newpwd").hide();
     			isnewpwd=1;
+    			console.log("유효O");
     		}else{
     			$("#newpwd").show();
     			$("#newpwd").css("color", "red").text("영문, 숫자, 특수문자 조합 8자리 이상을 입력해주세요.");
     			isnewpwd=0;
+    			console.log("유효X");
     		}
     	});
      	
@@ -326,7 +325,6 @@ secondForm.addEventListener("submit", (e) => e.preventDefault());
 		
 });
  function checkSignUp(){
-		console.log("5: "+isValidId);
 		var form = document.form1;
 		var id= document.getElementById("id").value;
 		var name=document.getElementById("name").value;
@@ -346,7 +344,6 @@ secondForm.addEventListener("submit", (e) => e.preventDefault());
 			alert("ID를 확인해주세요.");
 			return false;	
 		} else if(isValidName === 0){
-			console.log(isValidName);
 			alert("이름을 확인해주세요.");
 			return false;	
 		} else if(isValidEmail === 0){
@@ -375,7 +372,6 @@ secondForm.addEventListener("submit", (e) => e.preventDefault());
 		return false;
 	}
 	function setis(){
-		console.log(isfindid+"@@"+isfindemail);
 		$("#checkId").val("");
 		$("#checkEmail").val("");
 		$("#newPassword").val("");
@@ -401,7 +397,7 @@ secondForm.addEventListener("submit", (e) => e.preventDefault());
     		data : {
     			id : id,
     			email : email,
-    			pwd : pwd
+    			pwd : pwd2
     		},
     		type : 'POST',
     		dataType : 'json',
