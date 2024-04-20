@@ -45,7 +45,7 @@
 						<tbody>
 							<c:forEach items="${mytourList}" var="tour" varStatus="status">
 								<tr style="cursor: pointer;" onClick="location.href='${contextPath}/tour/detail?contentid=${tour.contentid }&title=${tour.title }&mapy=${mytourList2[status.index].getMapy() }&mapx=${mytourList2[status.index].getMapx() }&firstimage=${tour.firstimage }'">
-									<td><img class="favorite_tour_img" src="${tour.firstimage }"></td>
+									<td><img class="favorite_tour_img" src="${tour.firstimage }" onerror="this.src='../../resources/images/nocourseimg.png'"></td>
 									<td>${tour.contentid }</td>
 									<td>${tour.title }</td>
 									<td><p class="favorite_tour_overview">${mytourList2[status.index].getOverview() }</p></td>

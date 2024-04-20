@@ -77,7 +77,11 @@ public class MemberController {
     }
 
     @GetMapping("/login")
-    public String login() {
+    public String login(HttpSession session, HttpServletRequest request) {
+    	String previousPageUrl = request.getHeader("referer");
+    	previousPageUrl = previousPageUrl.substring(21);
+    	session.setAttribute("previousPageUrl", previousPageUrl);
+    	log.info("previousPageUrl: " + session.getAttribute("previousPageUrl"));
         return "login/login";
     }
    
@@ -87,7 +91,7 @@ public class MemberController {
         if (memberService.isUser(id, pwd)) {
         	log.info("login....");
             session.setAttribute("loginId", id);
-            return "redirect:/header/main";
+            return "redirect:"+session.getAttribute("previousPageUrl");
         } else {
             return "redirect:/login/login";
         }

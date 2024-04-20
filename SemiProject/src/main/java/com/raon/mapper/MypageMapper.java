@@ -10,6 +10,7 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.SelectKey;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.raon.domain.Board;
 import com.raon.domain.Cart;
 import com.raon.domain.Comment;
 
@@ -28,4 +29,7 @@ public interface MypageMapper {
 	@Delete("delete from cart where id=#{id} and contentid=#{contentid}")
 	@SelectKey(statement="SELECT ROW_COUNT()", keyProperty="rowCount", before=false, resultType=int.class)
 	public int deleteItemInCart(@Param("id") String id,@Param("contentid") String contentid);
+	
+	@Select("select * from boardtable where writer=#{writer}")
+	public List<Board> myboard(@Param("writer") String writer);
 }

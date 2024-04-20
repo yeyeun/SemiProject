@@ -90,12 +90,16 @@ header {
 	width: 32px;
 }
 
-.login-user span{
-	font-size: 13px;
-	margin-right: 5px;
-	font-weight: 600;
-	line-height: 30px;
-	text-align: center;
+.login-user span {
+    font-size: 13px;
+    margin-right: 5px;
+    font-weight: 600;
+    line-height: 33px;
+    text-align: center;
+    padding: 7px;
+    background: rgb(140,140,140);
+    border-radius: 7px 7px 7px 8px;
+    color: white;
 }
 
 .login-user-menu{
@@ -110,6 +114,9 @@ header {
 	list-style: none;
 	text-align:center;
 	background-color:#F8FFFF;
+}
+.login-user-menu li:hover{
+	background-color:rgb(236,236,236);
 }
 
 .login-user-menu li a{

@@ -63,7 +63,7 @@
 						<div class="modal-body" style="width: 483px; height: 465px; overflow-y: auto;">
 							<ul style="list-style-type: none;">
 								<c:forEach items="${mytourList }" var="tour">
-									<li class="cartItem"><input type="checkbox" class="cartCheckbox" value="${tour.title}" onclick="toggleCheckbox(this)"> <img src="${tour.firstimage}" alt="Tour Image" class="cartimage"> <span class="carttitle">${tour.title}</span>
+									<li class="cartItem"><input type="checkbox" class="cartCheckbox" value="${tour.title}" onclick="toggleCheckbox(this)"> <img src="${tour.firstimage}" alt="Tour Image" class="cartimage" onerror="this.src='../../resources/images/nocourseimg.png'"> <span class="carttitle">${tour.title}</span>
 										<p id="checkcontentid" style="display: none;">${tour.contentid }</p></li>
 								</c:forEach>
 							</ul>

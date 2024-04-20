@@ -3,6 +3,7 @@ package com.raon.controller;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.mysql.cj.Session;
 import com.raon.domain.Cart;
@@ -49,7 +51,18 @@ public class MypageController {
 	private MypageMapper mypagemapper;
 
 	@GetMapping("/mypage")
-	public String mypage() {
+	public String mypage(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		 if(request.getSession().getAttribute("loginId") == null) { //로그인 여부 확인
+	            response.setContentType("text/html; charset=UTF-8");
+	            PrintWriter out = response.getWriter();
+	            out.println("<script>");
+	            out.println("alert('로그인 후 이용해주세요')");
+	            out.println("location.href='/login/login';");
+//	            out.println("history.back()");
+	            out.println("</script>");
+	            out.flush();
+	            throw new Exception();
+	        }
 		log.info("mypage");
 		return "mypage/mypage";
 	}
@@ -72,8 +85,9 @@ public class MypageController {
 	}
 
 	@GetMapping("/mywrite")
-	public String mywrite() {
+	public String mywrite(@SessionAttribute("loginId")String loginId, Model model) {
 		log.info("mywrite");
+		model.addAttribute("bList",mypageservice.myboard(loginId));		
 		return "mypage/mywrite";
 	}
 

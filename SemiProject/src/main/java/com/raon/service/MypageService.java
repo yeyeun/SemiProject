@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.raon.domain.Board;
 import com.raon.domain.Cart;
 import com.raon.domain.Members;
 import com.raon.domain.Mytourpage;
@@ -38,6 +39,11 @@ public class MypageService {
 	public List<Cart> read(String id) {
 		log.info("Mypage -> read");
 		return mapper.read(id);
+	}
+	public List<Board> myboard(String writer) {
+		log.info("Mypage -> myboard");
+		List<Board> myboardlist = mapper.myboard(writer);
+		return myboardlist;
 	}
 	
 	 public int insertCart(@Param("id") String id,@Param("contentid") String contentid,@RequestParam("firstimage") String firstimage, @RequestParam("title") String title) {
