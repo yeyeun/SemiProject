@@ -1,12 +1,11 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-	
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<c:set value="${pageContext.request.contextPath}/resources" var="resourceurl" scope="application"/>
+<c:set value="${pageContext.request.contextPath}/resources" var="resourceurl" scope="application" />
 <link rel="stylesheet" href="${resourceurl }/css/include/footer.css">
 <title>Insert title here</title>
 </head>
@@ -16,9 +15,7 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-lg-3 col-md-6">
-						<div class="f_widget about-widget pl_70 wow fadeInLeft"
-							data-wow-delay="0.6s"
-							style="visibility: visible; animation-delay: 0.6s; animation-name: fadeInLeft;">
+						<div class="f_widget about-widget pl_70 wow fadeInLeft" data-wow-delay="0.6s" style="visibility: visible; animation-delay: 0.6s; animation-name: fadeInLeft;">
 							<h3 class="f-title f_600 t_color f_size_18">Resource</h3>
 							<ul class="list-unstyled f_list">
 								<li><a href="https://knto.or.kr/index">한국 관광 공사</a></li>
@@ -27,9 +24,7 @@
 						</div>
 					</div>
 					<div class="col-lg-3 col-md-6">
-						<div class="f_widget about-widget pl_70 wow fadeInLeft"
-							data-wow-delay="0.6s"
-							style="visibility: visible; animation-delay: 0.6s; animation-name: fadeInLeft;">
+						<div class="f_widget about-widget pl_70 wow fadeInLeft" data-wow-delay="0.6s" style="visibility: visible; animation-delay: 0.6s; animation-name: fadeInLeft;">
 							<h3 class="f-title f_600 t_color f_size_18">Team(요기5때)</h3>
 							<ul class="list-unstyled f_list">
 								<li><a href="https://github.com/chk0527">Choi Hyeon Kyu</a></li>
@@ -49,13 +44,11 @@
 			<div class="container">
 				<div class="row align-items-center">
 					<div class="col-lg-6 col-sm-7">
-						<p class="mb-0 f_400">© cakecounter Inc.. 2019 All rights
-							reserved.</p>
+						<p class="mb-0 f_400">© cakecounter Inc.. 2019 All rights reserved.</p>
 					</div>
 					<div class="col-lg-6 col-sm-5 text-right">
 						<p>
-							Made with <i class="icon_heart"></i> in <a
-								href="http://cakecounter.com" target="_blank">CakeCounter</a>
+							Made with <i class="icon_heart"></i> in <a href="http://cakecounter.com" target="_blank">CakeCounter</a>
 						</p>
 					</div>
 				</div>
