@@ -34,7 +34,7 @@
 					<input id="subcontentidInput" name="subcontentid" type="text" value="" style="display: none;" />
 					<input id="idInput" name="id" type="text" value="<%=loginId %>" style="display: none;" />
 					<div class="form-row">
-						<span>제목</span><input name="title" type="text" minlength="5" maxlength="20" placeholder="제목을 입력하세요" />
+						<span>제목</span><input name="title" type="text" id="title" maxlength="20" placeholder="제목을 입력하세요" />
 					</div>
 
 					<div class="form-row">
@@ -45,7 +45,7 @@
 
 					<div class="form-row">
 						<span>내용</span><br>
-						<textarea name="overview" minlength="10" maxlength="400" placeholder="내용을 입력하세요"></textarea>
+						<textarea name="overview" id="overview" maxlength="400" placeholder="내용을 입력하세요"></textarea>
 						<br>
 					</div>
 
@@ -134,21 +134,28 @@
 			tourList.innerHTML = selectedTitles.join(' → ');
 		}
 		function sendData() {
-			var titleValue = document.getElementByName("title").value;
-			var overviewValue = document.getElementByName("overview").value;
+			var titleValue = document.getElementById("title").value;
+			var overviewValue = document.getElementById("overview").value;
 			
 		    // 선택된 아이템이 없을 때 서브밋 막기
 		    if (selectedIds.length === 0) {
 		        alert("최소한 하나의 여행지를 선택해야 합니다.");
 		        event.preventDefault();
-		    }else{
+		    }
+		    // 제목,내용이 없을때 서브밋 막기
+		    else if(titleValue === '' || overviewValue === ''){
+		    	alert("제목과 내용은 최소 한 글자 이상 입력해주세요");
+		    	event.preventDefault();
+		    }
 		    
+
+		   
 		    // 폼에 랜덤 id 값 삽입
 		    var randomId = Math.floor(100000 + Math.random() * 900000);
 		    document.getElementById("contentidInput").value = randomId;
 		    document.getElementById("subcontentidInput").value = selectedIds;
 		    document.getElementById("firstimageInput").value = firstImage;
-		    }
+
 		}
 
 		$(document).ready(
