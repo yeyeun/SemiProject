@@ -80,31 +80,24 @@
 
 <script>
 
+var mapInfos;
+var mapxList = new Array();
+var mapyList = new Array();
+var titleList = new Array();
 	
-	var mapInfos;
-	var mapxList = new Array();
-	var mapyList = new Array();
-	var titleList = new Array();
+<c:forEach items="${contentdetailList}" var="contentdetail">
+	mapxList.push("${contentdetail.mapx}");
+	mapyList.push("${contentdetail.mapy}");
+	titleList.push("${contentdetail.title}")
+</c:forEach>
 	
-	<c:forEach items="${contentdetailList}" var="contentdetail">
-		mapxList.push("${contentdetail.mapx}");
-		mapyList.push("${contentdetail.mapy}");
-		titleList.push("${contentdetail.title}")
-	</c:forEach>
-	
-	//console.log(mapInfos);
-
-
-
-
-
-
+console.log(mapInfos);
 
 
 var mapContainer = document.getElementById('map');
 var options = {
-		center: new kakao.maps.LatLng(33.450701, 126.570667),
-		level: 3
+		center: new kakao.maps.LatLng(33.3891248662, 126.8050373428),
+		level: 10
 	};
 
 var map = new kakao.maps.Map(mapContainer, options);

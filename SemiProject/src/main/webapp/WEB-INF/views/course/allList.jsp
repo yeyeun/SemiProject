@@ -68,8 +68,7 @@
 							<c:if test="${pagingDTO.prev}">
 								<a href="${pagingDTO.start-1}" tabindex="-1">&laquo;</a>
 							</c:if>
-							<c:forEach var="num" begin="${pagingDTO.start}"
-								end="${pagingDTO.end}">
+							<c:forEach var="num" begin="${pagingDTO.start}" end="${pagingDTO.end}">
 								<c:choose>
 									<c:when test="${pageNum==num}">
 										<a href="${num}" class="active">${num}</a>
@@ -86,13 +85,9 @@
 					</div>
 
 				</div>
-
-				<form action="${pageContext.request.contextPath}/course/list.course" id="actionFrm">
-					<input type="hidden" name='pageNum' value='${pagingDTO.cri.pageNum}'>
-					<input type="hidden" name='amount' value='${pagingDTO.cri.amount}'>
-				</form>
 			</div>
-				<div class="modal fade" tabindex="-1" id="myModal">
+			
+		<div class="modal fade" tabindex="-1" id="myModal">
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
