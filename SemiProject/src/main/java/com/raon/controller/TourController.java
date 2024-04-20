@@ -58,7 +58,18 @@ public class TourController {
 		
 		return "tour/tour_detail";
 	}
-	
+	@GetMapping("/search")
+	public String search(HttpServletRequest request, HttpServletResponse response, Model model,  @RequestParam(defaultValue = "1") int page) {
+		try {
+			service.searchTourList(request, response, model, page);
+			log.info("controller -> search success");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			log.info("controller -> search fail");
+		}
+		
+		return "tour/tour_search";
+	}
 	
 //	slider_1용
 	@GetMapping("/slider1")
@@ -106,6 +117,6 @@ public class TourController {
 	    return "home/slider_1";
 	}
 
-
+	
 
 }

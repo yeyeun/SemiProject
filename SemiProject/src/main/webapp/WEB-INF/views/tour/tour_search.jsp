@@ -30,7 +30,7 @@
         <div class="side_tab">
             <div class="page_tag">
                 <div class="tour_category"><h1>여행지</h1></div>
-                <form action="${contextPath}/tour/search" method="Get">
+                <form action="${contextPath }/tour/search" method="Get">
                 <div class="hstack gap-3">
                     <input class="form-control me-auto" type="text" name="keyword" placeholder="검색" aria-label="검색">
                     <input type="submit" class="btn btn-secondary" value="검색">
@@ -68,7 +68,7 @@
             <c:set var="endPage" value="${Math.ceil(page/10)*10}" />
             <c:set var="startPage" value="${endPage-9}" />
             <!-- 이전 페이지로 이동하는 버튼 -->
-            <a href="${contextPath}/tour/list?page=${page - 1}" class="page-link prev-page-link"  data-page="${page - 1}">&laquo; Prev</a>
+            <a href="${contextPath}/tour/search?keyword=${param.keyword}&page=${page - 1}" class="page-link prev-page-link"  data-page="${page - 1}">&laquo; Prev</a>
     
             <!-- 페이지 링크를 동적으로 생성 -->
             
@@ -77,10 +77,10 @@
                 <c:if test="${i <= totalPages}">
                 	<c:choose>
                 	<c:when test="currentPage == page">
-                    <a href="${contextPath}/tour/list?page=${i}" class="page-link" data-page="${i}" class="active">${i}</a>
+                    <a href="${contextPath}/tour/search?keyword=${param.keyword}&page=${i}" class="page-link" data-page="${i}" class="active">${i}</a>
                 	</c:when>
                 	<c:otherwise>
-                		<a href="${contextPath}/tour/list?page=${i}" class="page-link" data-page="${i}">${i}</a>
+                		<a href="${contextPath}/tour/serach?keyword=${param.keyword}&page=${i}" class="page-link" data-page="${i}">${i}</a>
                 	</c:otherwise>
                 	</c:choose>
                 </c:if>
@@ -88,7 +88,7 @@
     
             <!-- 다음 페이지로 이동하는 버튼 -->
             <c:if test="${endPage < totalPages}">
-                <a href="${contextPath}/tour/list?page=${endPage + 1}" class="page-link next-page-link"
+                <a href="${contextPath}/tour/search?keyword=${param.keyword}&page=${endPage + 1}" class="page-link next-page-link"
                     data-page="${endPage + 1}">Next &raquo;</a>
             </c:if>
         </div>
@@ -109,20 +109,20 @@
         var totalPages = ${totalPages}; // 전체 페이지 수 가져오기 (JSP 변수로부터)
         var startPage = nextPage - (nextPage % 10) + 1; // 시작 페이지 계산
         var endPage = Math.min(startPage + 9, totalPages); // 끝 페이지 계산
-
+		var keyword = '<%= request.getParameter("keyword") %>';
         // 페이지 링크 업데이트
         var paginationHtml = '';
 
         if (startPage > 1) {
-            paginationHtml += '<a href="${contextPath}/tour/list?page=' + (startPage - 10) + '" class="page-link prev-page-link">&laquo; Prev</a>';
+            paginationHtml += '<a href="${contextPath}/tour/search?keyword='+keyword+'&page=' + (startPage - 10) + '" class="page-link prev-page-link">&laquo; Prev</a>';
         }
 
         for (var i = startPage; i <= endPage; i++) {
-            paginationHtml += '<a href="${contextPath}/tour/list?page=' + i + '" class="page-link">' + i + '</a>';
+            paginationHtml += '<a href="${contextPath}/tour/serach?keyword='+keyword+'&page=' + i + '" class="page-link">' + i + '</a>';
         }
 
         if (endPage < totalPages) {
-            paginationHtml += '<a href="${contextPath}/tour/list?page=' + (endPage + 1) + '" class="page-link next-page-link" data-page="' + (endPage + 1) + '">Next &raquo;</a>';
+            paginationHtml += '<a href="${contextPath}/tour/search?keyword='+keyword+'&page=' + (endPage + 1) + '" class="page-link next-page-link" data-page="' + (endPage + 1) + '">Next &raquo;</a>';
         }
 
         // pagination 엘리먼트 업데이트
