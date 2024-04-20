@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -100,8 +101,9 @@ public class MemberController {
     }
 
     @PostMapping("/signUp")
-    public String signUp(Members member) {
+    public String signUp(Members member, RedirectAttributes rttr) {
     	log.info("signUp...");
+    	rttr.addFlashAttribute("result","success");
         memberService.registerMember(member);
         return "redirect:/login/login";
     }
