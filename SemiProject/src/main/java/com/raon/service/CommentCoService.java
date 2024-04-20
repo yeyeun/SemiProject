@@ -17,9 +17,9 @@ public class CommentCoService {
 	@Setter(onMethod_=@Autowired)
 	private CommentCoMapper mapper;
 	
-	public int insert(CommentCo comment) {
-		log.info("register...."+comment);
-		return mapper.insert(comment);
+	public int insert(CommentCo commentco) {
+		log.info("register...."+commentco);
+		return mapper.insert(commentco);
 	}
 	
 	public CommentCo read(Integer commentid) {
@@ -27,9 +27,9 @@ public class CommentCoService {
 		return mapper.read(commentid);
 	}
 	
-	public int update(CommentCo comment) {
-		log.info("modify...."+comment);
-		return mapper.update(comment);
+	public int update(CommentCo commentco) {
+		log.info("modify...."+commentco);
+		return mapper.update(commentco);
 	}
 	
 	public int delete(Integer commentid) {
@@ -37,8 +37,8 @@ public class CommentCoService {
 		return mapper.delete(commentid);
 	}
 	
-	public List<CommentCo> getListByBno(Integer bno){
-		log.info("get Reply Comment of a Board......" + bno);
-		return mapper.getListByBno(bno);
+	public List<CommentCo> getListByContentid(String contentid){
+		log.info("get Comment of a Course......" + contentid);
+		return mapper.getListByContentid(contentid);
 	}
 }

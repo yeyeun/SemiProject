@@ -14,22 +14,22 @@ import com.raon.domain.CommentCo;
 @Mapper
 public interface CommentCoMapper {
 	//댓글 작성
-	@Insert("insert into comment (bno,content,id) values(#{bno},#{content},#{id})")
+	@Insert("insert into commentCourse (contentid,content,id) values(#{contentid},#{content},#{id})")
 	public int insert(CommentCo comment);
 	
 	//댓글 조회
-	@Select("select * from comment where commentid=#{commentid}")
+	@Select("select * from commentCourse where commentid=#{commentid}")
 	public CommentCo read(Integer commentid);
 	
 	//댓글 삭제
-	@Delete("delete from comment where commentid=#{commentid}")
+	@Delete("delete from commentCourse where commentid=#{commentid}")
 	public int delete(Integer commentid);
 	
 	//댓글 수정
-	@Update("update comment set content=#{content} where commentid=#{commentid}")
+	@Update("update commentCourse set content=#{content} where commentid=#{commentid}")
 	public int update(CommentCo comment);
 	
 	//특정 게시물의 댓글 조회
-	@Select("select * from comment where bno=#{bno}")
-	public List<CommentCo> getListByBno(@Param("bno") Integer bno);
+	@Select("select * from commentCourse where contentid=#{contentid}")
+	public List<CommentCo> getListByContentid(@Param("contentid") String contentid);
 }

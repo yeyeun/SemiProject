@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.raon.domain.Comment;
-import com.raon.service.CommentService;
+import com.raon.domain.CommentCo;
+import com.raon.service.CommentCoService;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
@@ -25,26 +25,26 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 @AllArgsConstructor
 public class CommentCoController {
-	private CommentService service;
+	private CommentCoService service;
 	
 	@PostMapping(value="/new", consumes="application/json",produces= {MediaType.TEXT_PLAIN_VALUE})
-	public ResponseEntity<String> create(@RequestBody Comment comment){
-		log.info("Comment : " + comment);
-		int insertCount = service.insert(comment);
-		log.info("Comment INSERT COUNT : " + insertCount);
+	public ResponseEntity<String> create(@RequestBody CommentCo commentco){
+		log.info("CommentCo : " + commentco);
+		int insertCount = service.insert(commentco);
+		log.info("CommentCo INSERT COUNT : " + insertCount);
 		return insertCount == 1 ? new ResponseEntity<>("success",HttpStatus.OK)
 				: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
-	@GetMapping(value="/pages/{bno}/{page}", produces= {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<List<Comment>> getList(@PathVariable("page") int page, @PathVariable("bno") Integer bno){
+	@GetMapping(value="/pages/{contentid}/{page}", produces= {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity<List<CommentCo>> getList(@PathVariable("page") int page, @PathVariable("contentid") String contentid){
 		log.info("getList..........");
-		return new ResponseEntity<> (service.getListByBno(bno), HttpStatus.OK);
+		return new ResponseEntity<> (service.getListByContentid(contentid), HttpStatus.OK);
 	}
 	
 	//댓글 조회
 	@GetMapping(value="/{commentid}", produces= {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<Comment> get(@PathVariable("commentid") Integer commentid){
+	public ResponseEntity<CommentCo> get(@PathVariable("commentid") Integer commentid){
 		log.info("get : " + commentid);
 		return new ResponseEntity<> (service.read(commentid), HttpStatus.OK);
 	}
@@ -60,11 +60,11 @@ public class CommentCoController {
 	//댓글 수정
 	@RequestMapping(method={RequestMethod.PUT, RequestMethod.PATCH},
 			value="/{commentid}", consumes="application/json", produces={MediaType.TEXT_PLAIN_VALUE})
-	public ResponseEntity<String> modify(@RequestBody Comment comment, @PathVariable("commentid") Integer commentid){
-		comment.setCommentid(commentid);
+	public ResponseEntity<String> modify(@RequestBody CommentCo commentco, @PathVariable("commentid") Integer commentid){
+		commentco.setCommentid(commentid);
 		log.info("commentid : " + commentid);
-		log.info("modify : " + comment);
-		return service.update(comment)==1? new ResponseEntity<>("success", HttpStatus.OK)
+		log.info("modify : " + commentco);
+		return service.update(commentco)==1? new ResponseEntity<>("success", HttpStatus.OK)
 				:new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 }

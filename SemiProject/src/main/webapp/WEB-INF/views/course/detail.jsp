@@ -363,17 +363,23 @@ $(document).ready(function(){
 	
 	//새로운 댓글 처리
 	$("#registerBtn").on("click",function(e){
+		var contentValue = document.getElementById('content').value; //댓글창에 입력된 값 가져오기
 		if(loginId=="null"){
 			alert("로그인 후 사용해주세요");
+			return;
+		}
+		if(contentValue === ''){
+			alert("최소 한 글자 이상 입력해주세요");
 			return;
 		}
 /* 		console.log("content값============"+document.getElementById('content').value);
 		console.log("loginId값============"+loginId); */
  		var comment={
-			content:document.getElementById('content').value,
+			content:contentValue,
 			id:loginId,
 			contentid:contentidValue
 		};
+		
 		add(comment,function(result){
 			alert("댓글이 등록되었습니다");
 			$('#content').val(""); //댓글 등록이 되면, 텍스트 내용을 지움
