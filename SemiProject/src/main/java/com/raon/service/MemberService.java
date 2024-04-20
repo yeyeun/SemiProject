@@ -49,8 +49,8 @@ public class MemberService {
     }
 
     
-    public void updatePassword(Members member) {
-    	mapper.updatePassword(member);
+    public void updatePassword(@RequestParam("id") String id, @RequestParam("email") String email, @RequestParam("pwd") String pwd) {
+    	mapper.updatePassword(id, email, pwd);
     }
 	public boolean selectId(String id) {
 		log.info("Service :: selectId...................");

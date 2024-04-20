@@ -72,9 +72,11 @@ public class MemberController {
     }
 
     @PostMapping("/updatePwd")
-    public String updatePwd(Members member) {
-        memberService.updatePassword(member);
-        return "redirect:/home/main";
+    @ResponseBody
+    public boolean updatePwd(@RequestParam("id")String id, @RequestParam("email")String email, @RequestParam("pwd") String pwd) {    	
+    	memberService.updatePassword(id, email, pwd);
+    	boolean result = true;    	    	
+    	return result;
     }
 
     @GetMapping("/login")
@@ -90,12 +92,13 @@ public class MemberController {
    
     
     @PostMapping("/login")
-    public String login(HttpSession session, @RequestParam String id, @RequestParam String pwd) {
+    public String login(HttpSession session, @RequestParam String id, @RequestParam String pwd, RedirectAttributes rttr) {
         if (memberService.isUser(id, pwd)) {
         	log.info("login....");
             session.setAttribute("loginId", id);
             return "redirect:"+session.getAttribute("previousPageUrl");
         } else {
+        	rttr.addFlashAttribute("loginfail","fail");
             return "redirect:/login/login";
         }
     }

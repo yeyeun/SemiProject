@@ -41,7 +41,9 @@
 		<div class="container__form container--signin">
 			<form action="${contextPath}/login/login" method="Post" class="form" id="form2">
 				<h2 class="form__title">로그인</h2>
-				<input type="text" id="id" name="id" placeholder="아이디" class="input" /> <input type="password" id="pwd" name="pwd" placeholder="비밀번호" class="input" /> <a href="#exampleModal" id="findPwd" data-bs-toggle="modal">비밀번호 찾기</a>
+				<input type="text" id="id" name="id" placeholder="아이디" class="input" />
+				<input type="password" id="pwd" name="pwd" placeholder="비밀번호" class="input" />
+				<a href="#exampleModal" id="findPwd" data-bs-toggle="modal" onclick="setis()">비밀번호 찾기</a>
 				<button type="submit" class="btn">로그인</button>
 			</form>
 		</div>
@@ -62,23 +64,24 @@
 			<div class="modal-dialog modal-dialog-centered">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h1 class="modal-title fs-5" id="exampleModalLabel">아이디를 입력하세요</h1>
+						<h1 class="modal-title fs-5" id="exampleModalLabel">비밀번호 찾기</h1>
 					</div>
 
 					<div class="modal-body">
 						<form action="${contextPath}/login/confirmPwd" method="Post">
 							<div id="inputInfo">
-								<input type="text" id="checkId" name="id" placeholder="아이디 입력" class="input_id" /><label id="labelId"></label> <input type="text" id="checkEmail" name="email" placeholder="이메일 입력" class="input_email" /><label id="labelEmail"></label>
+								<input type="text" id="checkId" name="id" placeholder="아이디 입력" class="input_id" /><label id="labelId"></label>
+								<input type="text" id="checkEmail" name="email" placeholder="이메일 입력" class="input_email" /><label id="labelEmail"></label>
 								<div class="modal-footer">
-									<button type="submit" id="confirmInfo" class="btn btn-primary">확인</button>
+									<input type="button" id="confirmInfo" class="btn btn-primary" value="확인"/>
 									<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
 								</div>
 							</div>
 						</form>
 						<div id="newPasswordDiv" style="display: none;">
-							<input type="password" id="newPassword" name="newPassword" placeholder="새 비밀번호" />
+							<input type="text" id="newPassword" name="newPassword" placeholder="새 비밀번호" />
 							<div class="modal-footer">
-								<button type="submit" id="confirmPw" class="btn btn-primary" onclick="location.href='${contextPath}/login/updatePwd'">확인</button>
+								<input type="button" id="confirmPw" class="btn btn-primary" onclick="updatepwd()" value="확인"/>
 								<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
 							</div>
 						</div>
@@ -105,6 +108,8 @@ var isValidName = 1;
 var isValidEmail = 1;
 var isValidphoneNo = 1;
 var isValidpwd = 1;
+var isfindid = 1;
+var isfindemail = 1;
 
 
 signInBtn.addEventListener("click", () => {
@@ -119,6 +124,18 @@ signUpBtn.addEventListener("click", () => {
 secondForm.addEventListener("submit", (e) => e.preventDefault());
  */
  $(document).ready(function() {
+	 //로그인 실패해서 창으로 돌아올때
+	let isfail = '<c:out value="${loginfail}"/>';
+	console.log('isfail :', isfail);
+	checkFail(isfail);
+	function checkFail(isfail) {
+		if (isfail === '') {
+				return; 
+			}
+		if(isfail === "fail"){
+			alert("아이디/비밀번호가 틀렸습니다.")
+		}   		
+   	}
 	 //회원가입->로그인창 이동 시 alert창
 	 let result = '<c:out value="${result}"/>';
 	 console.log('result :', result);
@@ -137,18 +154,35 @@ secondForm.addEventListener("submit", (e) => e.preventDefault());
 			var modal = $(this);
 
 		});
+		$("#checkId").on("focusout", function() {
+    		var id = $("#checkId").val();
+    		if(id == '' || id.length == 0) {
+    			$("#labelId").show();
+    			$("#labelId").css("color", "red").text("Id를 입력해주세요.");
+    			isfindid = 0;
+    		}else{
+    			$("#labelId").hide();
+    			isfindid = 1;
+    		}
+    	});
+		$("#checkEmail").on("focusout", function() {
+    		var email = $("#checkEmail").val();
+    		if(email == '' || email.length == 0) {
+    			$("#labelEmail").show();
+    			$("#labelEmail").css("color", "red").text("이메일을 입력해주세요.");
+    			isfindemail = 0;
+    		}else{
+    			$("#labelEmail").hide();
+    			isfindemail = 1;
+    		}
+    	});
 		//비밀번호 재설정시 id와 email 확인
 		$("#confirmInfo").on("click", function() {
     		var id = $("#checkId").val();
     		var email = $("#checkEmail").val();
-    		if(id == '' || id.length == 0) {
-    			$("#labelId").css("color", "red").text("Id를 입력해주세요.");
-    			return false;
-    		}
-    		if(email == '' || email.length == 0) {
-    			$("#labelEmail").css("color", "red").text("Email을 입력해주세요.");
-    			return false;
-    		}
+    		if(isfindid === 0 || isfindemail === 0){
+    			alert("올바른 정보를 입력해주세요.");
+    		}else{
         	//Ajax로 전송
         	$.ajax({
         		url : './confirmPwd',
@@ -162,9 +196,13 @@ secondForm.addEventListener("submit", (e) => e.preventDefault());
         			if (result == true) {
         				$("#newPasswordDiv").show();
         				$("#inputInfo").hide();
+        			}else{
+        				$("#labelEmail").show();
+        				$("#labelEmail").css("color", "red").text("일치하는 정보가 없습니다.");
         			}
         		}
         	}); //End Ajax
+    		}
     	});
 		//ID 중복 확인
     	//id를 입력할 수 있는 input text 영역을 벗어나면 동작
@@ -317,6 +355,41 @@ secondForm.addEventListener("submit", (e) => e.preventDefault());
 		e.select();
 		e.focus();
 		return false;
+	}
+	function setis(){
+		console.log(isfindid+"@@"+isfindemail);
+		$("#checkId").val("");
+		$("#checkEmail").val("");
+		$("#newPassword").val("");
+		$("#newPasswordDiv").hide();
+		$("#inputInfo").show();
+		
+		isfindid = 0;
+		isfindemail = 0;
+	}
+	function updatepwd(){
+		var id = $("#checkId").val();
+		var email = $("#checkEmail").val();
+		var pwd = $("#newPassword").val();
+		
+    	$.ajax({
+    		url : '/login/updatePwd',
+    		data : {
+    			id : id,
+    			email : email,
+    			pwd : pwd
+    		},
+    		type : 'POST',
+    		dataType : 'json',
+    		success : function(result) {
+    			if (result == true) {
+    				alert("비밀번호 변경이 완료 되었습니다.");
+    				location.reload();
+    			}else{
+    				alert("비밀번호 변경이 실패 했습니다.");
+    			}
+    		}
+    	}); //End Ajax
 	}
 </script>
 </body>
