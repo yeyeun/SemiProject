@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.raon.domain.Board;
 import com.raon.domain.Cart;
+import com.raon.domain.Course;
 import com.raon.domain.Members;
 import com.raon.domain.Mytourpage;
 import com.raon.domain.TourDetailInfo;
@@ -44,6 +45,11 @@ public class MypageService {
 		log.info("Mypage -> myboard");
 		List<Board> myboardlist = mapper.myboard(writer);
 		return myboardlist;
+	}
+	public List<Course> mycourse(String id) {
+		log.info("Mypage -> myboard");
+		List<Course> mycourselist = mapper.mycourse(id);
+		return mycourselist;
 	}
 	
 	 public int insertCart(@Param("id") String id,@Param("contentid") String contentid,@RequestParam("firstimage") String firstimage, @RequestParam("title") String title) {

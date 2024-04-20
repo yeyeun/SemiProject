@@ -87,7 +87,8 @@ public class MypageController {
 	@GetMapping("/mywrite")
 	public String mywrite(@SessionAttribute("loginId")String loginId, Model model) {
 		log.info("mywrite");
-		model.addAttribute("bList",mypageservice.myboard(loginId));		
+		model.addAttribute("bList",mypageservice.myboard(loginId));
+		model.addAttribute("cList",mypageservice.mycourse(loginId));
 		return "mypage/mywrite";
 	}
 

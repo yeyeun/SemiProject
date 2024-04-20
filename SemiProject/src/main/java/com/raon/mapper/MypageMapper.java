@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.raon.domain.Board;
 import com.raon.domain.Cart;
 import com.raon.domain.Comment;
+import com.raon.domain.Course;
 
 @Mapper
 public interface MypageMapper {
@@ -32,4 +33,7 @@ public interface MypageMapper {
 	
 	@Select("select * from boardtable where writer=#{writer}")
 	public List<Board> myboard(@Param("writer") String writer);
+	
+	@Select("select * from course where id = #{id}")
+	public List<Course> mycourse(@Param("id") String id);
 }

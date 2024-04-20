@@ -46,7 +46,7 @@
 									<td>${board.bno}</td>
 									<td>${board.btype}</td>
 									<td>${board.title}</td>
-									<td><fmt:formatDate pattern="yyyy/MM/dd" value="${board.regDate}"/></td>
+									<td><fmt:formatDate pattern="yyyy/MM/dd" value="${board.regDate}" /></td>
 									<td>${board.hit}</td>
 								</tr>
 							</c:forEach>
@@ -62,37 +62,23 @@
 
 				<div class="blog-wrapper category-course">
 					<!-- 카드 아이템 -->
-					<div class="blog-card">
-						<div class="card-img">
-							<img src="http://tong.visitkorea.or.kr/cms/resource/97/600097_image2_1.jpg">
-							<h1>몸과 마음을 치유하는 에코 테라피</h1>
+					<c:forEach items="${cList}" var="course">
+						<div class="blog-card">
+							<div class="card-img">
+								<img src="${course.firstimage}">
+								<h1>${course.title }</h1>
+							</div>
+							<div class="card-details">
+								<span><i class="fa fa-calendar"></i>${course.regDate}</span> <span><i class="fa fa-comment"></i>15</span>
+							</div>
+							<div class="card-text">
+								<p>${course.overview }</p>
+							</div>
+							<div class="read-more">
+								<a href="${contextPath}/course/detail.course?contentid=${course.contentid}">상세 보기</a>
+							</div>
 						</div>
-						<div class="card-details">
-							<span><i class="fa fa-calendar"></i>2024-04-01</span> <span><i class="fa fa-comment"></i>15</span>
-						</div>
-						<div class="card-text">
-							<p>회색빛 도시의 일상에 지친 이들에게 제주의 숲과 바다는 천연 치유제가 된다. 천년의 숲 비자림에 들어서면 영혼까지 맑아지는 기분이다. 평화로움 가득한 중산간 도로, 잘 가꿔진 허브동산, 망망대해가 펼쳐진 해안 절벽까지 천천히 쉬어가는 동안 스트레스로 찌들었던 몸과 마음이 한결 가벼워진다. 비워진 공간엔 맑고 따스한 기운이 가득 찬다.</p>
-						</div>
-						<div class="read-more">
-							<a href="${contextPath}/course/detail.course?contentid=1855198">상세 보기</a>
-						</div>
-					</div>
-					<div class="blog-card">
-						<div class="card-img">
-							<img src="http://tong.visitkorea.or.kr/cms/resource/27/3023727_image2_1.jpg">
-							<h1>한라산 품 안에서 보내는 하룻밤</h1>
-						</div>
-						<div class="card-details">
-							<span><i class="fa fa-calendar"></i>2024-04-15</span> <span><i class="fa fa-comment"></i>85</span>
-						</div>
-						<div class="card-text">
-							<p>한라산 기슭 1100도로 변에 자리한 서귀포자연휴양림은 삼림욕과 생태탐방은 물론 여름철 물놀이와 캠핑을 위한 야영장까지 고루 갖추고 있다. 편백나무 숲 속에 펼친 텐트에 모여 앉아 밤하늘 총총히 뜬 별빛을 바라보며 보내는 하룻밤은 평생 간직할 추억으로 남는다. 휴양림에서 멀지 않은 거리에 한라수목원과 어승생악 탐방로가 있어 반나절 코스로 잡으면 좋다.</p>
-						</div>
-						<div class="read-more">
-							<a href="${contextPath}/course/detail.course?contentid=1855218">상세 보기</a>
-						</div>
-					</div>
-
+					</c:forEach>
 					<!-- 카드 아이템 -->
 				</div>
 
