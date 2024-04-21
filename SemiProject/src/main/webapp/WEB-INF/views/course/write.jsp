@@ -62,9 +62,12 @@
 						</div>
 						<div class="modal-body" style="width: 483px; height: 465px; overflow-y: auto;">
 							<ul style="list-style-type: none;">
-								<c:forEach items="${mytourList }" var="tour">
-									<li class="cartItem"><input type="checkbox" class="cartCheckbox" value="${tour.title}" onclick="toggleCheckbox(this)"> <img src="${tour.firstimage}" alt="Tour Image" class="cartimage" onerror="this.src='../../resources/images/nocourseimg.png'"> <span class="carttitle">${tour.title}</span>
-										<p id="checkcontentid" style="display: none;">${tour.contentid }</p></li>
+								<c:forEach items="${mytourList}" var="tour">
+								
+									<li class="cartItem"><input type="checkbox" class="cartCheckbox" value="${tour.title}" onclick="toggleCheckbox(this)">
+									<img src="${tour.firstimage}" alt="Tour Image" class="cartimage" onerror="this.src='../../resources/images/nocourseimg.png'"><span class="carttitle">${tour.title}</span>
+									<p id="checkcontentid" style="display: none;">${tour.contentid}</p></li>
+										
 								</c:forEach>
 							</ul>
 						</div>
@@ -131,6 +134,12 @@
 		}
 
 		function showTourList() {
+			var checkboxsCnt = document.querySelectorAll('.cartCheckbox').length;
+			console.log("체크박스 갯수 : " + checkboxsCnt);
+			if(checkboxsCnt>10){ //최대 선택 가능한 여행지 갯수 제한
+				alert("선택 가능한 여행지의 최대 갯수는 10개입니다.");
+				return false;
+			}
 			tourList.innerHTML = selectedTitles.join(' → ');
 		}
 		function sendData() {

@@ -152,6 +152,7 @@ textarea {
   height: 30em;
 }
 
+
 /* Modal */
 .cartItem{
 	margin-bottom: 35px;	
@@ -172,5 +173,10 @@ textarea {
 }
 .cartCheckbox{
 	width: 13px;
+}
+.cartCheckbox{
+	width: 20px;
+	height: 20px;
+	margin-right: 5px;
 }
 
