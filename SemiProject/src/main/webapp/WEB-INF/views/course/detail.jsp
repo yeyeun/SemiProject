@@ -35,6 +35,16 @@
 			</blockquote>
 		</div>
 		<div class="container">
+		<div class="writer-text">
+			<c:choose>
+				<c:when test="${course.id == 'admin'}">
+					<span class="writer" style="background:#0D689C; color:#FFFFFF;">한국관광공사 제공</span>
+				</c:when>
+				<c:otherwise>
+					<span class="writer" style="background:#c4deff; color:#000000;">작성자 : ${course.id}</span>
+				</c:otherwise>
+			</c:choose>
+		</div>
 		<div class="overview-text">
 			<blockquote>
 				<p>${course.overview}</p>
