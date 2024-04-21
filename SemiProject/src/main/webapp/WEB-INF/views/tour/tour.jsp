@@ -94,37 +94,59 @@
 <%-- <jsp:include page="footer.jsp"/> --%>
 
 <script>
-    $(document).ready(function () {
-        $('.pagination a').click(function (event) {
-            event.preventDefault(); // 기본 링크 동작 방지
-            var nextPage = parseInt($(this).attr('data-page')); // 클릭된 페이지 번호 가져오기
-            updatePagination(nextPage); // pagination 업데이트
-        });
+$(document).ready(function () {
+    // 페이지 로드 시 초기 pagination 생성
+    updatePagination(1);
+
+    // 이벤트 위임을 통해 동적으로 생성된 페이지 링크에도 클릭 이벤트를 적용
+    $('.pagination').on('click', 'a.page-link', function (event) {
+        event.preventDefault(); // 기본 링크 동작 방지
+        var nextPage = parseInt($(this).attr('data-page')); // 클릭된 페이지 번호 가져오기
+        updatePagination(nextPage); // pagination 업데이트
+        // 페이지 이동을 여기서 처리합니다.
+        window.location.href = $(this).attr('href');
     });
+});
 
-    function updatePagination(nextPage) {
-        var totalPages = ${totalPages}; // 전체 페이지 수 가져오기 (JSP 변수로부터)
-        var startPage = nextPage - (nextPage % 10) + 1; // 시작 페이지 계산
-        var endPage = Math.min(startPage + 9, totalPages); // 끝 페이지 계산
+function updatePagination(nextPage) {
+    var totalPages = ${totalPages}; // 전체 페이지 수 가져오기 (JSP 변수로부터)
 
-        // 페이지 링크 업데이트
-        var paginationHtml = '';
+    // 현재 페이지를 기준으로 시작 페이지 계산
+    var currentPage = parseInt(${page});
+    var startPage = Math.floor((currentPage - 1) / 10) * 10 + 1;
 
-        if (startPage > 1) {
-            paginationHtml += '<a href="${contextPath}/tour/list?page=' + (startPage - 10) + '" class="page-link prev-page-link">&laquo; Prev</a>';
-        }
+    // 끝 페이지 계산
+    var endPage = Math.min(startPage + 9, totalPages);
 
-        for (var i = startPage; i <= endPage; i++) {
+    // 페이지 링크 업데이트
+    var paginationHtml = '';
+
+    // 이전 페이지로 이동하는 버튼 추가
+    if (startPage > 1) {
+        paginationHtml += '<a href="${contextPath}/tour/list?page=' + (startPage - 1) + '" class="page-link prev-page-link">&laquo; Prev</a>';
+    } else {
+        paginationHtml += '<span class="page-link disabled">&laquo; Prev</span>';
+    }
+
+    // 페이지 번호 링크 생성
+    for (var i = startPage; i <= endPage; i++) {
+        if (i === currentPage) {
+            paginationHtml += '<a href="${contextPath}/tour/list?page=' + i + '" class="page-link active">' + i + '</a>';
+        } else {
             paginationHtml += '<a href="${contextPath}/tour/list?page=' + i + '" class="page-link">' + i + '</a>';
         }
-
-        if (endPage < totalPages) {
-            paginationHtml += '<a href="${contextPath}/tour/list?page=' + (endPage + 1) + '" class="page-link next-page-link" data-page="' + (endPage + 1) + '">Next &raquo;</a>';
-        }
-
-        // pagination 엘리먼트 업데이트
-        $('.pagination').html(paginationHtml);
     }
+
+    // 다음 페이지로 이동하는 버튼 추가
+    if (endPage < totalPages) {
+        paginationHtml += '<a href="${contextPath}/tour/list?page=' + (endPage + 1) + '" class="page-link next-page-link" data-page="' + (endPage + 1) + '">Next &raquo;</a>';
+    } else {
+        paginationHtml += '<span class="page-link disabled">Next &raquo;</span>';
+    }
+
+    // pagination 엘리먼트 업데이트
+    $('.pagination').html(paginationHtml);
+}
 </script>
 </body>
 </html>
