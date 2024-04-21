@@ -92,9 +92,9 @@ html, body {
 	margin: 0 auto;
 	padding: 0;
 	overflow-x: hidden;
-	overflow-y: scroll;
+	/* overflow-y: scroll; */
 	height: 90%;
-	width: 100%;
+	width: 80%;
 }
 
 
@@ -115,7 +115,7 @@ html, body {
 }
 
 .overview-text{
-	width:100%;
+	width: 1000px;
 	margin:0 auto;
 }
 
@@ -148,6 +148,7 @@ html, body {
 	text-align: right;
 	margin-top: 5px;
 	margin-bottom: 15px;
+	margin-right: 90px;
 }
 
 .writer{
@@ -165,137 +166,161 @@ html, body {
 }
 
 
-/* 타임라인 디자인 */
 
-/* The actual timeline (the vertical ruler) */
-.main-timeline-2 {
-  position: relative;
+/* 카드 디자인 */
+
+.projcard-container {
+	margin: 50px 0;
 }
 
-/* The actual timeline (the vertical ruler) */
-.main-timeline-2::after {
-  content: "";
-  position: absolute;
-  width: 3px;
-  background-color: #26c6da;
-  top: 0;
-  bottom: 0;
-  left: 50%;
-  margin-left: -3px;
+.projcard-container,
+.projcard-container * {
+	box-sizing: border-box;
 }
-
-/* Container around content */
-.timeline-2 {
-  position: relative;
-  background-color: inherit;
-  width: 40%;
+.projcard-container {
+	margin-left: auto;
+	margin-right: auto;
+	width: 1000px;
 }
-
-/* The circles on the timeline */
-.timeline-2::after {
-  content: "";
-  position: absolute;
-  width: 25px;
-  height: 25px;
-  right: -11px;
-  background-color: #26c6da;
-  top: 15px;
-  border-radius: 50%;
-  z-index: 1;
+.projcard {
+	position: relative;
+	width: 100%;
+	height: 300px;
+	margin-bottom: 40px;
+	border-radius: 10px;
+	background-color: #fff;
+	border: 2px solid #ddd;
+	font-size: 18px;
+	overflow: hidden;
+	cursor: pointer;
+	box-shadow: 0 4px 21px -12px rgba(0, 0, 0, .66);
+	transition: box-shadow 0.2s ease, transform 0.2s ease;
 }
-
-/* Place the container to the left */
-.timeline-2:nth-child(odd) {
-  padding: 0px 40px 20px 0px;
-  left: -20%;
+.projcard:hover {
+	box-shadow: 0 34px 32px -33px rgba(0, 0, 0, .18);
+	transform: translate(0px, -3px);
 }
-
-/* Place the container to the right */
-.timeline-2:nth-child(even) {
-  padding: 0px 0px 20px 40px;
-  left: 20%;
+.projcard::before {
+	content: "";
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	background-image: linear-gradient(-70deg, #424242, transparent 50%);
+	opacity: 0.07;
 }
-
-/* Add arrows to the left container (pointing right) */
-.timeline-2:nth-child(odd)::before {
-  content: " ";
-  position: absolute;
-  top: 18px;
-  z-index: 1;
-  right: 30px;
-  border: medium solid white;
-  border-width: 10px 0 10px 10px;
-  border-color: transparent transparent transparent white;
+.projcard:nth-child(2n)::before {
+	background-image: linear-gradient(-250deg, #424242, transparent 50%);
 }
-
-/* Add arrows to the right container (pointing left) */
-.timeline-2:nth-child(even)::before {
-  content: " ";
-  position: absolute;
-  top: 18px;
-  z-index: 1;
-  left: 30px;
-  border: medium solid white;
-  border-width: 10px 10px 10px 0;
-  border-color: transparent white transparent transparent;
+.projcard-innerbox {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
 }
-
-/* Fix the circle for containers on the right side */
-.timeline-2:nth-child(even)::after {
-  left: -14px;
+.projcard-img {
+	position: absolute;
+	height: 300px;
+	width: 400px;
+	top: 0;
+	left: 0;
+	transition: transform 0.2s ease;
 }
-
-/* Media queries - Responsive timeline on screens less than 600px wide */
-@media screen and (max-width: 600px) {
-  /* Place the timelime to the left */
-  .main-timeline-2::after {
-    left: 31px;
-  }
-
-  /* Full-width containers */
-  .timeline-2 {
-    width: 100%;
-    padding-left: 70px;
-    padding-right: 25px;
-  }
-
-  /* Make sure that all arrows are pointing leftwards */
-  .timeline-2::before {
-    left: 60px;
-    border: medium solid white;
-    border-width: 10px 10px 10px 0;
-    border-color: transparent white transparent transparent;
-  }
-
-  /* Make sure all circles are at the same spot */
-  .timeline-2:nth-child(odd)::after,
-  .timeline-2:nth-child(even)::after {
-    left: 18px;
-  }
-
-  .timeline-2:nth-child(odd)::before {
-    right: auto;
-  }
-
-  /* Make all right containers behave like the left ones */
-  .timeline-2:nth-child(even) {
-    left: 0%;
-  }
+.projcard:nth-child(2n) .projcard-img {
+	left: initial;
+	right: 0;
 }
-
-
-.fw-bold a{
-	text-decoration: none;
-	color: black;
-	
+.projcard:hover .projcard-img {
+	transform: scale(1.05) rotate(1deg);
 }
-
-.subtitle{
-	margin-top: 10px;
+.projcard:hover .projcard-bar {
+	width: 70px;
+}
+.projcard-textbox {
+	position: absolute;
+	top: 7%;
+	bottom: 7%;
+	left: 430px;
+	width: calc(100% - 470px);
+	font-size: 17px;
+	margin-top: 15px;
+}
+.projcard:nth-child(2n) .projcard-textbox {
+	left: initial;
+	right: 430px;
+}
+.projcard-textbox::before,
+.projcard-textbox::after {
+	content: "";
+	position: absolute;
+	display: block;
+	background: #ff0000bb;
+	background: #fff;
+	top: -20%;
+	left: -55px;
+	height: 140%;
+	width: 60px;
+	transform: rotate(8deg);
+}
+.projcard:nth-child(2n) .projcard-textbox::before {
+	display: none;
+}
+.projcard-textbox::after {
+	display: none;
+	left: initial;
+	right: -55px;
+}
+.projcard:nth-child(2n) .projcard-textbox::after {
+	display: block;
+}
+.projcard-textbox * {
+	position: relative;
+}
+.projcard-title {
+	font-family: "Noto Sans KR";
+	font-size: 24px;
 	margin-bottom: 10px;
-	font-weight: 500;
+}
+.projcard-subtitle {
+	font-family: "Noto Sans KR";
+	color: #888;
+}
+.projcard-bar {
+	left: -2px;
+	width: 50px;
+	height: 5px;
+	margin: 10px 0;
+	border-radius: 5px;
+	background-color: #424242;
+	transition: width 0.2s ease;
+}
+.projcard-blue .projcard-bar { background-color: #0088FF; }
+.projcard-blue::before { background-image: linear-gradient(-70deg, #0088FF, transparent 50%); }
+.projcard-blue:nth-child(2n)::before { background-image: linear-gradient(-250deg, #0088FF, transparent 50%); }
+.projcard-customcolor .projcard-bar { background-color: var(--projcard-color); }
+.projcard-customcolor::before { background-image: linear-gradient(-70deg, var(--projcard-color), transparent 50%); }
+.projcard-customcolor:nth-child(2n)::before { background-image: linear-gradient(-250deg, var(--projcard-color), transparent 50%); }
+.projcard-description {
+	z-index: 10;
+	font-size: 15px;
+	color: #424242;
+	/* height: 140px; */
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 5;
+	-webkit-box-orient: vertical;
 }
 
+.projcard-num{
+	background: #96C7ED;
+	font-size: 20px;
+	border-radius: 30px;
+	margin-right: 5px;
+	padding: 0px 9px 2px 9px;
+}
 
 
 /* @@@@@@ 댓글 디자인 @@@@@@@@ */
@@ -441,4 +466,20 @@ button[type="button"]:hover{
 
 .comment-button button:hover{
 	background: #a5d8ff;
+}
+
+/* 수정 삭제 버튼 */
+.buttons-wrapper{
+	text-align: right;
+}
+.buttons-wrapper button{
+	border-style: none;
+	padding: 5px;
+	border-radius: 10px;
+	margin-right: 8px;
+	background: #cbdeff;
+}
+
+.buttons-wrapper button:hover{
+	background: #a4c5ff;
 }

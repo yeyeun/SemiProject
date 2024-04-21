@@ -152,11 +152,12 @@ public class CourseService {
 			StringBuilder urlBuilder = new StringBuilder("https://apis.data.go.kr/B551011/KorService1/detailCommon1"); //api URL
 			urlBuilder.append("?" + URLEncoder.encode("MobileOS", "UTF-8") + "=" + URLEncoder.encode("ETC", "UTF-8"));
 			urlBuilder.append("&" + URLEncoder.encode("MobileApp", "UTF-8") + "=" + URLEncoder.encode("raon", "UTF-8"));
-			urlBuilder.append("&" + URLEncoder.encode("contentId", "UTF-8") + "=" + URLEncoder.encode(subcontent.trim(), "UTF-8")); //여행코스 id
+			urlBuilder.append("&" + URLEncoder.encode("contentId", "UTF-8") + "=" + URLEncoder.encode(subcontent.trim(), "UTF-8")); //여행코스의 여행지 id
 			urlBuilder.append("&" + URLEncoder.encode("defaultYN", "UTF-8") + "=" + URLEncoder.encode("Y", "UTF-8")); //기본정보 조회여부
 			urlBuilder.append("&" + URLEncoder.encode("firstImageYN", "UTF-8") + "=" + URLEncoder.encode("Y", "UTF-8")); //이미지 조회여부
 			urlBuilder.append("&" + URLEncoder.encode("mapinfoYN", "UTF-8") + "=" + URLEncoder.encode("Y", "UTF-8")); //좌표 조회여부
 			urlBuilder.append("&" + URLEncoder.encode("overviewYN", "UTF-8") + "=" + URLEncoder.encode("Y", "UTF-8")); //설명 조회여부
+			urlBuilder.append("&" + URLEncoder.encode("addrinfoYN", "UTF-8") + "=" + URLEncoder.encode("Y", "UTF-8")); //주소 조회여부
 			urlBuilder.append("&" + URLEncoder.encode("serviceKey", "UTF-8") + "=mu4MvO6eUoXAtU8dp%2Bdwyt%2B%2F24GYekx10foLVqNhtViQi60IGrp26ujspnFxZvJc5EZ0UhX99Q6eQ%2FdE2pRwiA%3D%3D"); //서비스키
 			urlBuilder.append("&" + URLEncoder.encode("_type", "UTF-8") + "=" + URLEncoder.encode("json", "UTF-8")); //조회 타입
 
@@ -184,7 +185,7 @@ public class CourseService {
 							jsonArray.getJSONObject(i).getString("title"),jsonArray.getJSONObject(i).getString("contentid"),
 							jsonArray.getJSONObject(i).getString("firstimage"),jsonArray.getJSONObject(i).getString("mapx"),
 							jsonArray.getJSONObject(i).getString("mapy"),jsonArray.getJSONObject(i).getString("mlevel"),
-							jsonArray.getJSONObject(i).getString("overview")
+							jsonArray.getJSONObject(i).getString("overview"),jsonArray.getJSONObject(i).getString("addr1")
 						));
 				}
 			} catch (JSONException e) {

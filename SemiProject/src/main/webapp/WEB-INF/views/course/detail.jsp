@@ -51,38 +51,44 @@
 			</blockquote>
 		</div>
 		<div class="row-wrapper">
-			<section style="background-color: #F0F2F5;">
-				<div class="container py-5">
-					<div class="main-timeline-2">
+			<div class="projcard-container">
 					<c:choose>
 						<c:when test="${empty contentdetailList}">
 						여행지 목록이 없습니다.
 						</c:when>
 						<c:otherwise>
-							<c:forEach items="${contentdetailList}" var="contentdetail">
-							<div class="timeline-2">
-								<div class="card">
-									<img src="${contentdetail.firstimage}" alt="..." onerror="this.src='../../../resources/images/nocourseimg.png'" class="card-img-top"/>
-									<div class="card-body p-4">              
-										<h4 class="fw-bold mb-4">
-										<a href="${contextPath}/tour/tour_detail?contentid=${contentdetail.contentid}&title=${contentdetail.title}&mapy=${contentdetail.mapy}&mapx=${contentdetail.mapx}">${contentdetail.title}</a>
-										</h4>
-									</div>
+						<c:forEach items="${contentdetailList}" var="contentdetail">
+						<c:set var="i" value="${i+1}"/>
+						<div class="projcard projcard-blue" onclick="location.href='/tour/detail?contentid=${contentdetail.contentid}&title=${contentdetail.title}&mapy=${contentdetail.mapy}&mapx=${contentdetail.mapx}&firstimage=${contentdetail.firstimage}'">
+							<div class="projcard-innerbox">
+								<img class="projcard-img" src="${contentdetail.firstimage}" alt="..." onerror="this.src='../../../resources/images/nocourseimg.png'"/>
+								<div class="projcard-textbox">
+									<div class="projcard-title"><span class="projcard-num">${i}</span>${contentdetail.title}</div>
+									<div class="projcard-subtitle">${contentdetail.addr1}</div>
+									<div class="projcard-bar"></div>
+									<div class="projcard-description">${contentdetail.overview}</div>
 								</div>
 							</div>
-							</c:forEach>
+						</div>
+						</c:forEach>
 						</c:otherwise>
 					</c:choose>
-					</div>
-				</div>
-			</section>
-  			
+			</div>
   		</div>
   		
   		<!-- 카카오 지도 -->
   		<div id="map-wrapper">
-  			<div id="map" style="width:500px;height:400px;"></div>
+  			<div id="map" style="width:700px;height:400px;"></div>
   		</div>
+  		
+  		<hr style="border: none; height: 2px; background: #0D689C; opacity: 0.4; width:100%;">
+  		
+  		<c:if test="${sessionScope.loginId == course.id}">
+  		 <div class="buttons-wrapper">
+  			<button data-oper='modify' onclick="location.href='/course/modify?contentid=<c:out value="${course.contentid}"/>'">여행코스 수정하기</button>
+  			<button data-oper='delete' onclick="location.href='/course/delete?contentid=<c:out value="${course.contentid}"/>'">여행코스 삭제하기</button>
+  		</div>
+  		</c:if>
   		
   		<!-- 댓글 -->
   		
@@ -135,6 +141,7 @@
 var xList = new Array();
 var yList = new Array();
 var titleList = new Array();
+var linePath = new Array(); //선을 구성하는 좌표 배열
 	
 <c:forEach items="${contentdetailList}" var="contentdetail">
 	xList.push("${contentdetail.mapx}");
@@ -148,6 +155,7 @@ var minXvalue = Math.min.apply(null,xList);
 var maxYvalue = Math.max.apply(null,yList);
 var minYvalue = Math.min.apply(null,yList);
 
+//여행지들의 평균 좌표
 var centerX = (maxXvalue + minXvalue) / 2;
 var centerY = (maxYvalue + minYvalue) / 2;
 	
@@ -159,18 +167,39 @@ var options = {
 
 var map = new kakao.maps.Map(mapContainer, options);
 
-var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
+var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png"; // 마커 이미지 url
 
 for(var i=0; i<xList.length; i++){
-	var imageSize = new kakao.maps.Size(24, 35); // 마커 이미지 크기
-	var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); // 마커 이미지 생성
+	var imageSize = new kakao.maps.Size(36, 35); // 마커 이미지 크기
+	var imgOptions =  {
+            spriteSize : new kakao.maps.Size(36, 691), // 스프라이트 이미지의 크기
+            spriteOrigin : new kakao.maps.Point(0, (i*46)+10), // 스프라이트 이미지 중 사용할 영역의 좌상단 좌표
+            offset: new kakao.maps.Point(13, 37) // 마커 좌표에 일치시킬 이미지 내에서의 좌표
+        };
+	var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imgOptions); // 마커 이미지 생성
+	
     var marker = new kakao.maps.Marker({ // 마커 생성
         map: map, // 마커를 표시할 지도
         position: new kakao.maps.LatLng(yList[i], xList[i]),
         title : titleList[i], // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
         image : markerImage // 마커 이미지 
     });
+	
+	//배열에 좌표 저장
+	linePath.push(new kakao.maps.LatLng(yList[i], xList[i]));
 }
+
+//지도에 표시할 선을 생성합니다
+var polyline = new kakao.maps.Polyline({
+    path: linePath, // 선을 구성하는 좌표배열 입니다
+    strokeWeight: 5, // 선의 두께 입니다
+    strokeColor: '#0D689C', // 선의 색깔입니다
+    strokeOpacity: 0.7, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+    strokeStyle: 'solid' // 선의 스타일입니다
+});
+
+// 지도에 선을 표시합니다 
+polyline.setMap(map);
 
 
 $(document).ready(function(){

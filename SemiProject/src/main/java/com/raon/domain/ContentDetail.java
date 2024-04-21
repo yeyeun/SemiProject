@@ -13,4 +13,5 @@ public class ContentDetail {
 	private String mapy;
 	private String mlevel;
 	private String overview;
+	private String addr1;
 }
