@@ -135,10 +135,10 @@ $(document).ready(function(){
 			$('.modal-body > p').text("여행코스가 등록되었습니다");
 		}
    		if (result === "modify") {
-       		$('.modal-body > p').text('수정되었습니다');
+       		$('.modal-body > p').text('여행코스가 수정되었습니다');
    		}
    		if (result === "remove") {
-       		$('.modal-body > p').text('삭제되었습니다');
+       		$('.modal-body > p').text('여행코스가 삭제되었습니다');
        	} 
    		$("#myModal").modal("show");
    	}

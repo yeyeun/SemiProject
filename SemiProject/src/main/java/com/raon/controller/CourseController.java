@@ -125,4 +125,14 @@ public class CourseController {
 		return "redirect:/course/allList";
 	}
 	
+	@GetMapping("/remove")
+	public String remove(@RequestParam("contentid") String contentid, RedirectAttributes rttr) {
+		log.info(contentid + " 여행코스 삭제=========");
+		if(service.remove(contentid) && service.removeCommentCo(contentid)) {
+			rttr.addFlashAttribute("result","remove");
+		}
+		return "redirect:/course/allList";
+		
+	}
+	
 }

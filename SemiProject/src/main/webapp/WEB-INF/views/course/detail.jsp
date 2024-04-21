@@ -86,7 +86,7 @@
   		<c:if test="${sessionScope.loginId == course.id}">
   		 <div class="buttons-wrapper">
   			<button data-oper='modify' onclick="location.href='/course/modify?contentid=<c:out value="${course.contentid}"/>'">여행코스 수정하기</button>
-  			<button data-oper='delete' onclick="location.href='/course/delete?contentid=<c:out value="${course.contentid}"/>'">여행코스 삭제하기</button>
+  			<button data-oper='remove' onclick="location.href='/course/remove?contentid=<c:out value="${course.contentid}"/>'">여행코스 삭제하기</button>
   		</div>
   		</c:if>
   		

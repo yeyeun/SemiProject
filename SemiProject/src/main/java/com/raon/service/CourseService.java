@@ -197,4 +197,16 @@ public class CourseService {
 		model.addAttribute("contentdetailList",contentdetailList);
     }
 
+
+	public boolean remove(String contentid) {
+		log.info("remove....."+contentid);
+		return mapper.remove(contentid)==1;
+	}
+
+
+	public boolean removeCommentCo(String contentid) {
+		log.info("remove comments....." + contentid);
+		return mapper.removeComment(contentid)>=0;
+	}
+
 }

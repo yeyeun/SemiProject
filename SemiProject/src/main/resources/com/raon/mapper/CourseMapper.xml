@@ -27,4 +27,13 @@
       		where #{searchField} like concat('%',#{searchWord},'%')
       	</if>
       </select>
+      
+
+     <delete id="remove">
+      	delete from course where contentid=#{contentid}
+      </delete>
+      
+      <delete id="removeComment">
+      	delete from commentcourse where contentid=#{contentid}
+      </delete>
 </mapper>

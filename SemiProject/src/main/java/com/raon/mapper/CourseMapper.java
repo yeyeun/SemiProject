@@ -27,4 +27,8 @@ public interface CourseMapper {
     public int getTotal(Criteria cri);
     
     public List<Course> getListPaging(Criteria cri);
+
+	public int remove(String contentid);
+
+	public int removeComment(String contentid);
 }
