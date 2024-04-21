@@ -184,6 +184,13 @@
 										'[' + recipient + ']님의 관심 여행지');
 								modal.find('.modal-body').val(recipient);
 							});
+					 $('#overview').on('keyup', function() {
+						 
+					        if($(this).val().length > 399) {
+					        alert("최대 400자까지 입력 가능합니다.");
+					        $(this).val($(this).val().substring(0, 399));
+					        }
+					        });
 				});
 	</script>
 </body>
