@@ -67,9 +67,6 @@
             <c:set var="page" value="${param.page != null ? param.page : 1}" />
             <c:set var="endPage" value="${Math.ceil(page/10)*10}" />
             <c:set var="startPage" value="${endPage-9}" />
-            <!-- 이전 페이지로 이동하는 버튼 -->
-            <a href="${contextPath}/tour/list?page=${page - 1}" class="page-link prev-page-link"  data-page="${page - 1}">&laquo; Prev</a>
-    
             <!-- 페이지 링크를 동적으로 생성 -->
             
 			
