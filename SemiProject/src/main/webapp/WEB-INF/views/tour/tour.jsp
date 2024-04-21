@@ -42,7 +42,7 @@
     <div class="right-box">
         <div class="container">
             <div class="row row-3" align="center">
-                <c:forEach items="${searchList}" var="item">
+                <c:forEach items="${tList}" var="item">
                     <div class="col-4">
                         <div class="m-1">
                             <div class="card" style="width:24rem;" align="center">

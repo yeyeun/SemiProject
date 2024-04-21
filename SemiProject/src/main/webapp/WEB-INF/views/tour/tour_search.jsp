@@ -67,8 +67,6 @@
             <c:set var="page" value="${param.page != null ? param.page : 1}" />
             <c:set var="endPage" value="${Math.ceil(page/10)*10}" />
             <c:set var="startPage" value="${endPage-9}" />
-            <!-- 이전 페이지로 이동하는 버튼 -->
-            <a href="${contextPath}/tour/search?keyword=${param.keyword}&page=${page - 1}" class="page-link prev-page-link"  data-page="${page - 1}">&laquo; Prev</a>
     
             <!-- 페이지 링크를 동적으로 생성 -->
             
@@ -80,17 +78,12 @@
                     <a href="${contextPath}/tour/search?keyword=${param.keyword}&page=${i}" class="page-link" data-page="${i}" class="active">${i}</a>
                 	</c:when>
                 	<c:otherwise>
-                		<a href="${contextPath}/tour/serach?keyword=${param.keyword}&page=${i}" class="page-link" data-page="${i}">${i}</a>
+                		<a href="${contextPath}/tour/search?keyword=${param.keyword}&page=${i}" class="page-link" data-page="${i}">${i}</a>
                 	</c:otherwise>
                 	</c:choose>
                 </c:if>
             </c:forEach>
     
-            <!-- 다음 페이지로 이동하는 버튼 -->
-            <c:if test="${endPage < totalPages}">
-                <a href="${contextPath}/tour/search?keyword=${param.keyword}&page=${endPage + 1}" class="page-link next-page-link"
-                    data-page="${endPage + 1}">Next &raquo;</a>
-            </c:if>
         </div>
     </div>
 </div>
@@ -118,7 +111,7 @@
         }
 
         for (var i = startPage; i <= endPage; i++) {
-            paginationHtml += '<a href="${contextPath}/tour/serach?keyword='+keyword+'&page=' + i + '" class="page-link">' + i + '</a>';
+            paginationHtml += '<a href="${contextPath}/tour/search?keyword='+keyword+'&page=' + i + '" class="page-link">' + i + '</a>';
         }
 
         if (endPage < totalPages) {
