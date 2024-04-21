@@ -47,7 +47,7 @@
 		</div>
 		<div class="overview-text">
 			<blockquote>
-				<p>${course.overview}</p>
+				<pre id="preoverview">${course.overview}</pre>
 			</blockquote>
 		</div>
 		<div class="row-wrapper">

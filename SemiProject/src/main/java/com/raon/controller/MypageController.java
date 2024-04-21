@@ -105,7 +105,7 @@ public class MypageController {
 		            break;
 		        }
 		    }
-		    // count를 찾지 못한 경우 0으로 설정
+		    // count를 찾지 못한 경우 0으로 설정.
 		    if (!found) {
 		        course.setCount("0");
 		    }

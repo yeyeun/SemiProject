@@ -156,7 +156,13 @@ html, body {
 	font-size: 15px;
 	font-weight: 500;
 }
-
+/* 내용 디자인 */
+#preoverview{
+	font-size: 17px;
+	font-family: "Noto Sans KR";
+	overflow: hidden;
+    white-space: pre-wrap;
+}
 
 
 /* 타임라인 디자인 */
