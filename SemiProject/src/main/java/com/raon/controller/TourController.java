@@ -61,7 +61,7 @@ public class TourController {
 		try {
 			service.getTourDetail(request, response, model);
 			service.getBusStation(request, response, model);
-			
+			service.getTourImage(request, response, model);
 			List<BusStation> allbus = (List<BusStation>) model.getAttribute("BusStationList");
 			for(BusStation bus:allbus) {
 				log.info("!!!!!!"+bus.getNodeid());

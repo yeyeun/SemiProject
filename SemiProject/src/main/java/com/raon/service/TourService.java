@@ -24,6 +24,7 @@ import com.raon.domain.Bus;
 import com.raon.domain.BusArrive;
 import com.raon.domain.BusStation;
 import com.raon.domain.TourDetailInfo;
+import com.raon.domain.TourImageInfo;
 import com.raon.domain.TourInfo;
 import com.raon.domain.finalbus;
 
@@ -168,47 +169,79 @@ public class TourService {
 			
 	}
 
-//	public void getTourImage(HttpServletRequest request, HttpServletResponse response, Model model) throws IOException {
-//	    List<String> imgUrls = new ArrayList<String>();
-//	    String contentId = request.getParameter("contentid");
-//	    StringBuilder urlBuilder = new StringBuilder("https://apis.data.go.kr/B551011/KorService1/detailImage1");
-//	    urlBuilder.append("?" + URLEncoder.encode("MobileOS", "UTF-8") + "=" + URLEncoder.encode("ETC", "UTF-8"));
-//	    urlBuilder.append("&" + URLEncoder.encode("MobileApp", "UTF-8") + "=" + URLEncoder.encode("raon", "UTF-8"));
-//	    urlBuilder.append("&" + URLEncoder.encode("_type", "UTF-8") + "=" + URLEncoder.encode("json", "UTF-8"));
-//	    urlBuilder.append("&" + URLEncoder.encode("contentId", "UTF-8") + "=" + URLEncoder.encode(contentId, "UTF-8"));
-//	    urlBuilder.append("&" + URLEncoder.encode("imageYN", "UTF-8") + "=" + URLEncoder.encode("Y", "UTF-8"));
-//	    urlBuilder.append("&" + URLEncoder.encode("subImageYN", "UTF-8") + "=" + URLEncoder.encode("Y", "UTF-8"));
-//	    urlBuilder.append("&" + URLEncoder.encode("serviceKey", "UTF-8") + "=b7k%2B9H2DZnNoOhZSPNTopjx1cG%2F8y74JvA2aFmp4dlvoRTGzmxGL976Dcdg0PTLdbegGkqm466WbLV5PHNOwmw%3D%3D");
-//
-//	    URL url = new URL(urlBuilder.toString());
-//	    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-//	    conn.setRequestMethod("GET");
-//	    conn.setRequestProperty("Content-type", "application/json");
-//	    System.out.println("Response code: " + conn.getResponseCode());
-//	    BufferedReader rd;
-//	    if (conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
-//	        rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-//	    } else {
-//	        rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
-//	    }
-//	    StringBuilder sb = new StringBuilder();
-//	    String line;
-//	    while ((line = rd.readLine()) != null) {
-//	        sb.append(line);
-//	    }
-//	    rd.close();
-//	    conn.disconnect();
-//	    System.out.println(sb.toString());
-//	    JSONObject jsonObject = new JSONObject(sb.toString());
-//	    jsonObject = jsonObject.getJSONObject("response").getJSONObject("body").getJSONObject("items");
-//	    JSONArray jsonArray = jsonObject.getJSONArray("item");
-//	    System.out.println(jsonObject.keys());
-//	    for (int i = 0; i < jsonArray.length(); i++) {
-//	        imgUrls.add(jsonArray.getJSONObject(i).getString("originimgurl"));
-//	    }
-//	    // 이미지 URL을 클라이언트로 전송
-//	    model.addAttribute("imgUrls", imgUrls);
-//	}
+	public void getTourImage(HttpServletRequest request, HttpServletResponse response, Model model) throws IOException {
+		List<TourImageInfo> imgUrls = new ArrayList<TourImageInfo>();
+        String contentId = request.getParameter("contentid");
+        StringBuilder urlBuilder = new StringBuilder("https://apis.data.go.kr/B551011/KorService1/detailImage1");
+        urlBuilder.append("?" + URLEncoder.encode("MobileOS", "UTF-8") + "=" + URLEncoder.encode("ETC", "UTF-8"));
+        urlBuilder.append("&" + URLEncoder.encode("MobileApp", "UTF-8") + "=" + URLEncoder.encode("raon", "UTF-8"));
+        urlBuilder.append("&" + URLEncoder.encode("_type", "UTF-8") + "=" + URLEncoder.encode("json", "UTF-8"));
+        urlBuilder.append("&" + URLEncoder.encode("contentId", "UTF-8") + "=" + URLEncoder.encode(contentId, "UTF-8"));
+        urlBuilder.append("&" + URLEncoder.encode("imageYN", "UTF-8") + "=" + URLEncoder.encode("Y", "UTF-8"));
+        urlBuilder.append("&" + URLEncoder.encode("subImageYN", "UTF-8") + "=" + URLEncoder.encode("Y", "UTF-8"));
+        urlBuilder.append("&" + URLEncoder.encode("serviceKey", "UTF-8") + "=b7k%2B9H2DZnNoOhZSPNTopjx1cG%2F8y74JvA2aFmp4dlvoRTGzmxGL976Dcdg0PTLdbegGkqm466WbLV5PHNOwmw%3D%3D");
+
+        URL url = new URL(urlBuilder.toString());
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setRequestMethod("GET");
+        conn.setRequestProperty("Content-type", "application/json");
+        System.out.println("Response code: " + conn.getResponseCode());
+        BufferedReader rd;
+        if (conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
+            rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+        } else {
+            rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+        }
+        StringBuilder sb = new StringBuilder();
+        String line;
+        while ((line = rd.readLine()) != null) {
+            sb.append(line);
+        }
+        rd.close();
+        conn.disconnect();
+        System.out.println(sb.toString());
+        JSONObject jsonObject = new JSONObject(sb.toString());
+        JSONObject responseObject = jsonObject.getJSONObject("response");
+        log.info(responseObject);
+        Object items = responseObject.getJSONObject("body").get("items");
+
+        // items가 JSONObject인지 확인
+        if (items instanceof JSONObject) {
+            JSONObject itemsObject = (JSONObject) items;
+
+            // "item" 키가 있는지 확인
+            if (itemsObject.has("item")) {
+                Object itemValue = itemsObject.get("item");
+
+                // "item" 키의 값이 JSONArray 또는 JSONObject인지 확인
+                if (itemValue instanceof JSONArray) {
+                    // JSONArray로 변환하여 처리
+                    JSONArray jsonArray = (JSONArray) itemValue;
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        imgUrls.add(new TourImageInfo(jsonArray.getJSONObject(i).getString("originimgurl")));
+                    }
+                } else if (itemValue instanceof JSONObject) {
+                    // 단일 객체인 경우 바로 처리
+                	System.out.println(itemValue);
+                    imgUrls.add(new TourImageInfo(((JSONObject) itemValue).getString("originimgurl")));
+                } else {
+                    // "item"이 JSONObject도 JSONArray도 아닌 경우
+                    imgUrls.add(new TourImageInfo("../../resources/images/tour_none_image.png"));
+                }
+            } else {
+                // "item" 키가 없는 경우
+                imgUrls.add(new TourImageInfo("../../resources/images/tour_none_image.png"));
+            }
+        } else {
+            // items가 JSONObject가 아닌 경우
+            imgUrls.add(new TourImageInfo("../../resources/images/tour_none_image.png"));
+        }
+
+
+        // 이미지 URL을 클라이언트로 전송
+        model.addAttribute("imgUrls", imgUrls);
+
+	}
 	public void getTourDetail(HttpServletRequest request, HttpServletResponse response, Model model)
 			throws IOException {
 		// TODO Auto-generated method stub

@@ -46,22 +46,28 @@
        
         <div class="row">
         	<div class="col">
-				<div class="detail-image">
-					<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel" style="height:500px;">
-						 <div class="carousel-indicators">
-						 </div>
-						 <div class="carousel-inner"></div>
-						 <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-						    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-						    <span class="visually-hidden">Previous</span>
-						  </button>
-						  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-						   	<span class="carousel-control-next-icon" aria-hidden="true"></span>
-						    <span class="visually-hidden">Next</span>
-						  </button>
-					</div>
-				</div>
-			</div>
+        <div class="detail-image">
+            <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel" style="height:500px;">
+                <div class="carousel-inner">
+                    <c:forEach items="${imgUrls}" var="item" varStatus="loop">
+                        <div class="carousel-item ${loop.index == 0 ? 'active' : ''}">
+                            <img src="${item.originimgurl}" class="d-block w-100" alt="Slide ${loop.index+1}" onerror="this.src='../../resources/images/tour_none_image.png'" style="max-height: 450px;">
+                        </div>
+                    </c:forEach>
+                      <!-- 캐러셀 이전/다음 버튼 추가 -->
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+                </div>
+              
+            </div>
+        </div>
+    </div>
 			 <c:forEach items="${detailList}" var="item">
 			<div class="col">
 			
@@ -292,56 +298,6 @@ $(document).ready(function(){
 	            }
 	        });
 
-		$.ajax({
-			url: "https://apis.data.go.kr/B551011/KorService1/detailImage1?MobileOS=ETC&MobileApp=raon&contentId="+contentid+"&imageYN=Y&subImageYN=Y&serviceKey=b7k%2B9H2DZnNoOhZSPNTopjx1cG%2F8y74JvA2aFmp4dlvoRTGzmxGL976Dcdg0PTLdbegGkqm466WbLV5PHNOwmw%3D%3D&_type=json",
-			success: function(data){
-				console.log('items',data.response.body.items);
-				let first= true;
-				items = data.response.body.items.item;
-				if(items!=null){
-					items.forEach(function(item, index) {
-						var active = first?"active":"";//첫번쨰 이미지에 active 부여
-						let idx=index;
-						first= false;
-						if(item.originimgurl == null){
-							if(firstimage.equals("")){
-								carouselInner.append(`
-										<img src=<%=request.getParameter("firstimage")%> class="d-block w-100" alt="this.src= '../../resources/images/tour_none_image.png'">			
-								`);
-							}
-							
-						}else{
-							if(index ==0){
-								carouselIndicators.append(`
-					                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="\${index}" class="\${active}" aria-current="true" aria-label="Slide \${index+1}"></button>
-					                `);
-							}else{
-								carouselIndicators.append(`
-										<button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="\${index}" aria-label="Slide \${index}"></button>
-					                `);
-								
-							}
-							
-							carouselInner.append(`
-								<div class="carousel-item \${active}">
-									<img src="\${item.originimgurl}" class="d-block w-100" alt="1" onerror="this.src='../../resources/images/tour_none_image.png'"   style="max-height: 450px;">	
-			    				</div>
-						`);
-						}
-						
-					});
-				}
-				else{
-					carouselInner.append(`
-							<img src= <%=request.getParameter("firstimage")%> class="d-block w-100" style="height: 450px;" alt="1" onerror="this.src='../../resources/images/tour_none_image.png'" >			
-					`);
-				}
-				
-			}
-		});
-		
-
-		
         
 // 	    지도 추가
 

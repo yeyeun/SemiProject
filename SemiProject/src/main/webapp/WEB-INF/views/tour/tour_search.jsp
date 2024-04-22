@@ -141,6 +141,15 @@
         // pagination 엘리먼트 업데이트
         $('.pagination').html(paginationHtml);
     }
+    window.onload = function() {
+        // searchList가 비어 있는지 확인
+        if (${empty searchList}) {
+            // 검색 결과가 없음을 알리는 경고창 출력
+            alert('검색 결과가 없습니다.');
+            // 페이지를 다시 로드하여 검색 페이지로 이동
+            window.location.href = "${contextPath}/tour/list";
+        }
+    };
 </script>
 </body>
 </html>
