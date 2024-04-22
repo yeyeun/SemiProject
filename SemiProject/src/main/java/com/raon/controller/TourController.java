@@ -104,7 +104,7 @@ public class TourController {
 	
 	@GetMapping("/arrivelist")
 	@ResponseBody
-	public List<BusArrive> busarrive(@RequestParam("nodeid") String nodeid,Model model) {
+	public List<BusArrive> busarrive(@RequestParam("nodeid") String nodeid,@RequestParam("nodenm") String nodenm,  Model model) {
 		int index=0;
 		try {
 			service.getBusArrive(nodeid, model);
@@ -131,7 +131,7 @@ public class TourController {
 			        notAvailable.setArrprevstationcnt(-1);
 			        notAvailable.setArrtime(-1);
 			        notAvailable.setNodeid(nodeid);
-			        notAvailable.setNodenm("제주고등학교[서]");
+			        notAvailable.setNodenm(nodenm);
 			        notAvailable.setRouteid(bus.getRouteid());
 			        notAvailable.setRouteno(bus.getRouteno());
 			        notAvailable.setRoutetp(bus.getRoutetp());

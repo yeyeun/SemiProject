@@ -89,7 +89,8 @@
 			<div class="map_info">
 				<p id="explain">위치</p>
 				<hr style="border: none; width: 100%; height: 3px; background: black; opacity: 1;">
-				<div id="map" style="width: 60%; height: 450px; border: 1px solid black;"></div>
+				<div id="map" style="width: 49%; height: 450px; border: 1px solid black;">
+				</div>
 				<div id="bustable">
 				<table class="bustable">
 					<thead>
@@ -97,53 +98,23 @@
 								<th>도착 정보</th>
 							</tr>
 						</thead>
-					<tbody>
+					<tbody id="busbody">
 						<tr>
-							<td><span style="font-size: 30px; color: red;">&#149</span>3002번 </td>
-							<td>3002번</td>
-							<td>약 14분<span style="color: gray;">[5번째 전]</span></td>
+							<td style="font-size: 30px; color: blue;">"routetp"</td>
+							<td>"routeno"</td>
+							<td>"arrtime"<span style="color: gray;">"arrprevstationcnt"</span></td>
 						</tr>
-						<tr>
-							<td style="font-size: 30px; color: blue;">&#149</td>
-							<td>123번</td>
-							<td>약 14분<span style="color: gray;">[5번째 전]</span></td>
-						</tr>
-						<tr>
-							<td style="font-size: 30px; color: green;">&#149</td>
-							<td>345번</td>
-							<td>약 14분<span style="color: gray;">[5번째 전]</span></td>
-						</tr>
-						<tr>
-							<td style="font-size: 30px; color: green;">&#149</td>
-							<td>456번</td>
-							<td>약 14분<span style="color: gray;">[5번째 전]</span></td>
-						</tr>
-						<tr>
-							<td style="font-size: 30px; color: green;">&#149</td>
-							<td>456번</td>
-							<td>약 14분<span style="color: gray;">[5번째 전]</span></td>
-						</tr>
-						<tr>
-							<td style="font-size: 30px; color: green;">&#149</td>
-							<td>789번</td>
-							<td>약 14분<span style="color: gray;">[5번째 전]</span></td>
-						</tr>
-						
-						
 					</tbody>
 				</table>
 				</div>
 			</div>
+			<div style="position: relative; width: 300px; right: 225px;">
+			<p style="color:gray;">[여행지 주변 500m이내 정류장]</p>
+			</div>
 			
         </div>
         
-        <div id="bus" style="width:100%; height: 300px;">
-        	<c:forEach items="${BusStationList}" var="station">
-					<p id="nodenm" onclick="showAllBus('${station.nodeid}','${station.nodenm}')">${station.nodenm }<p>
-					<p id="nodeid" style="display: none">${station.nodeid }<p>
-					<div class="businfo"></div>
-			</c:forEach>
-        </div>
+
         </div>
   
 <script>
@@ -158,13 +129,15 @@ var yList = new Array();
 var titleList = new Array();
 var buslist1  = new Array();
 var buslist2 = new Array();
+
 //마커
 let businfo = $(".businfo");
 function showAllBus(nodeid, nodenm){
 	var nodeids = nodeid;
 	var nodenms = nodenm;
-	
-	
+	var endnodenmlist = [];
+	var startnodenmlist = [];
+		
 	 $.ajax({
             type: "GET",
             url: "/tour/buslist", // 컨트롤러의 엔드포인트 URL
@@ -176,7 +149,8 @@ function showAllBus(nodeid, nodenm){
             	buslist1 = data;
             	console.log(nodenm+"정류장에 오는 모든 버스는");
                 $.each(data, function(idx, val) {
-                    console.log(val.routeno);
+                	endnodenmlist.push(val.endnodenm);
+                	startnodenmlist.push(val.startnodenm);
                 });
 
 
@@ -192,15 +166,57 @@ function showAllBus(nodeid, nodenm){
             url: "/tour/arrivelist", // 컨트롤러의 엔드포인트 URL
             async: false,
             data: { 
-            	nodeid: nodeids }, // 요청 파라미터 설정
+            	nodeid: nodeids,
+            	nodenm: nodenms
+            	}, // 요청 파라미터 설정
             dataType : 'json', 
             success: function(data) {
-            	buslist2 = data;
-            	console.log(nodenm+"정류장에");
+                buslist2 = data;
+                console.log(nodenm + "정류장에");
+                var tableBody = $('#bustable tbody');
+                tableBody.empty();
+                
                 $.each(data, function(idx, val) {
-                    console.log(val.routeno+"번 버스가 "+val.arrprevstationcnt+"개 정류장 남았고 "+val.arrtime/60+"분 뒤 도착");
+                    // 새로운 행(tr) 생성
+                    var newRow = $('<tr></tr>');
+                    
+                    // 버스 종류 표시
+                    var routeTypeCell = $('<td></td>').text(val.routetp);
+                    newRow.append(routeTypeCell);
+                    
+                    // 버스 번호 표시
+                    var routeNumberCell = $('<td></td>').text(val.routeno);
+                    newRow.append(routeNumberCell);
+                    
+                    // 도착 시간 및 정류소 표시
+                     var arrivalInfoCell;
+    					if (val.arrtime >= 0) {
+        				arrivalInfoCell = $('<td></td>').text(val.arrtime / 60 + "분 뒤 도착");
+        				arrivalInfoCell.append('<span style="color: gray;">[' + val.arrprevstationcnt + '번째 전]</span>');
+    					} else {
+        				arrivalInfoCell = $('<td></td>').text("도착 정보 없음");
+    				}
+                    newRow.append(arrivalInfoCell);
+                    
+                    var endnodenmCell = $('<td></td>').text(startnodenmlist[idx]+"->"+endnodenmlist[idx]);
+                    newRow.append(endnodenmCell);                    
+
+                    if (val.arrtime >= 0) {
+                        // 도착 정보가 있는 경우 해당 행을 그대로 추가
+                        newRow.append(arrivalInfoCell);
+                        tableBody.prepend(newRow);
+                    } else {
+                        // 도착 정보가 없는 경우 따로 모아서 마지막에 추가
+                        newRow.append(arrivalInfoCell);
+                        tableBody.append(newRow);
+                    }
                 });
-                // alert 창에 출력
+//             	buslist2 = data;
+//             	console.log(nodenm+"정류장에");
+//                 $.each(data, function(idx, val) {
+//                     console.log(val.routetp+"종류의"+val.routeno+"번 버스가 "+val.arrprevstationcnt+"개 정류장 남았고 "+val.arrtime/60+"분 뒤 도착");
+//                 });
+//                 // alert 창에 출력
                 
 
 
@@ -234,6 +250,7 @@ $(document).ready(function(){
 		var mappx = document.getElementById("mapx").innerText;
         var mappy = document.getElementById("mapy").innerText;
         var mlevel = document.getElementById("mlevel").innerText;
+
         console.log(mapx, mapy);
 		
 	       $.ajax({
@@ -329,15 +346,18 @@ $(document).ready(function(){
     <c:forEach items="${BusStationList}" var="station" varStatus="loop">
         {
             title: "${station.nodenm}",
-            latlng: new kakao.maps.LatLng("${station.gpslati}", "${station.gpslong}")
+            latlng: new kakao.maps.LatLng("${station.gpslati}", "${station.gpslong}"),
+            nodeid: "${station.nodeid}",
+            nodenm: "${station.nodenm}"
         }<c:if test="${!loop.last}">,</c:if>
     </c:forEach>
 ];
-console.log("positions:", positions);
+
 
 	//버스 추가//
 		var imageSrc = "../../resources/images/bus-stop2.png";
 		console.log("&&&&"+positions);
+		
 		for(var i=0; i<positions.length; i++){
 			
 			// 마커 이미지의 이미지 크기 입니다
@@ -353,8 +373,34 @@ console.log("positions:", positions);
 		        title : positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
 		        image : markerImage // 마커 이미지 
 		    });
+		    
+		    
+		    (function(nodeid, nodenm) {
+		        // 마커 클릭 이벤트 리스너 등록
+		        kakao.maps.event.addListener(marker, 'click', function() {
+		            console.log(nodeid + " " + nodenm); // nodeid와 nodenm 출력
+		            // 해당 정류장의 정보를 가져오는 함수 호출
+		            showAllBus(nodeid, nodenm);
+		        });
+
+		        // 마커 호버 이벤트 등록
+		        kakao.maps.event.addListener(marker, 'mouseover', function() {
+		            var infowindow = new kakao.maps.InfoWindow({
+		                content: "<div style='padding:5px;'>정류장 ID: " + nodeid + "<br>정류장 이름: " + nodenm + "</div>",
+		                removable: true
+		            });
+		            infowindow.open(map, marker);
+		        });
+
+		        // 마커에서 마우스를 떼었을 때 인포윈도우 닫기
+		        kakao.maps.event.addListener(marker, 'mouseout', function() {
+		            infowindow.close();
+		        });
+		    })(positions[i].nodeid, positions[i].nodenm); // 즉시 실행 함수를 이용하여 현재의 nodeid와 nodenm 값을 넘겨줌
+		    
+		    
 		
-		}
+		}//마커 삽입 for문
 		//마커가 표시될 위치입니다 
 		var markerPosition  = new kakao.maps.LatLng(mappy, mappx); 
 
