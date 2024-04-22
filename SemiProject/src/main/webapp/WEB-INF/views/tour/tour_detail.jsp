@@ -89,7 +89,7 @@
 			<div class="map_info">
 				<p id="explain">위치</p>
 				<hr style="border: none; width: 100%; height: 3px; background: black; opacity: 1;">
-				<div id="map" style="width: 49%; height: 450px; border: 1px solid black;">
+				<div id="map" style="width: 60%; height: 600px; border: 1px solid black;">
 				</div>
 				<div id="bustable">
 				<table class="bustable">
@@ -137,6 +137,8 @@ function showAllBus(nodeid, nodenm){
 	var nodenms = nodenm;
 	var endnodenmlist = [];
 	var startnodenmlist = [];
+	var routeidlist = [];
+	var routenolist = [];
 		
 	 $.ajax({
             type: "GET",
@@ -149,8 +151,13 @@ function showAllBus(nodeid, nodenm){
             	buslist1 = data;
             	console.log(nodenm+"정류장에 오는 모든 버스는");
                 $.each(data, function(idx, val) {
+                	console.log(val.routeid);
+                	console.log(val.routeno);
                 	endnodenmlist.push(val.endnodenm);
                 	startnodenmlist.push(val.startnodenm);
+                	routeidlist.push(val.routeid);
+                	routenolist.push(val.routeno);
+                	
                 });
 
 
@@ -172,11 +179,13 @@ function showAllBus(nodeid, nodenm){
             dataType : 'json', 
             success: function(data) {
                 buslist2 = data;
-                console.log(nodenm + "정류장에");
+                console.log(nodenm + "정류장에 도착하는 버스는");
                 var tableBody = $('#bustable tbody');
                 tableBody.empty();
                 
                 $.each(data, function(idx, val) {
+                	console.log(val.routeid);
+                	console.log(val.routeno);
                     // 새로운 행(tr) 생성
                     var newRow = $('<tr></tr>');
                     
@@ -198,8 +207,10 @@ function showAllBus(nodeid, nodenm){
     				}
                     newRow.append(arrivalInfoCell);
                     
-                    var endnodenmCell = $('<td></td>').text(startnodenmlist[idx]+"->"+endnodenmlist[idx]);
-                    newRow.append(endnodenmCell);                    
+                    var endnodenmCell = $('<td></td>').text(val.startnodenm+"->"+val.endnodenm);
+                    newRow.append(endnodenmCell);     
+                    
+//                     tableBody.append(newRow);
 
                     if (val.arrtime >= 0) {
                         // 도착 정보가 있는 경우 해당 행을 그대로 추가

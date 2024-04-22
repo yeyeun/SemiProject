@@ -30,6 +30,7 @@ import com.raon.domain.Course;
 import com.raon.domain.TourDetailInfo;
 import com.raon.domain.TourInfo;
 import com.raon.domain.allTourInfo;
+import com.raon.domain.finalbus;
 import com.raon.service.TourService;
 
 import lombok.AllArgsConstructor;
@@ -104,21 +105,28 @@ public class TourController {
 	
 	@GetMapping("/arrivelist")
 	@ResponseBody
-	public List<BusArrive> busarrive(@RequestParam("nodeid") String nodeid,@RequestParam("nodenm") String nodenm,  Model model) {
+	public List<finalbus> busarrive(@RequestParam("nodeid") String nodeid,@RequestParam("nodenm") String nodenm,  Model model) {
 		int index=0;
 		try {
+			//도착하는 버스
 			service.getBusArrive(nodeid, model);
 			List<BusArrive> busarriveinfo =(List<BusArrive>) model.getAttribute("BusArriveList");
+			
+			//모든 버스
 			service.getAllBus(nodeid, model);
-			List<Bus> businfo =(List<Bus>) model.getAttribute("allbus");	
+			List<finalbus> businfo =(List<finalbus>) model.getAttribute("allbus");	
 			log.info("@모든버스정보@"+businfo);
+			
+			
 			// businfo의 갯수만큼 반복
-			for (Bus bus : businfo) {
+			for (finalbus bus : businfo) {
 			    boolean found = false; // 해당 버스에 대한 정보가 있는지 여부를 확인하기 위한 플래그
 
 			    // busarriveinfo를 순회하면서 해당 routeid를 가진 정보가 있는지 확인
 			    for (BusArrive arrive : busarriveinfo) {
 			        if (arrive.getRouteid().equals(bus.getRouteid())) { // routeid가 일치하는 경우
+			        	bus.setArrprevstationcnt(arrive.getArrprevstationcnt());
+			        	bus.setArrtime(arrive.getArrtime());
 			            found = true; // 정보가 있는 것으로 플래그를 설정
 			            break; // 더 이상 확인할 필요가 없으므로 반복문 종료
 			        }
@@ -143,8 +151,8 @@ public class TourController {
 			    }
 			    index++;
 			}
-			log.info("@버스도착정보@"+busarriveinfo);
-			return busarriveinfo;
+			log.info("@버스도착정보@"+businfo);
+			return businfo;
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

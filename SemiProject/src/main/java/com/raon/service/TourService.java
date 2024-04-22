@@ -25,6 +25,7 @@ import com.raon.domain.BusArrive;
 import com.raon.domain.BusStation;
 import com.raon.domain.TourDetailInfo;
 import com.raon.domain.TourInfo;
+import com.raon.domain.finalbus;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -454,7 +455,7 @@ public class TourService {
 	public void getAllBus(@Param("nodeid") String nodeid, Model model) throws IOException {
 	    // TODO Auto-generated method stub
 		String nodeids = nodeid;
-	    List<Bus> allbus = new ArrayList<Bus>();
+	    List<finalbus> allbus = new ArrayList<finalbus>();
 	        StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/1613000/BusSttnInfoInqireService/getSttnThrghRouteList"); /*URL*/
 	        urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=KR1eLnI5BrfL8EDf5l8G3OTQakbgTZ0izb4KANg0SWhwqnP1wHHQQRb%2BrbP1N2a5lnEtjR%2BBvLqfZKaKSZELLQ%3D%3D"); /*Service Key*/
 	        urlBuilder.append("&" + URLEncoder.encode("pageNo","UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /*페이지번호*/
@@ -488,15 +489,15 @@ public class TourService {
 	            JSONArray jsonArray = (JSONArray) item;
 	            for (int i = 0; i < jsonArray.length(); i++) {
 	                JSONObject busObject = jsonArray.getJSONObject(i);
-	                allbus.add(new Bus(busObject.getString("endnodenm"),
+	                allbus.add(new finalbus(busObject.getString("endnodenm"),
 	                        busObject.getString("routeid"), String.valueOf(busObject.get("routeno")),
-	                        busObject.getString("routetp"), busObject.getString("startnodenm")));
+	                        busObject.getString("routetp"), busObject.getString("startnodenm"), -1, -1));
 	            }
 	        } else if (item instanceof JSONObject) {
 	            JSONObject busObject = (JSONObject) item;
-	            allbus.add(new Bus(busObject.getString("endnodenm"),
+	            allbus.add(new finalbus(busObject.getString("endnodenm"),
 	                    busObject.getString("routeid"), String.valueOf(busObject.get("routeno")),
-	                    busObject.getString("routetp"), busObject.getString("startnodenm")));
+	                    busObject.getString("routetp"), busObject.getString("startnodenm"),-1,-1));
 	        }
 	    
 	    model.addAttribute("allbus", allbus);
