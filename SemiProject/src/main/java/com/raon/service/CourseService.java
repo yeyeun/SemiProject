@@ -59,6 +59,11 @@ public class CourseService {
 	    mapper.add(contentid, firstimage, subcontentid, id, title, overview);
 	}
 	
+	public void modify(@Param("contentid") String contentid, @Param("firstimage") String firstimage, @Param("subcontentid") String subcontentid, @Param("title") String title, @Param("overview") String overview) {
+	    mapper.modify(contentid, firstimage, subcontentid, title, overview);
+	}
+	
+	
     public Map<String, List<?>> getTitleList(List<String> contentIds) throws IOException{ //여행코스에 해당하는 여행지 이름 불러오기
     	List<String> titleList = new ArrayList<>();
 		List<Integer> titleLength = new ArrayList<Integer>();
@@ -208,5 +213,7 @@ public class CourseService {
 		log.info("remove comments....." + contentid);
 		return mapper.removeComment(contentid)>=0;
 	}
+
+
 
 }

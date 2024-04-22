@@ -488,28 +488,42 @@ button[type="button"]:hover{
 
 /* 모달창 */
 
-.cartItem{
-	margin-bottom: 35px;	
+.contentItem{
+	margin-bottom: 10px;
+	list-style: none;
 }
-.cartimage{
+.contentImage{
 	width: 150px;
 }
- .cartItem:last-child {
-        margin-bottom: 0;
+ .contentItem:last-child {
+	 margin-bottom: 0;
 }
-.carttitle{
+.contentTitle{
 	font-size: 16px;
 	font-weight: 600;
 	margin-top: 10px;
 }
-.cartcontentid{
+.contentcontentid{
 	display:none;
 }
-.cartCheckbox{
-	width: 13px;
-}
-.cartCheckbox{
+.contentCheckbox{
 	width: 20px;
 	height: 20px;
 	margin-right: 5px;
+}
+
+.modal-body{
+	width: 600px;
+}
+
+.form-group{
+	margin-bottom: 15px;
+}
+
+.form-group label{
+	margin-bottom: 5px;
+	font-weight: 600;
+	background: #d5edff;
+	padding: 5px;
+	border-radius: 5px;
 }

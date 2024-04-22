@@ -136,50 +136,79 @@
 <!-- 모달 창 -->
 <div class="modal" tabindex="-1" role="dialog" id="myModal">
 	<div class="modal-dialog" role="document">
-		<div class="modal-content">
+		<div class="modal-content" style="width: 700px;">
 			<div class="modal-header">
 				<h5 class="modal-title">여행코스 수정하기</h5>
 			</div>
+			
+			<form action="${contextPath}/course/modify">
+					<input id="contentidInput" name="contentid" type="text" value="${course.contentid}" style="display: none;" /> 
+					<input id="firstimageInput" name="firstimage" type="text" value="" style="display: none;" />
+					<input id="subcontentidInput" name="subcontentid" type="text" value="" style="display: none;" />
 			<div class="modal-body">
 				<div class="form-group">
 					<label>여행코스 제목</label>
-					<input class="form-control" type="text" name='title' value='${course.title}'/>
+					<input class="form-control" type="text" name='title' id='title' value='${course.title}'/>
 				</div>
 				<div class="form-group">
 					<label>여행코스 경로</label>
-					
-					<c:choose>
-						<c:when test="${empty contentdetailList}">
-						여행지 목록이 없습니다.
-						</c:when>
-						<c:otherwise>
 						<c:forEach items="${contentdetailList}" var="contentdetail">
-						
 						<li class="contentItem">
 							<input type="checkbox" class="contentCheckbox" value="${contentdetail.title}" onclick="toggleCheckbox(this)">
 							<img src="${contentdetail.firstimage}" alt="..." class="contentImage" onerror="this.src='../../resources/images/nocourseimg.png'">
-							<span class="contentTitle">${tour.title}</span>
+							<span class="contentTitle">${contentdetail.title}</span>
 							<p id="checkcontentid" style="display: none;">${contentdetail.contentid}</p>
-						</li>
-									
+						</li>	
 						</c:forEach>
-						</c:otherwise>
-					</c:choose>
+					<p style="margin-top: 20px;">
+							수정된 여행 코스: <span id="selectedIdsDisplay"></span>
+					</p>
 				</div>
 				<div class="form-group">
 					<label>여행코스 설명</label>
-					<input class="form-control" type="text" name='overview' value='${course.overview}'/>
+					<textarea class="form-control" style="height:200px;" name='overview' id='overview'>${course.overview}</textarea>
 				</div>	
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-info" id="modifyCourseBtn" data-bs-dismiss="modal">수정하기</button>
+				<button type="submit" class="btn btn-info" id="modifyCourseBtn" data-bs-dismiss="modal">수정하기</button>
 				<button type="button" class="btn btn-secondary" id="closeCourseBtn">닫기</button>
 			</div>
+			</form>
+			
 		</div>
 	</div>
 </div>
 
 <script>
+var selectedTitles = [];
+var selectedIds = [];
+var selectedIdsDisplay = document.getElementById("selectedIdsDisplay");
+var selectedIdsValue = document.getElementById("checkcontentid");
+var firstImage; //첫번째 아이템의 이미지값
+
+/* 모달창 체크박스 */
+function toggleCheckbox(checkbox) {
+	console.log("click toggleCheckbox===========")
+	var contentTitle = checkbox.value;
+	var contentId = checkbox.parentElement
+			.querySelector("#checkcontentid").textContent;
+	var li = checkbox.parentElement;
+	if (checkbox.checked) {
+		selectedTitles.push(contentTitle);
+		selectedIds.push(contentId);
+		li.style.backgroundColor = "rgb(180,180,180)"; // 체크되면 배경색 변경
+	} else {
+		var index = selectedTitles.indexOf(contentTitle);
+		if (index !== -1) {
+			selectedTitles.splice(index, 1);
+			selectedIds.splice(index, 1);
+		}
+		li.style.backgroundColor = "";
+	}
+	selectedIdsDisplay.innerHTML = selectedTitles.join(' → ');
+	console.log(selectedIds);
+}
+
 
 
 var xList = new Array();
@@ -433,6 +462,7 @@ $(document).ready(function(){
 		}
 	}
 	
+	
 	let modifyBtn = $("#modifyBtn");
 	let loginId = '<%=(String)session.getAttribute("loginId")%>';
 	
@@ -462,6 +492,7 @@ $(document).ready(function(){
 		});
 	});
 	
+
 	//댓글 수정버튼 클릭시 input 활성화
 	$(document).on("click","#modifyBtn",function(e){
 		$(this).attr('hidden',true);
@@ -496,62 +527,63 @@ $(document).ready(function(){
 	
 	
 	
-	//해당 페이지 여행코스 조회
-	function get(commentid, callback, error){
-		$.get("/commentsCo/"+commentid+".json",function(result){
-			if(callback) { callback(result); }
-		}).fail(function(xhr,status,err){
-			if(error) { error(); }
-		});
-	}
-	
-	
 	/* ======모달창======= */
 	
 	
 	//모달창 버튼, input값
 	let modal=$("#myModal");
 	let modalInputTitle = modal.find("input[name='title']");
-	let modalInputSubContentid = modal.find("input[name='subcontentid']");
-	let modalInputOverview = modal.find("input[name='overview']");
+	let modalInputOverview = modal.find("textarea[name='overview']");
+	let contentid = modal.find()
 	
 	let updateCourseBtn = $("#updateCourseBtn"); //수정창 띄우는 버튼
 	let modifyCourseBtn = $("#modifyCourseBtn"); //수정하기 버튼
 	let closeCourseBtn = $("#closeCourseBtn"); //수정창 닫기 버튼
 	
 	
-	//현재 페이지의 여행코스 조회
-	function get(rno, callback, error){
-		$.get("/replies/"+rno+".json",function(result){
-			if(callback) { callback(result); }
-		}).fail(function(xhr,status,err){
-			if(error) { error(); }
-		});
-	}
-	
 	//여행코스 수정하기 버튼 클릭시 모달창 띄우기
 	updateCourseBtn.on("click",function(e){
 		$("#myModal").modal("show");
 		var contentid = $(this).data("contentid");
-		
-
-
 
 	});
 	
 	//모달창 닫기 버튼
 	closeCourseBtn.on("click",function(e){
+		var checkboxes = document.querySelectorAll('.contentCheckbox');
+		checkboxes.forEach(function(checkbox) {
+			checkbox.checked = false;
+			var contentId = checkbox.parentElement
+					.querySelector("#checkcontentid").textContent;
+			var index = selectedIds.indexOf(contentId);
+			if (index !== -1) {
+				selectedTitles.splice(index, 1);
+				selectedIds.splice(index, 1);
+			}
+			checkbox.parentElement.style.backgroundColor = "";
+		});
+		selectedIdsDisplay.innerHTML = '';
 		modal.modal("hide");
-	})
+		
+	});
 	
+
 	//모달창 수정하기 버튼
 	modifyCourseBtn.on("click",function(e){
-		modalInputTitle.val();
-		modalInputSubContentid.val();
-		modalInputOverview.val();
+		if(selectedIds.length<1){
+			alert("최소 한 개 이상의 여행지를 선택해주세요");
+			return false;
+		}
 		
-		console.log("수정하기 버튼===========");
-	})
+		var firstId = selectedIds[0];
+		// 해당 id를 가지고 있는 li 요소의 이미지 src 가져오기
+		firstImage = $('p:contains(' + firstId + ')').siblings('img').attr('src');
+
+		document.getElementById("subcontentidInput").value = selectedIds;
+	    document.getElementById("firstimageInput").value = firstImage;
+
+		
+	});
 	
 	
 }); //document.ready
