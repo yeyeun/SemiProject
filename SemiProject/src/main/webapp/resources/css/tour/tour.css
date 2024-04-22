@@ -83,8 +83,9 @@ html, body {
 }
 
 .card{
-	margin: 0px auto;
-	border-radius: none;
+	margin: 10px auto;
+	border: none;
+	
 }
 .card-img-top{
 	height: 13rem;
@@ -94,7 +95,7 @@ html, body {
 	display:none;
 }
 .card-title{
-	font-size: 18px;
+	font-size: 24px;
 }
 .card-text{
 	width: fit-content;
@@ -104,7 +105,19 @@ html, body {
     text-align: center;
     font-family: 'Hahmlet';
 }
-
+.col{
+	margin: 20px;
+	
+}
+.m-1{
+	box-shadow: rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em;
+}
+.card.btn{
+	bs-btn-color: rgb(128,0,255);
+}
+.text-body-secondary{
+	color: white;
+}
 .pagination a {
     color: black;
     padding: 8px 16px;
@@ -112,7 +125,6 @@ html, body {
     transition: background-color .3s;
     margin: 0 auto;
 }
-
 .pagination a.active {
 	background-color: rgb(83, 185, 252);
 	color: white;
