@@ -224,7 +224,7 @@ $(document).ready(function(){
 							
 							carouselInner.append(`
 								<div class="carousel-item \${active}">
-									<img src="\${item.originimgurl}" class="d-block w-100" alt="1" onerror="this.src='../../resources/images/tour_none_image.png'" >	
+									<img src="\${item.originimgurl}" class="d-block w-100" alt="1" onerror="this.src='../../resources/images/tour_none_image.png'"   style="max-height: 450px;">	
 			    				</div>
 						`);
 						}
