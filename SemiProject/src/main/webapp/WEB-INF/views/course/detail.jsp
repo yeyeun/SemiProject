@@ -222,25 +222,20 @@ var linePath = new Array(); //선을 구성하는 좌표 배열
 	titleList.push("${contentdetail.title}");
 </c:forEach>
 
-//x,y 최대값, 최소값 구하기
-var maxXvalue = Math.max.apply(null,xList);
-var minXvalue = Math.min.apply(null,xList);
-var maxYvalue = Math.max.apply(null,yList);
-var minYvalue = Math.min.apply(null,yList);
-
-//여행지들의 평균 좌표
-var centerX = (maxXvalue + minXvalue) / 2;
-var centerY = (maxYvalue + minYvalue) / 2;
-	
 var mapContainer = document.getElementById('map');
 var options = {
-		center: new kakao.maps.LatLng(centerY, centerX),
-		level: 10
+		center: new kakao.maps.LatLng(33.374671, 126.543772),
+		level: 3
 	};
 
 var map = new kakao.maps.Map(mapContainer, options);
 
-var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png"; // 마커 이미지 url
+// 마커 이미지 url
+var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png";
+
+//지도를 재설정할 범위정보를 가지고 있을 LatLngBounds 객체를 생성합니다
+var bounds = new kakao.maps.LatLngBounds();
+
 
 for(var i=0; i<xList.length; i++){
 	var imageSize = new kakao.maps.Size(36, 35); // 마커 이미지 크기
@@ -255,11 +250,17 @@ for(var i=0; i<xList.length; i++){
         map: map, // 마커를 표시할 지도
         position: new kakao.maps.LatLng(yList[i], xList[i]),
         title : titleList[i], // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
-        image : markerImage // 마커 이미지 
+        image : markerImage, // 마커 이미지
+
     });
 	
 	//배열에 좌표 저장
 	linePath.push(new kakao.maps.LatLng(yList[i], xList[i]));
+	
+	// LatLngBounds 객체에 좌표를 추가
+	 bounds.extend(new kakao.maps.LatLng(yList[i], xList[i]));
+	
+
 }
 
 //지도에 표시할 선을 생성합니다
@@ -271,8 +272,13 @@ var polyline = new kakao.maps.Polyline({
     strokeStyle: 'solid' // 선의 스타일입니다
 });
 
+
 // 지도에 선을 표시합니다 
 polyline.setMap(map);
+
+// LatLngBounds 객체에 추가된 좌표들을 기준으로 지도의 범위를 재설정합니다
+// 이때 지도의 중심좌표와 레벨이 변경될 수 있습니다
+map.setBounds(bounds);
 
 
 $(document).ready(function(){
