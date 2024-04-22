@@ -13,12 +13,16 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.ibatis.annotations.Param;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
+import com.raon.domain.Bus;
+import com.raon.domain.BusArrive;
+import com.raon.domain.BusStation;
 import com.raon.domain.TourDetailInfo;
 import com.raon.domain.TourInfo;
 
@@ -383,4 +387,189 @@ public class TourService {
 	    // model에 detailList 추가
 	    model.addAttribute("overviewList", detailList2);
 	}
+	public void getBusStation(HttpServletRequest request, HttpServletResponse response, Model model) throws IOException {
+	    // TODO Auto-generated method stub
+	    String mapx = request.getParameter("mapx");
+	    String mapy = request.getParameter("mapy");
+	    StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/1613000/BusSttnInfoInqireService/getCrdntPrxmtSttnList"); /*URL*/
+	    urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=KR1eLnI5BrfL8EDf5l8G3OTQakbgTZ0izb4KANg0SWhwqnP1wHHQQRb%2BrbP1N2a5lnEtjR%2BBvLqfZKaKSZELLQ%3D%3D"); /*Service Key*/
+	    urlBuilder.append("&" + URLEncoder.encode("pageNo","UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /*페이지번호*/
+	    urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + URLEncoder.encode("999", "UTF-8")); /*한 페이지 결과 수*/
+	    urlBuilder.append("&" + URLEncoder.encode("_type","UTF-8") + "=" + URLEncoder.encode("json", "UTF-8")); /*데이터 타입(xml, json)*/
+	    urlBuilder.append("&" + URLEncoder.encode("gpsLati","UTF-8") + "=" + URLEncoder.encode(mapy, "UTF-8")); /*WGS84 위도 좌표*/
+	    urlBuilder.append("&" + URLEncoder.encode("gpsLong","UTF-8") + "=" + URLEncoder.encode(mapx, "UTF-8")); /*WGS84 경도 좌표*/
+	    URL url = new URL(urlBuilder.toString());
+	    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+	    conn.setRequestMethod("GET");
+	    conn.setRequestProperty("Content-type", "application/json");
+	    System.out.println("Response code: " + conn.getResponseCode());
+	    BufferedReader rd;
+	    if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
+	        rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+	    } else {
+	        rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+	    }
+	    StringBuilder sb = new StringBuilder();
+	    String line;
+	    while ((line = rd.readLine()) != null) {
+	        sb.append(line);
+	    }
+	    rd.close();
+	    conn.disconnect();
+	    System.out.println(sb.toString());
+	    JSONObject jsonObject = new JSONObject(sb.toString());
+	    List<BusStation> BusStationList = new ArrayList<BusStation>();
+	    JSONObject responseObj = jsonObject.getJSONObject("response");
+	            Object items = responseObj.getJSONObject("body").get("items");
+	            if (items instanceof JSONObject) {
+	                JSONObject itemsObj = (JSONObject) items;
+	                if (itemsObj.has("item")) {
+	                    JSONArray jsonArray = itemsObj.getJSONArray("item");
+	                    for (int i = 0; i < jsonArray.length(); i++) {
+	                        JSONObject stationObj = jsonArray.getJSONObject(i);
+	                        String nodenm = stationObj.getString("nodenm");
+	                        if (!nodenm.contains("투어")) {
+	                            BusStationList.add(new BusStation(stationObj.getInt("citycode"),
+	                                    stationObj.getDouble("gpslati"), stationObj.getDouble("gpslong"),
+	                                    stationObj.getString("nodeid"), nodenm));
+	                        }
+	                    }
+	                } else {
+	                    // "item"이 없는 경우
+	                    System.out.println("API 응답에 'item'이 없습니다.");
+	                    // "정보없음"을 리스트에 추가
+	                    BusStationList.add(new BusStation(-1, -1.0, -1.0, "N/A", "N/A"));
+	                }
+	            } else {
+	                // "items"가 JSONObject가 아닌 경우
+	                System.out.println("API 응답에 'items'가 JSONObject가 아닙니다.");
+	                // "정보없음"을 리스트에 추가
+	                BusStationList.add(new BusStation(-1, -1.0, -1.0, "정보 없음", "정보 없음"));
+	            }
+	        
+	    model.addAttribute("BusStationList", BusStationList);
+	}
+
+	
+	public void getAllBus(@Param("nodeid") String nodeid, Model model) throws IOException {
+	    // TODO Auto-generated method stub
+		String nodeids = nodeid;
+	    List<Bus> allbus = new ArrayList<Bus>();
+	        StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/1613000/BusSttnInfoInqireService/getSttnThrghRouteList"); /*URL*/
+	        urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=KR1eLnI5BrfL8EDf5l8G3OTQakbgTZ0izb4KANg0SWhwqnP1wHHQQRb%2BrbP1N2a5lnEtjR%2BBvLqfZKaKSZELLQ%3D%3D"); /*Service Key*/
+	        urlBuilder.append("&" + URLEncoder.encode("pageNo","UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /*페이지번호*/
+	        urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + URLEncoder.encode("999", "UTF-8")); /*한 페이지 결과 수*/
+	        urlBuilder.append("&" + URLEncoder.encode("_type","UTF-8") + "=" + URLEncoder.encode("json", "UTF-8")); /*데이터 타입(xml, json)*/
+	        urlBuilder.append("&" + URLEncoder.encode("cityCode","UTF-8") + "=" + URLEncoder.encode("39", "UTF-8")); /*도시코드*/
+	        urlBuilder.append("&" + URLEncoder.encode("nodeid","UTF-8") + "=" + URLEncoder.encode(nodeids, "UTF-8")); /*정류소ID*/
+	        URL url = new URL(urlBuilder.toString());
+	        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+	        conn.setRequestMethod("GET");
+	        conn.setRequestProperty("Content-type", "application/json");
+	        System.out.println("Response code: " + conn.getResponseCode());
+	        BufferedReader rd;
+	        if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
+	            rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+	        } else {
+	            rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+	        }
+	        StringBuilder sb = new StringBuilder();
+	        String line;
+	        while ((line = rd.readLine()) != null) {
+	            sb.append(line);
+	        }
+	        rd.close();
+	        conn.disconnect();
+	        System.out.println(sb.toString());
+	        JSONObject jsonObject = new JSONObject(sb.toString());
+	        jsonObject = jsonObject.getJSONObject("response").getJSONObject("body").getJSONObject("items");
+	        Object item = jsonObject.get("item");
+	        if (item instanceof JSONArray) {
+	            JSONArray jsonArray = (JSONArray) item;
+	            for (int i = 0; i < jsonArray.length(); i++) {
+	                JSONObject busObject = jsonArray.getJSONObject(i);
+	                allbus.add(new Bus(busObject.getString("endnodenm"),
+	                        busObject.getString("routeid"), String.valueOf(busObject.get("routeno")),
+	                        busObject.getString("routetp"), busObject.getString("startnodenm")));
+	            }
+	        } else if (item instanceof JSONObject) {
+	            JSONObject busObject = (JSONObject) item;
+	            allbus.add(new Bus(busObject.getString("endnodenm"),
+	                    busObject.getString("routeid"), String.valueOf(busObject.get("routeno")),
+	                    busObject.getString("routetp"), busObject.getString("startnodenm")));
+	        }
+	    
+	    model.addAttribute("allbus", allbus);
+	}
+
+
+	
+	public void getBusArrive(Model model) throws IOException {
+	    List<BusStation> allbus = (List<BusStation>) model.getAttribute("BusStationList");
+	    List<BusArrive> BusArriveList = new ArrayList<BusArrive>();
+	    for (BusStation bus : allbus) {
+	        String nodeId = bus.getNodeid();
+	        StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/1613000/ArvlInfoInqireService/getSttnAcctoArvlPrearngeInfoList"); /*URL*/
+	        urlBuilder.append("?" + URLEncoder.encode("serviceKey", "UTF-8") + "=KR1eLnI5BrfL8EDf5l8G3OTQakbgTZ0izb4KANg0SWhwqnP1wHHQQRb%2BrbP1N2a5lnEtjR%2BBvLqfZKaKSZELLQ%3D%3D"); /*Service Key*/
+	        urlBuilder.append("&" + URLEncoder.encode("pageNo", "UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /*페이지번호*/
+	        urlBuilder.append("&" + URLEncoder.encode("numOfRows", "UTF-8") + "=" + URLEncoder.encode("999", "UTF-8")); /*한 페이지 결과 수*/
+	        urlBuilder.append("&" + URLEncoder.encode("_type", "UTF-8") + "=" + URLEncoder.encode("json", "UTF-8")); /*데이터 타입(xml, json)*/
+	        urlBuilder.append("&" + URLEncoder.encode("cityCode", "UTF-8") + "=" + URLEncoder.encode("39", "UTF-8")); /*도시코드 [상세기능3 도시코드 목록 조회]에서 조회 가능*/
+	        urlBuilder.append("&" + URLEncoder.encode("nodeId", "UTF-8") + "=" + URLEncoder.encode(nodeId, "UTF-8")); /*정류소ID [국토교통부(TAGO)_버스정류소정보]에서 조회가능*/
+	        URL url = new URL(urlBuilder.toString());
+	        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+	        conn.setRequestMethod("GET");
+	        conn.setRequestProperty("Content-type", "application/json");
+	        System.out.println("Response code: " + conn.getResponseCode());
+	        BufferedReader rd;
+	        if (conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
+	            rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+	        } else {
+	            rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+	        }
+	        StringBuilder sb = new StringBuilder();
+	        String line;
+	        while ((line = rd.readLine()) != null) {
+	            sb.append(line);
+	        }
+	        rd.close();
+	        conn.disconnect();
+	        System.out.println(sb.toString());
+	        JSONObject jsonObject = new JSONObject(sb.toString());
+	        JSONObject responseObj = jsonObject.getJSONObject("response");
+	        Object items = responseObj.getJSONObject("body").get("items");
+	        if (items instanceof JSONObject) {
+	            JSONObject itemsObj = (JSONObject) items;
+	            if (itemsObj.has("item")) {
+	                JSONArray jsonArray;
+	                // "item"이 단일 객체인 경우 JSONArray로 변환하여 처리
+	                if (itemsObj.get("item") instanceof JSONArray) {
+	                    jsonArray = itemsObj.getJSONArray("item");
+	                } else {
+	                    jsonArray = new JSONArray().put(itemsObj.getJSONObject("item"));
+	                }
+	                for (int i = 0; i < jsonArray.length(); i++) {
+	                    BusArriveList.add(new BusArrive(jsonArray.getJSONObject(i).getInt("arrprevstationcnt"),
+	                            jsonArray.getJSONObject(i).getInt("arrtime"), jsonArray.getJSONObject(i).getString("nodeid"),
+	                            jsonArray.getJSONObject(i).getString("nodenm"), jsonArray.getJSONObject(i).getString("routeid"),
+	                            jsonArray.getJSONObject(i).getInt("routeno"), jsonArray.getJSONObject(i).getString("routetp"),
+	                            jsonArray.getJSONObject(i).getString("vehicletp")
+	                    ));
+	                }
+	            } else {
+	                // "item"이 없는 경우
+	                System.out.println("API 응답에 'item'이 없습니다.");
+	                // "정보없음"을 리스트에 추가
+	                BusArriveList.add(new BusArrive(-1, -1, "정보 없음", "정보 없음", "정보 없음", -1, "정보 없음", "정보 없음"));
+	            }
+	        } else {
+	            // "items"가 JSONObject가 아닌 경우
+	            System.out.println("API 응답에 'items'가 JSONObject가 아닙니다.");
+	            // "정보없음"을 리스트에 추가
+	            BusArriveList.add(new BusArrive(-1, -1, "정보 없음", "정보 없음", "정보 없음", -1, "정보 없음", "정보 없음"));
+	        }
+	    }
+	    model.addAttribute("BusArriveList", BusArriveList);
+	}
+
 }

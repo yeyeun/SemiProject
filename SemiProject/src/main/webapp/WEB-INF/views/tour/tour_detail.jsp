@@ -94,8 +94,14 @@
 			
         </div>
         
-        <div id="block" style="width:100%; height: 200px;"></div>       
-     </div>
+        <div id="block" style="width:100%; height: 200px;"></div>
+        <div id="bus" style="width:100%; height: 300px;">
+        	<c:forEach items="${BusStationList}" var="station">
+					<p id="nodenm" onclick="showAllBus('${station.nodeid}')">${station.nodenm }<p>
+					<div class="businfo"></div>
+			</c:forEach>
+        </div>
+        </div>
   
 <script>
 var i = 0;
@@ -103,6 +109,32 @@ var contentids = '<%= request.getParameter("contentid") %>';
 var ids = '<%=id %>'
 var firstimages = '<%=firstimage %>';
 var titles = '<%= title %>';
+let businfo = $(".businfo");
+function showAllBus(nodeid){
+	var nodeids = nodeid;
+	
+	
+	 $.ajax({
+            type: "GET",
+            url: "/tour/buslist", // 컨트롤러의 엔드포인트 URL
+            data: { 
+            	nodeid: nodeids }, // 요청 파라미터 설정
+            dataType : 'json', 
+            success: function(data) {
+            	var alertString = "정류장에 오는 모든 버스\n";
+                $.each(data, function(idx, val) {
+                    alertString += val.routeno + "번 버스\n";
+                });
+                // alert 창에 출력
+                alert(alertString);
+
+            },
+            error: function(xhr, status, error) {
+                // 요청이 실패하면 실행될 코드
+                console.error("AJAX request failed:", status, error);
+            }
+        });
+}
 $(document).ready(function(){
 		var contentid = '<%= request.getParameter("contentid") %>';
 		var firstimage = '<%= request.getParameter("firstimage") %>';
@@ -371,6 +403,7 @@ function deleteFromCart(){
         $('i').attr('class','fa-solid fa-heart');
         i = 1;
     }
+
 }
 
     </script>

@@ -1,6 +1,11 @@
 package com.raon.controller;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -9,12 +14,18 @@ import javax.lang.model.element.ModuleElement;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.raon.domain.Bus;
+import com.raon.domain.BusArrive;
+import com.raon.domain.BusStation;
 import com.raon.domain.Course;
 import com.raon.domain.TourDetailInfo;
 import com.raon.domain.TourInfo;
@@ -48,7 +59,24 @@ public class TourController {
 	public String detail(HttpServletRequest request, HttpServletResponse response, Model model) {
 		try {
 			service.getTourDetail(request, response, model);
-			log.info(request+"!!!!"+response+"!!!!!!!"+model);
+			service.getBusStation(request, response, model);
+			
+			List<BusStation> allbus = (List<BusStation>) model.getAttribute("BusStationList");
+			for(BusStation bus:allbus) {
+				log.info("!!!!!!"+bus.getNodeid());
+			}
+			if(allbus.get(0).getCitycode() != -1) {
+//				service.getBusArrive(model);
+				log.info("정류장이 있을경우 도착정보 호출");
+			}else {
+				log.info("정류장이 없을경우");
+			}
+			
+//			log.info("!!!!!"+model.getAttribute("BusStationList"));
+//			log.info("@@@@@"+model.getAttribute("BusArriveList"));
+			
+			
+
 			log.info("controller -> detail success");
 			//service.getTourImage(request, response, model);
 		} catch (IOException e) {
@@ -58,6 +86,22 @@ public class TourController {
 		
 		return "tour/tour_detail";
 	}
+	
+	@GetMapping("/buslist")
+	@ResponseBody
+	public List<Bus> buslist(@RequestParam("nodeid") String nodeid,Model model) {
+		try {
+			service.getAllBus(nodeid, model);
+			List<Bus> businfo =(List<Bus>) model.getAttribute("allbus");
+			log.info("@@@@"+businfo);
+			return businfo;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
 	@GetMapping("/search")
 	public String search(HttpServletRequest request, HttpServletResponse response, Model model,  @RequestParam(defaultValue = "1") int page) {
 		try {

@@ -8,6 +8,9 @@
   font-weight: 400;
   font-style: normal;
 }
+*{
+	font-family:"Noto Sans KR";
+}
 .carousel-inner{
 	height:100vh;
 }
@@ -64,6 +67,7 @@
 }
 
 .carousel-caption p{
+	font-family:"Noto Sans KR";
 	font-size:22px; 
 }
 
