@@ -85,8 +85,8 @@
   		
   		<c:if test="${sessionScope.loginId == course.id}">
   		 <div class="buttons-wrapper">
-  			<button data-oper='modify' onclick="location.href='/course/modify?contentid=<c:out value="${course.contentid}"/>'">여행코스 수정하기</button>
-  			<button data-oper='remove' onclick="location.href='/course/remove?contentid=<c:out value="${course.contentid}"/>'">여행코스 삭제하기</button>
+  			<button data-oper='modify' id="updateCourseBtn">여행코스 수정하기</button>
+  			<button data-oper='remove' data-contentid="${course.contentid}" onclick="location.href='/course/remove?contentid=<c:out value="${course.contentid}"/>'">여행코스 삭제하기</button>
   		</div>
   		</c:if>
   		
@@ -133,7 +133,51 @@
 	</div>
 
 
-
+<!-- 모달 창 -->
+<div class="modal" tabindex="-1" role="dialog" id="myModal">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">여행코스 수정하기</h5>
+			</div>
+			<div class="modal-body">
+				<div class="form-group">
+					<label>여행코스 제목</label>
+					<input class="form-control" type="text" name='title' value='${course.title}'/>
+				</div>
+				<div class="form-group">
+					<label>여행코스 경로</label>
+					
+					<c:choose>
+						<c:when test="${empty contentdetailList}">
+						여행지 목록이 없습니다.
+						</c:when>
+						<c:otherwise>
+						<c:forEach items="${contentdetailList}" var="contentdetail">
+						
+						<li class="contentItem">
+							<input type="checkbox" class="contentCheckbox" value="${contentdetail.title}" onclick="toggleCheckbox(this)">
+							<img src="${contentdetail.firstimage}" alt="..." class="contentImage" onerror="this.src='../../resources/images/nocourseimg.png'">
+							<span class="contentTitle">${tour.title}</span>
+							<p id="checkcontentid" style="display: none;">${contentdetail.contentid}</p>
+						</li>
+									
+						</c:forEach>
+						</c:otherwise>
+					</c:choose>
+				</div>
+				<div class="form-group">
+					<label>여행코스 설명</label>
+					<input class="form-control" type="text" name='overview' value='${course.overview}'/>
+				</div>	
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-info" id="modifyCourseBtn" data-bs-dismiss="modal">수정하기</button>
+				<button type="button" class="btn btn-secondary" id="closeCourseBtn">닫기</button>
+			</div>
+		</div>
+	</div>
+</div>
 
 <script>
 
@@ -308,15 +352,7 @@ $(document).ready(function(){
 		});
 	}
 	
-	//특정 댓글 조회
-	function get(commentid, callback, error){
-		$.get("/commentsCo/"+commentid+".json",function(result){
-			if(callback) { callback(result); }
-		}).fail(function(xhr,status,err){
-			if(error) { error(); }
-		});
-	}
-	
+
 	//댓글 목록 처리
 	let replyUL = $(".comments");
 	showList(1);
@@ -354,13 +390,13 @@ $(document).ready(function(){
 					else{
 						str+=`
 						
-						<li class="clearfix" data-commentid="\${item.commentid}">
+						<li class="clearfix">
 						  <img src="${resourceurl}/images/user-icon.png" class="avatar" alt="">
 						  <div class="post-comments">
 						  <input type="hidden" id="findid" value="\${item.commentid}"/>
 					     	 <div class="comment-button">
-					      		<button type="button" id="modifyBtn" style="display:none;">수정하기</button>
-					      		<button type="button" id="removeBtn" style="display:none;">삭제하기</button>
+					      		<button type="button" id="modifyBtn" data-commentid="\${item.commentid}" style="display:none;">수정하기</button>
+					      		<button type="button" id="removeBtn" data-commentid="\${item.commentid}" style="display:none;">삭제하기</button>
 					      	</div>
 
 						      <p class="meta"><span class="id">\${item.id}</span>\${displayTime(item.regDate)}</p>
@@ -438,7 +474,8 @@ $(document).ready(function(){
 	//특정 댓글 수정
 	$(document).on("click","#updateBtn",function(){
 		//var idData = document.querySelector(".clearfix"); //.clearfix의 data 속성 가져오기
-		var commentid = $(this).parent().prev().val();//해당 댓글의 id값 가져오기
+		var commentid = $(this).data("commentid");
+		//var commentid = $(this).parent().prev().val();//해당 댓글의 id값 가져오기
 		var modifycomment = $(this).parent().next().next().next().children();
   		var comment = {commentid:commentid, content:modifycomment.val()};
 		update(comment,function(result){
@@ -456,7 +493,67 @@ $(document).ready(function(){
 			showList(1);
 		});
 	});
+	
+	
+	
+	//해당 페이지 여행코스 조회
+	function get(commentid, callback, error){
+		$.get("/commentsCo/"+commentid+".json",function(result){
+			if(callback) { callback(result); }
+		}).fail(function(xhr,status,err){
+			if(error) { error(); }
+		});
+	}
+	
+	
+	/* ======모달창======= */
+	
+	
+	//모달창 버튼, input값
+	let modal=$("#myModal");
+	let modalInputTitle = modal.find("input[name='title']");
+	let modalInputSubContentid = modal.find("input[name='subcontentid']");
+	let modalInputOverview = modal.find("input[name='overview']");
+	
+	let updateCourseBtn = $("#updateCourseBtn"); //수정창 띄우는 버튼
+	let modifyCourseBtn = $("#modifyCourseBtn"); //수정하기 버튼
+	let closeCourseBtn = $("#closeCourseBtn"); //수정창 닫기 버튼
+	
+	
+	//현재 페이지의 여행코스 조회
+	function get(rno, callback, error){
+		$.get("/replies/"+rno+".json",function(result){
+			if(callback) { callback(result); }
+		}).fail(function(xhr,status,err){
+			if(error) { error(); }
+		});
+	}
+	
+	//여행코스 수정하기 버튼 클릭시 모달창 띄우기
+	updateCourseBtn.on("click",function(e){
+		$("#myModal").modal("show");
+		var contentid = $(this).data("contentid");
+		
 
+
+
+	});
+	
+	//모달창 닫기 버튼
+	closeCourseBtn.on("click",function(e){
+		modal.modal("hide");
+	})
+	
+	//모달창 수정하기 버튼
+	modifyCourseBtn.on("click",function(e){
+		modalInputTitle.val();
+		modalInputSubContentid.val();
+		modalInputOverview.val();
+		
+		console.log("수정하기 버튼===========");
+	})
+	
+	
 }); //document.ready
 
 </script>

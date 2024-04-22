@@ -483,3 +483,33 @@ button[type="button"]:hover{
 .buttons-wrapper button:hover{
 	background: #a4c5ff;
 }
+
+
+
+/* 모달창 */
+
+.cartItem{
+	margin-bottom: 35px;	
+}
+.cartimage{
+	width: 150px;
+}
+ .cartItem:last-child {
+        margin-bottom: 0;
+}
+.carttitle{
+	font-size: 16px;
+	font-weight: 600;
+	margin-top: 10px;
+}
+.cartcontentid{
+	display:none;
+}
+.cartCheckbox{
+	width: 13px;
+}
+.cartCheckbox{
+	width: 20px;
+	height: 20px;
+	margin-right: 5px;
+}
