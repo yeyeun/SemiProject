@@ -456,15 +456,36 @@ public class TourService {
 	    JSONObject bodyObj = responseObj.getJSONObject("body");
 	    Object items = bodyObj.get("items");
 
-	    if (items instanceof JSONObject) {
+	    if (items instanceof String) {
+	        // "items"가 비어 있는 경우
+	        System.out.println("API 응답에 'items'가 비어 있습니다.");
+	        // "정보없음"을 리스트에 추가
+	        BusStationList.add(new BusStation(-1, -1.0, -1.0, "N/A", "N/A"));
+	    } else if (items instanceof JSONObject) {
 	        JSONObject itemsObj = (JSONObject) items;
 	        if (itemsObj.has("item")) {
-	            JSONObject stationObj = itemsObj.getJSONObject("item");
-	            String nodenm = stationObj.getString("nodenm");
-	            if (!nodenm.contains("투어")) {
-	                BusStationList.add(new BusStation(stationObj.getInt("citycode"),
-	                        stationObj.getDouble("gpslati"), stationObj.getDouble("gpslong"),
-	                        stationObj.getString("nodeid"), nodenm));
+	            Object item = itemsObj.get("item");
+	            if (item instanceof JSONObject) {
+	                // 단일 아이템인 경우
+	                JSONObject stationObj = (JSONObject) item;
+	                String nodenm = stationObj.getString("nodenm");
+	                if (!nodenm.contains("투어")) {
+	                    BusStationList.add(new BusStation(stationObj.getInt("citycode"),
+	                            stationObj.getDouble("gpslati"), stationObj.getDouble("gpslong"),
+	                            stationObj.getString("nodeid"), nodenm));
+	                }
+	            } else if (item instanceof JSONArray) {
+	                // 여러 아이템인 경우
+	                JSONArray jsonArray = (JSONArray) item;
+	                for (int i = 0; i < jsonArray.length(); i++) {
+	                    JSONObject stationObj = jsonArray.getJSONObject(i);
+	                    String nodenm = stationObj.getString("nodenm");
+	                    if (!nodenm.contains("투어")) {
+	                        BusStationList.add(new BusStation(stationObj.getInt("citycode"),
+	                                stationObj.getDouble("gpslati"), stationObj.getDouble("gpslong"),
+	                                stationObj.getString("nodeid"), nodenm));
+	                    }
+	                }
 	            }
 	        } else {
 	            // "item"이 없는 경우
@@ -472,20 +493,9 @@ public class TourService {
 	            // "정보없음"을 리스트에 추가
 	            BusStationList.add(new BusStation(-1, -1.0, -1.0, "N/A", "N/A"));
 	        }
-	    } else if (items instanceof JSONArray) {
-	        JSONArray jsonArray = (JSONArray) items;
-	        for (int i = 0; i < jsonArray.length(); i++) {
-	            JSONObject stationObj = jsonArray.getJSONObject(i);
-	            String nodenm = stationObj.getString("nodenm");
-	            if (!nodenm.contains("투어")) {
-	                BusStationList.add(new BusStation(stationObj.getInt("citycode"),
-	                        stationObj.getDouble("gpslati"), stationObj.getDouble("gpslong"),
-	                        stationObj.getString("nodeid"), nodenm));
-	            }
-	        }
 	    } else {
-	        // "items"가 JSONObject 또는 JSONArray가 아닌 경우
-	        System.out.println("API 응답에 'items'가 JSONObject 또는 JSONArray가 아닙니다.");
+	        // "items"가 JSONObject 또는 String이 아닌 경우
+	        System.out.println("API 응답에 'items'가 JSONObject 또는 String이 아닙니다.");
 	        // "정보없음"을 리스트에 추가
 	        BusStationList.add(new BusStation(-1, -1.0, -1.0, "정보 없음", "정보 없음"));
 	    }
