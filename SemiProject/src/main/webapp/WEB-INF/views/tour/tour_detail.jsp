@@ -101,21 +101,19 @@
 				<table class="bustable">
 					<thead>
 							<tr>
-								<th>도착 정보</th>
+								<th colspan="2" style="font-size:25px"><mark id="mark3">도착 정보</mark><br><br></th>
 							</tr>
 						</thead>
 					<tbody id="busbody">
 						<tr>
-							<td style="font-size: 30px; color: blue;">"routetp"</td>
-							<td>"routeno"</td>
-							<td>"arrtime"<span style="color: gray;">"arrprevstationcnt"</span></td>
+							<td colspan="2" style="font-size: 20px;"><mark id="mark3">정류소를 눌러 버스 도착 정보를 확인해보세요!</mark></td>
 						</tr>
 					</tbody>
 				</table>
 				</div>
 			</div>
 			<div style="position: relative; width: 300px; right: 225px;">
-			<p style="color:gray;">[여행지 주변 500m이내 정류장]</p>
+				<p style="color:gray;">[여행지 주변 500m이내 정류장]</p>
 			</div>
 			
         </div>
@@ -141,38 +139,39 @@ let businfo = $(".businfo");
 function showAllBus(nodeid, nodenm){
 	var nodeids = nodeid;
 	var nodenms = nodenm;
-	var endnodenmlist = [];
-	var startnodenmlist = [];
-	var routeidlist = [];
-	var routenolist = [];
+// 	var endnodenmlist = [];
+// 	var startnodenmlist = [];
+// 	var routeidlist = [];
+// 	var routenolist = [];
 		
-	 $.ajax({
-            type: "GET",
-            url: "/tour/buslist", // 컨트롤러의 엔드포인트 URL
-            async: false,
-            data: { 
-            	nodeid: nodeids }, // 요청 파라미터 설정
-            dataType : 'json', 
-            success: function(data) {
-            	buslist1 = data;
-            	console.log(nodenm+"정류장에 오는 모든 버스는");
-                $.each(data, function(idx, val) {
-                	console.log(val.routeid);
-                	console.log(val.routeno);
-                	endnodenmlist.push(val.endnodenm);
-                	startnodenmlist.push(val.startnodenm);
-                	routeidlist.push(val.routeid);
-                	routenolist.push(val.routeno);
+// 	//버스 전체 호출
+// 	 $.ajax({
+//             type: "GET",
+//             url: "/tour/buslist", // 컨트롤러의 엔드포인트 URL
+//             async: false,
+//             data: { 
+//             	nodeid: nodeids }, // 요청 파라미터 설정
+//             dataType : 'json', 
+//             success: function(data) {
+//             	buslist1 = data;
+//             	console.log(nodenm+"정류장에 오는 모든 버스는");
+//                 $.each(data, function(idx, val) {
+//                 	console.log(val.routeid);
+//                 	console.log(val.routeno);
+//                 	endnodenmlist.push(val.endnodenm);
+//                 	startnodenmlist.push(val.startnodenm);
+//                 	routeidlist.push(val.routeid);
+//                 	routenolist.push(val.routeno);
                 	
-                });
+//                 });
 
 
-            },
-            error: function(xhr, status, error) {
-                // 요청이 실패하면 실행될 코드
-                console.error("AJAX request failed:", status, error);
-            }
-        });
+//             },
+//             error: function(xhr, status, error) {
+//                 // 요청이 실패하면 실행될 코드
+//                 console.error("AJAX request failed:", status, error);
+//             }
+//         });
 	 //버스 도착//
 	 	 $.ajax({
             type: "GET",
@@ -185,36 +184,50 @@ function showAllBus(nodeid, nodenm){
             dataType : 'json', 
             success: function(data) {
                 buslist2 = data;
-                console.log(nodenm + "정류장에 도착하는 버스는");
+                
                 var tableBody = $('#bustable tbody');
                 tableBody.empty();
                 
                 $.each(data, function(idx, val) {
-                	console.log(val.routeid);
-                	console.log(val.routeno);
+
                     // 새로운 행(tr) 생성
                     var newRow = $('<tr></tr>');
                     
-                    // 버스 종류 표시
-                    var routeTypeCell = $('<td></td>').text(val.routetp);
+               		// 버스 종류 표시
+                    var routeTypeCell = $('<td class="td1"></td>');
+                    if (val.routetp === '순환버스') {
+                        routeTypeCell.append('<img class="routetp" src="../../resources/images/bus-yellow.png" alt="순환버스" /><span style="color:rgb(235,224,20); font-size: 20px;"><b>'+val.routetp.slice(0, -2)+' '+val.routeno+'번</b></span><br><p>'+val.startnodenm+'→'+val.endnodenm+'</p>');
+                    } else if (val.routetp === '급행버스') {
+                        routeTypeCell.append('<img class="routetp" src="../../resources/images/bus-red.png" alt="급행버스" /><span style="color:rgb(204,51,20); font-size: 20px;"><b>'+val.routetp.slice(0, -2)+' '+val.routeno+'번</b></span><br><p>'+val.startnodenm+'→'+val.endnodenm+'</p>');
+                    }  else if (val.routetp === '공항버스') {
+                        routeTypeCell.append('<img class="routetp" src="../../resources/images/bus-red.png" alt="공항버스" /><span style="color:rgb(204,51,20); font-size: 20px;"><b>'+val.routetp.slice(0, -2)+' '+val.routeno+'번</b></span><br><p>'+val.startnodenm+'→'+val.endnodenm+'</p>');
+                    } else if (val.routetp === '간선버스') {
+                        routeTypeCell.append('<img class="routetp" src="../../resources/images/bus-blue.png" alt="간선버스" /><span style="color:rgb(63,72,204); font-size: 20px;"><b>'+val.routetp.slice(0, -2)+' '+val.routeno+'번</b></span><br><p>'+val.startnodenm+'→'+val.endnodenm+'</p>');
+                    } else if (val.routetp === '지선버스') {
+                        routeTypeCell.append('<img class="routetp" src="../../resources/images/bus-green.png" alt="지선버스" /><span style="color:rgb(0,199,195); font-size: 20px;"><b>'+val.routetp.slice(0, -2)+' '+val.routeno+'번</b></span><br><p>'+val.startnodenm+'→'+val.endnodenm+'</p>');
+                    } else if (val.routetp === '심야버스') {
+                        routeTypeCell.append('<img class="routetp" src="../../resources/images/bus-yellow.png" alt="심야버스" /><span style="color:rgb(235,224,20); font-size: 20px;"><b>'+val.routetp.slice(0, -2)+' '+val.routeno+'번</b></span><br><p>'+val.startnodenm+'→'+val.endnodenm+'</p>');
+                    } else if (val.routetp === '임시버스') {
+                        routeTypeCell.append('<img class="routetp" src="../../resources/images/bus-yellow.png" alt="임시버스" /><span style="color:rgb(235,224,20); font-size: 20px;"><b>'+val.routetp.slice(0, -2)+' '+val.routeno+'번</b></span><br><p>'+val.startnodenm+'→'+val.endnodenm+'</p>');
+                    }
                     newRow.append(routeTypeCell);
                     
                     // 버스 번호 표시
-                    var routeNumberCell = $('<td></td>').text(val.routeno);
-                    newRow.append(routeNumberCell);
+//                     var routeNumberCell = $('<td></td>').text(val.routeno);
+//                     newRow.append(routeNumberCell);
                     
                     // 도착 시간 및 정류소 표시
                      var arrivalInfoCell;
     					if (val.arrtime >= 0) {
-        				arrivalInfoCell = $('<td></td>').text(val.arrtime / 60 + "분 뒤 도착");
+        				arrivalInfoCell = $('<td class="td2"></td>').text(val.arrtime / 60 + "분 뒤 도착");
         				arrivalInfoCell.append('<span style="color: gray;">[' + val.arrprevstationcnt + '번째 전]</span>');
     					} else {
-        				arrivalInfoCell = $('<td></td>').text("도착 정보 없음");
+        				arrivalInfoCell = $('<td class="td3"></td>').text("도착 정보 없음");
     				}
                     newRow.append(arrivalInfoCell);
                     
-                    var endnodenmCell = $('<td></td>').text(val.startnodenm+"->"+val.endnodenm);
-                    newRow.append(endnodenmCell);     
+//                     var endnodenmCell = $('<td></td>').text(val.startnodenm+"->"+val.endnodenm);
+//                     newRow.append(endnodenmCell);     
                     
 //                     tableBody.append(newRow);
 
@@ -243,7 +256,7 @@ function showAllBus(nodeid, nodenm){
                 console.error("AJAX request failed:", status, error);
             }
         });
-	 console.log("@@"+buslist1+"@@@"+buslist2);
+	 
 	 //버스 도착//
 	 
 }
@@ -268,7 +281,7 @@ $(document).ready(function(){
         var mappy = document.getElementById("mapy").innerText;
         var mlevel = document.getElementById("mlevel").innerText;
 
-        console.log(mapx, mapy);
+        
 		
 	       $.ajax({
 	            type: "GET",
@@ -323,7 +336,7 @@ $(document).ready(function(){
 
 	//버스 추가//
 		var imageSrc = "../../resources/images/bus-stop2.png";
-		console.log("&&&&"+positions);
+		
 		
 		for(var i=0; i<positions.length; i++){
 			
@@ -345,19 +358,19 @@ $(document).ready(function(){
 		    (function(nodeid, nodenm) {
 		        // 마커 클릭 이벤트 리스너 등록
 		        kakao.maps.event.addListener(marker, 'click', function() {
-		            console.log(nodeid + " " + nodenm); // nodeid와 nodenm 출력
+		            
 		            // 해당 정류장의 정보를 가져오는 함수 호출
 		            showAllBus(nodeid, nodenm);
 		        });
 
 		        // 마커 호버 이벤트 등록
-		        kakao.maps.event.addListener(marker, 'mouseover', function() {
-		            var infowindow = new kakao.maps.InfoWindow({
-		                content: "<div style='padding:5px;'>정류장 ID: " + nodeid + "<br>정류장 이름: " + nodenm + "</div>",
-		                removable: true
-		            });
-		            infowindow.open(map, marker);
-		        });
+// 		        kakao.maps.event.addListener(marker, 'mouseover', function() {
+// 		            var infowindow = new kakao.maps.InfoWindow({
+// 		                content: "<div style='padding:5px;'>정류장 ID: " + nodeid + "<br>정류장 이름: " + nodenm + "</div>",
+// 		                removable: true
+// 		            });
+// 		            infowindow.open(map, marker);
+// 		        });
 
 		        // 마커에서 마우스를 떼었을 때 인포윈도우 닫기
 		        kakao.maps.event.addListener(marker, 'mouseout', function() {

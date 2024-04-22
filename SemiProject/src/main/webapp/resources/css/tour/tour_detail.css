@@ -85,4 +85,39 @@ blockquote{
     border: none;
     justify-content: center;
 }
-
+/* 버스테이블 */
+/* 이미지크기 */
+.routetp{
+	width:30px;
+}
+.bustable {
+/* 	border-collapse:collapse; */
+	}
+.bustable tr{
+	border-bottom: 2px solid lightgray;
+}
+#bustable{
+	height: 620px;
+    overflow: hidden;
+    overflow-y: scroll;
+}
+#mark3{
+	background-color: #f89b00;
+    color: white;
+    font-weight: 600;
+    border-radius: 5px 5px 5px 5px;
+}
+#busbody p{
+	margin-bottom:0px !important;
+}
+.td1{
+	float: left;
+    width: 246px;
+}
+.td2{
+	width:100%;
+}
+.td3{
+	font-weight: 500;
+	width:100%;
+}
