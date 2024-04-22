@@ -109,6 +109,12 @@ var contentids = '<%= request.getParameter("contentid") %>';
 var ids = '<%=id %>'
 var firstimages = '<%=firstimage %>';
 var titles = '<%= title %>';
+//지도에 띄울 마커
+var xList = new Array();
+var yList = new Array();
+var titleList = new Array();
+
+//마커
 let businfo = $(".businfo");
 function showAllBus(nodeid){
 	var nodeids = nodeid;
@@ -136,6 +142,14 @@ function showAllBus(nodeid){
         });
 }
 $(document).ready(function(){
+	//지도 마커
+		<c:forEach items="${BusStationList}" var="station">
+			xList.push("${station.gpslong}");
+			yList.push("${station.gpslati}");
+			titleList.push("${station.nodenm}");
+		</c:forEach>
+	
+	
 		var contentid = '<%= request.getParameter("contentid") %>';
 		var firstimage = '<%= request.getParameter("firstimage") %>';
 		var id = '<%=id %>'
@@ -239,7 +253,7 @@ $(document).ready(function(){
 
 		var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
 
-		// 지도를 클릭한 위치에 표출할 마커입니다
+		
 		var marker = new kakao.maps.Marker({ 
 		    // 지도 중심좌표에 마커를 생성합니다 
 		    position: map.getCenter() 
@@ -277,7 +291,7 @@ $(document).ready(function(){
 		// 마커가 지도 위에 표시되도록 설정합니다
 		marker.setMap(map);
 
-		var iwContent = '<div class="map_loc" style="padding:5px;">행사 위치<br><a href="https://map.kakao.com/link/map/'+mtitle+','+mappy+','+mappx+'" style="color:blue" target="_blank">'+mtitle+'</a> <a href="https://map.kakao.com/link/to/'+mtitle+','+mappy+','+mappx+'" style="color:blue" target="_blank">길찾기</a></div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+		var iwContent = '<div class="map_loc" style="padding:5px;">여행지 위치<br><a href="https://map.kakao.com/link/map/'+mtitle+','+mappy+','+mappx+'" style="color:blue" target="_blank">'+mtitle+'</a> <a href="https://map.kakao.com/link/to/'+mtitle+','+mappy+','+mappx+'" style="color:blue" target="_blank">길찾기</a></div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
 		    iwPosition = new kakao.maps.LatLng(mappy, mappx); //인포윈도우 표시 위치입니다
 
 		// 인포윈도우를 생성합니다
