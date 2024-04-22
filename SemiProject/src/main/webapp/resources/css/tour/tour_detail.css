@@ -85,6 +85,27 @@ blockquote{
     border: none;
     justify-content: center;
 }
+.info-title {
+    display: block;
+    background: #50627F;
+    color: #fff;
+    text-align: center;
+    border-radius: 10px 10px 10px 10px;
+    line-height:22px;
+    padding:0px 10px;
+    height:45px;
+}
+.bus-title{
+	display: block;
+    background: #4d7d82;
+    color: #fff;
+    text-align: center;
+    border-radius: 10px 10px 10px 10px;
+    line-height:22px;
+    font-size: 15px;
+    padding:5px;
+    height:47px;
+}
 /* 버스테이블 */
 /* 이미지크기 */
 .routetp{

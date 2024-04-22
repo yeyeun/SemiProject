@@ -139,39 +139,6 @@ let businfo = $(".businfo");
 function showAllBus(nodeid, nodenm){
 	var nodeids = nodeid;
 	var nodenms = nodenm;
-// 	var endnodenmlist = [];
-// 	var startnodenmlist = [];
-// 	var routeidlist = [];
-// 	var routenolist = [];
-		
-// 	//버스 전체 호출
-// 	 $.ajax({
-//             type: "GET",
-//             url: "/tour/buslist", // 컨트롤러의 엔드포인트 URL
-//             async: false,
-//             data: { 
-//             	nodeid: nodeids }, // 요청 파라미터 설정
-//             dataType : 'json', 
-//             success: function(data) {
-//             	buslist1 = data;
-//             	console.log(nodenm+"정류장에 오는 모든 버스는");
-//                 $.each(data, function(idx, val) {
-//                 	console.log(val.routeid);
-//                 	console.log(val.routeno);
-//                 	endnodenmlist.push(val.endnodenm);
-//                 	startnodenmlist.push(val.startnodenm);
-//                 	routeidlist.push(val.routeid);
-//                 	routenolist.push(val.routeno);
-                	
-//                 });
-
-
-//             },
-//             error: function(xhr, status, error) {
-//                 // 요청이 실패하면 실행될 코드
-//                 console.error("AJAX request failed:", status, error);
-//             }
-//         });
 	 //버스 도착//
 	 	 $.ajax({
             type: "GET",
@@ -241,12 +208,6 @@ function showAllBus(nodeid, nodenm){
                         tableBody.append(newRow);
                     }
                 });
-//             	buslist2 = data;
-//             	console.log(nodenm+"정류장에");
-//                 $.each(data, function(idx, val) {
-//                     console.log(val.routetp+"종류의"+val.routeno+"번 버스가 "+val.arrprevstationcnt+"개 정류장 남았고 "+val.arrtime/60+"분 뒤 도착");
-//                 });
-//                 // alert 창에 출력
                 
 
 
@@ -299,11 +260,6 @@ $(document).ready(function(){
 	            		$('#heartzone').attr('class','fa-regular fa-heart');
 	            	}
 	            	
-	            	
-	            	
-	                // 요청이 성공하면 실행될 코드
-	                // 서버에서 보내온 응답(response)을 처리
-	                // 예를 들어, 장바구니에 여행지가 있는지 여부에 따라 화면 표시를 변경하는 등의 작업 수행
 	            },
 	            error: function(xhr, status, error) {
 	                // 요청이 실패하면 실행될 코드
@@ -347,36 +303,48 @@ $(document).ready(function(){
 		    var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 
 		    
 		    // 마커를 생성합니다
-		    var marker = new kakao.maps.Marker({
+		    var marker2 = new kakao.maps.Marker({
 		        map: map, // 마커를 표시할 지도
 		        position: positions[i].latlng, // 마커를 표시할 위치
 		        title : positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
 		        image : markerImage // 마커 이미지 
 		    });
+		    //커스텀오버레이
 		    
-		    
+			var content2 = '<div class="bus-title">'+positions[i].title+'<br>'+positions[i].nodeid+'</div>';
+			var customOverlay2 = new kakao.maps.CustomOverlay({
+			    position: positions[i].latlng,
+			    content: content2,
+			    yAnchor: 2.3
+			});
+
+			// 커스텀 오버레이를 지도에 추가
+// 		    customOverlay2.setMap(map);
+			//클릭이벤트
 		    (function(nodeid, nodenm) {
 		        // 마커 클릭 이벤트 리스너 등록
-		        kakao.maps.event.addListener(marker, 'click', function() {
+		        kakao.maps.event.addListener(marker2, 'click', function() {
 		            
 		            // 해당 정류장의 정보를 가져오는 함수 호출
 		            showAllBus(nodeid, nodenm);
 		        });
-
-		        // 마커 호버 이벤트 등록
-// 		        kakao.maps.event.addListener(marker, 'mouseover', function() {
-// 		            var infowindow = new kakao.maps.InfoWindow({
-// 		                content: "<div style='padding:5px;'>정류장 ID: " + nodeid + "<br>정류장 이름: " + nodenm + "</div>",
-// 		                removable: true
-// 		            });
-// 		            infowindow.open(map, marker);
-// 		        });
-
-		        // 마커에서 마우스를 떼었을 때 인포윈도우 닫기
-		        kakao.maps.event.addListener(marker, 'mouseout', function() {
-		            infowindow.close();
-		        });
 		    })(positions[i].nodeid, positions[i].nodenm); // 즉시 실행 함수를 이용하여 현재의 nodeid와 nodenm 값을 넘겨줌
+		    // 마커에 마우스 이벤트 추가
+		    kakao.maps.event.addListener(marker2, 'mouseover', function (overlay) {
+		        return function () {
+		            // 마우스가 마커에 올라갔을 때 해당 마커의 커스텀 오버레이 표시
+		            overlay.setMap(map);
+		        };
+		    }(customOverlay2)); // 즉시 실행 함수로 현재 커스텀 오버레이를 저장
+
+		    kakao.maps.event.addListener(marker2, 'mouseout', function (overlay) {
+		        return function () {
+		            // 마우스가 마커에서 벗어났을 때 해당 마커의 커스텀 오버레이 숨김
+		            overlay.setMap(null);
+		        };
+		    }(customOverlay2)); // 즉시 실행 함수로 현재 커스텀 오버레이를 저장
+		    
+
 		    
 		    
 		
@@ -391,18 +359,43 @@ $(document).ready(function(){
 
 		// 마커가 지도 위에 표시되도록 설정합니다
 		marker.setMap(map);
+		
+		var customPosition = new kakao.maps.LatLng(mappy, mappx);
+		var content = '<div class="info-title"><a href="https://map.kakao.com/link/map/'+mtitle+','+mappy+','+mappx+'" style="color:white; text-decoration-line: none;" target="_blank">'+mtitle+'</a><br><a href="https://map.kakao.com/link/to/'+mtitle+','+mappy+','+mappx+'" style="color:white" target="_blank">길찾기</a><span class="close-btn" style="color:white; cursor:pointer; float:right;">&times;</span></div>';
+	    var customOverlay = new kakao.maps.CustomOverlay({
+	        position: customPosition,
+	        content: content,
+	        yAnchor: 2
+	    });
 
-		var iwContent = '<div class="map_loc" style="padding:5px;"><a href="https://map.kakao.com/link/map/'+mtitle+','+mappy+','+mappx+'" style="color:blue" target="_blank">'+mtitle+'</a><br> <a href="https://map.kakao.com/link/to/'+mtitle+','+mappy+','+mappx+'" style="color:blue" target="_blank">길찾기</a></div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
-		    iwPosition = new kakao.maps.LatLng(mappy, mappx); //인포윈도우 표시 위치입니다
-
-		// 인포윈도우를 생성합니다
-		var infowindow = new kakao.maps.InfoWindow({
-		    position : iwPosition, 
-		    content : iwContent 
+	    // 커스텀 오버레이를 지도에 표시합니다
+	    // 커스텀 오버레이를 지도에 표시합니다
+		customOverlay.setMap(map);
+	    
+		// 마커 클릭 이벤트 리스너 추가
+		kakao.maps.event.addListener(marker, 'click', function () {
+		    customOverlay.setMap(map); // 커스텀 오버레이를 표시
 		});
+		// 닫기 버튼 클릭 이벤트 리스너 추가
+		var closeBtn = document.querySelector('.close-btn');
+		closeBtn.addEventListener('click', function () {
+  		  customOverlay.setMap(null); // 커스텀 오버레이를 숨김
+		});
+		// 커스텀 오버레이 클릭 이벤트 리스너 추가
+		
+
+// 		var iwContent = '<div class="map_loc" style="padding:5px;"><a href="https://map.kakao.com/link/map/'+mtitle+','+mappy+','+mappx+'" style="color:blue" target="_blank">'+mtitle+'</a><br> <a href="https://map.kakao.com/link/to/'+mtitle+','+mappy+','+mappx+'" style="color:blue" target="_blank">길찾기</a></div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+// 		    iwPosition = new kakao.maps.LatLng(mappy, mappx); //인포윈도우 표시 위치입니다
+  
+// 		// 인포윈도우를 생성합니다
+// 		var infowindow = new kakao.maps.CustomOverlay({
+// 		    position : iwPosition,
+// 		    map: map,
+// 		    content : iwContent 
+// 		});
 		  
-		// 마커 위에 인포윈도우를 표시합니다. 두번째 파라미터인 marker를 넣어주지 않으면 지도 위에 표시됩니다
-		infowindow.open(map, marker);
+// 		// 마커 위에 인포윈도우를 표시합니다. 두번째 파라미터인 marker를 넣어주지 않으면 지도 위에 표시됩니다
+// 		infowindow.open(map, marker);
 
 	});
 
