@@ -170,8 +170,8 @@
 				</div>	
 			</div>
 			<div class="modal-footer">
-				<button type="submit" class="btn btn-info" id="modifyCourseBtn" data-bs-dismiss="modal">수정하기</button>
-				<button type="button" class="btn btn-secondary" id="closeCourseBtn">닫기</button>
+				<button type="submit" id="modifyCourseBtn" data-bs-dismiss="modal">수정하기</button>
+				<button type="button" id="closeCourseBtn">닫기</button>
 			</div>
 			</form>
 			

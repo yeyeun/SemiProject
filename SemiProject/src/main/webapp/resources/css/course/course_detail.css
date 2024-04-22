@@ -527,3 +527,16 @@ button[type="button"]:hover{
 	padding: 5px;
 	border-radius: 5px;
 }
+
+.modal-footer button{
+	margin: 0px;
+	border: none;
+	padding: 5px;
+	margin-right: 10px;
+	border-radius: 5px;
+	background : #ade1ff;
+}
+
+.modal-footer button:hover{
+	background : #6dcaff;
+}
