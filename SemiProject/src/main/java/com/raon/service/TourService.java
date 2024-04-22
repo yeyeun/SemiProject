@@ -504,18 +504,16 @@ public class TourService {
 
 
 	
-	public void getBusArrive(Model model) throws IOException {
-	    List<BusStation> allbus = (List<BusStation>) model.getAttribute("BusStationList");
+	public void getBusArrive(@Param("nodeid") String nodeid, Model model) throws IOException {
 	    List<BusArrive> BusArriveList = new ArrayList<BusArrive>();
-	    for (BusStation bus : allbus) {
-	        String nodeId = bus.getNodeid();
+	    String nodeids = nodeid;
 	        StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/1613000/ArvlInfoInqireService/getSttnAcctoArvlPrearngeInfoList"); /*URL*/
 	        urlBuilder.append("?" + URLEncoder.encode("serviceKey", "UTF-8") + "=KR1eLnI5BrfL8EDf5l8G3OTQakbgTZ0izb4KANg0SWhwqnP1wHHQQRb%2BrbP1N2a5lnEtjR%2BBvLqfZKaKSZELLQ%3D%3D"); /*Service Key*/
 	        urlBuilder.append("&" + URLEncoder.encode("pageNo", "UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /*페이지번호*/
 	        urlBuilder.append("&" + URLEncoder.encode("numOfRows", "UTF-8") + "=" + URLEncoder.encode("999", "UTF-8")); /*한 페이지 결과 수*/
 	        urlBuilder.append("&" + URLEncoder.encode("_type", "UTF-8") + "=" + URLEncoder.encode("json", "UTF-8")); /*데이터 타입(xml, json)*/
 	        urlBuilder.append("&" + URLEncoder.encode("cityCode", "UTF-8") + "=" + URLEncoder.encode("39", "UTF-8")); /*도시코드 [상세기능3 도시코드 목록 조회]에서 조회 가능*/
-	        urlBuilder.append("&" + URLEncoder.encode("nodeId", "UTF-8") + "=" + URLEncoder.encode(nodeId, "UTF-8")); /*정류소ID [국토교통부(TAGO)_버스정류소정보]에서 조회가능*/
+	        urlBuilder.append("&" + URLEncoder.encode("nodeId", "UTF-8") + "=" + URLEncoder.encode(nodeids, "UTF-8")); /*정류소ID [국토교통부(TAGO)_버스정류소정보]에서 조회가능*/
 	        URL url = new URL(urlBuilder.toString());
 	        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 	        conn.setRequestMethod("GET");
@@ -552,7 +550,7 @@ public class TourService {
 	                    BusArriveList.add(new BusArrive(jsonArray.getJSONObject(i).getInt("arrprevstationcnt"),
 	                            jsonArray.getJSONObject(i).getInt("arrtime"), jsonArray.getJSONObject(i).getString("nodeid"),
 	                            jsonArray.getJSONObject(i).getString("nodenm"), jsonArray.getJSONObject(i).getString("routeid"),
-	                            jsonArray.getJSONObject(i).getInt("routeno"), jsonArray.getJSONObject(i).getString("routetp"),
+	                            String.valueOf(jsonArray.getJSONObject(i).get("routeno")), jsonArray.getJSONObject(i).getString("routetp"),
 	                            jsonArray.getJSONObject(i).getString("vehicletp")
 	                    ));
 	                }
@@ -560,15 +558,15 @@ public class TourService {
 	                // "item"이 없는 경우
 	                System.out.println("API 응답에 'item'이 없습니다.");
 	                // "정보없음"을 리스트에 추가
-	                BusArriveList.add(new BusArrive(-1, -1, "정보 없음", "정보 없음", "정보 없음", -1, "정보 없음", "정보 없음"));
+	                BusArriveList.add(new BusArrive(-1, -1, "정보 없음", "정보 없음", "정보 없음", "-1", "정보 없음", "정보 없음"));
 	            }
 	        } else {
 	            // "items"가 JSONObject가 아닌 경우
 	            System.out.println("API 응답에 'items'가 JSONObject가 아닙니다.");
 	            // "정보없음"을 리스트에 추가
-	            BusArriveList.add(new BusArrive(-1, -1, "정보 없음", "정보 없음", "정보 없음", -1, "정보 없음", "정보 없음"));
+	            BusArriveList.add(new BusArrive(-1, -1, "정보 없음", "정보 없음", "정보 없음", "-1", "정보 없음", "정보 없음"));
 	        }
-	    }
+	    
 	    model.addAttribute("BusArriveList", BusArriveList);
 	}
 

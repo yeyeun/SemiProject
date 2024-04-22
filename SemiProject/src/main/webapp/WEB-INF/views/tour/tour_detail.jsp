@@ -90,14 +90,57 @@
 				<p id="explain">위치</p>
 				<hr style="border: none; width: 100%; height: 3px; background: black; opacity: 1;">
 				<div id="map" style="width: 60%; height: 450px; border: 1px solid black;"></div>
+				<div id="bustable">
+				<table class="bustable">
+					<thead>
+							<tr>
+								<th>도착 정보</th>
+							</tr>
+						</thead>
+					<tbody>
+						<tr>
+							<td><span style="font-size: 30px; color: red;">&#149</span>3002번 </td>
+							<td>3002번</td>
+							<td>약 14분<span style="color: gray;">[5번째 전]</span></td>
+						</tr>
+						<tr>
+							<td style="font-size: 30px; color: blue;">&#149</td>
+							<td>123번</td>
+							<td>약 14분<span style="color: gray;">[5번째 전]</span></td>
+						</tr>
+						<tr>
+							<td style="font-size: 30px; color: green;">&#149</td>
+							<td>345번</td>
+							<td>약 14분<span style="color: gray;">[5번째 전]</span></td>
+						</tr>
+						<tr>
+							<td style="font-size: 30px; color: green;">&#149</td>
+							<td>456번</td>
+							<td>약 14분<span style="color: gray;">[5번째 전]</span></td>
+						</tr>
+						<tr>
+							<td style="font-size: 30px; color: green;">&#149</td>
+							<td>456번</td>
+							<td>약 14분<span style="color: gray;">[5번째 전]</span></td>
+						</tr>
+						<tr>
+							<td style="font-size: 30px; color: green;">&#149</td>
+							<td>789번</td>
+							<td>약 14분<span style="color: gray;">[5번째 전]</span></td>
+						</tr>
+						
+						
+					</tbody>
+				</table>
+				</div>
 			</div>
 			
         </div>
         
-        <div id="block" style="width:100%; height: 200px;"></div>
         <div id="bus" style="width:100%; height: 300px;">
         	<c:forEach items="${BusStationList}" var="station">
-					<p id="nodenm" onclick="showAllBus('${station.nodeid}')">${station.nodenm }<p>
+					<p id="nodenm" onclick="showAllBus('${station.nodeid}','${station.nodenm}')">${station.nodenm }<p>
+					<p id="nodeid" style="display: none">${station.nodeid }<p>
 					<div class="businfo"></div>
 			</c:forEach>
         </div>
@@ -113,26 +156,29 @@ var titles = '<%= title %>';
 var xList = new Array();
 var yList = new Array();
 var titleList = new Array();
-
+var buslist1  = new Array();
+var buslist2 = new Array();
 //마커
 let businfo = $(".businfo");
-function showAllBus(nodeid){
+function showAllBus(nodeid, nodenm){
 	var nodeids = nodeid;
+	var nodenms = nodenm;
 	
 	
 	 $.ajax({
             type: "GET",
             url: "/tour/buslist", // 컨트롤러의 엔드포인트 URL
+            async: false,
             data: { 
             	nodeid: nodeids }, // 요청 파라미터 설정
             dataType : 'json', 
             success: function(data) {
-            	var alertString = "정류장에 오는 모든 버스\n";
+            	buslist1 = data;
+            	console.log(nodenm+"정류장에 오는 모든 버스는");
                 $.each(data, function(idx, val) {
-                    alertString += val.routeno + "번 버스\n";
+                    console.log(val.routeno);
                 });
-                // alert 창에 출력
-                alert(alertString);
+
 
             },
             error: function(xhr, status, error) {
@@ -140,6 +186,33 @@ function showAllBus(nodeid){
                 console.error("AJAX request failed:", status, error);
             }
         });
+	 //버스 도착//
+	 	 $.ajax({
+            type: "GET",
+            url: "/tour/arrivelist", // 컨트롤러의 엔드포인트 URL
+            async: false,
+            data: { 
+            	nodeid: nodeids }, // 요청 파라미터 설정
+            dataType : 'json', 
+            success: function(data) {
+            	buslist2 = data;
+            	console.log(nodenm+"정류장에");
+                $.each(data, function(idx, val) {
+                    console.log(val.routeno+"번 버스가 "+val.arrprevstationcnt+"개 정류장 남았고 "+val.arrtime/60+"분 뒤 도착");
+                });
+                // alert 창에 출력
+                
+
+
+            },
+            error: function(xhr, status, error) {
+                // 요청이 실패하면 실행될 코드
+                console.error("AJAX request failed:", status, error);
+            }
+        });
+	 console.log("@@"+buslist1+"@@@"+buslist2);
+	 //버스 도착//
+	 
 }
 $(document).ready(function(){
 	//지도 마커
@@ -148,8 +221,7 @@ $(document).ready(function(){
 			yList.push("${station.gpslati}");
 			titleList.push("${station.nodenm}");
 		</c:forEach>
-	
-	
+
 		var contentid = '<%= request.getParameter("contentid") %>';
 		var firstimage = '<%= request.getParameter("firstimage") %>';
 		var id = '<%=id %>'
@@ -195,7 +267,7 @@ $(document).ready(function(){
 		$.ajax({
 			url: "https://apis.data.go.kr/B551011/KorService1/detailImage1?MobileOS=ETC&MobileApp=raon&contentId="+contentid+"&imageYN=Y&subImageYN=Y&serviceKey=b7k%2B9H2DZnNoOhZSPNTopjx1cG%2F8y74JvA2aFmp4dlvoRTGzmxGL976Dcdg0PTLdbegGkqm466WbLV5PHNOwmw%3D%3D&_type=json",
 			success: function(data){
-// 				console.log('items',data.response.body.items);
+				console.log('items',data.response.body.items);
 				let first= true;
 				items = data.response.body.items.item;
 				if(items!=null){
@@ -244,42 +316,45 @@ $(document).ready(function(){
 		
         
 // 	    지도 추가
-		let str1="";
+
 		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 		    mapOption = { 
 		        center: new kakao.maps.LatLng(mappy, mappx), // 지도의 중심좌표
-		        level: mlevel // 지도의 확대 레벨
+		        level: 4 // 지도의 확대 레벨
 		    };    
 
 		var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+				//버스 추가//
+	var positions = [
+    <c:forEach items="${BusStationList}" var="station" varStatus="loop">
+        {
+            title: "${station.nodenm}",
+            latlng: new kakao.maps.LatLng("${station.gpslati}", "${station.gpslong}")
+        }<c:if test="${!loop.last}">,</c:if>
+    </c:forEach>
+];
+console.log("positions:", positions);
 
+	//버스 추가//
+		var imageSrc = "../../resources/images/bus-stop2.png";
+		console.log("&&&&"+positions);
+		for(var i=0; i<positions.length; i++){
+			
+			// 마커 이미지의 이미지 크기 입니다
+		    var imageSize = new kakao.maps.Size(47, 47); 
+		    
+		    // 마커 이미지를 생성합니다    
+		    var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 
+		    
+		    // 마커를 생성합니다
+		    var marker = new kakao.maps.Marker({
+		        map: map, // 마커를 표시할 지도
+		        position: positions[i].latlng, // 마커를 표시할 위치
+		        title : positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+		        image : markerImage // 마커 이미지 
+		    });
 		
-		var marker = new kakao.maps.Marker({ 
-		    // 지도 중심좌표에 마커를 생성합니다 
-		    position: map.getCenter() 
-		}); 
-		// 지도에 마커를 표시합니다
-		marker.setMap(map);
-
-		// 지도에 클릭 이벤트를 등록합니다
-		// 지도를 클릭하면 마지막 파라미터로 넘어온 함수를 호출합니다
-		kakao.maps.event.addListener(map, 'click', function(mouseEvent) {        
-		    
-		    // 클릭한 위도, 경도 정보를 가져옵니다 
-		    var latlng = mouseEvent.latLng; 
-		    
-		    // 마커 위치를 클릭한 위치로 옮깁니다
-		    marker.setPosition(latlng);
-		    
-		    var message = '클릭한 위치의 위도는 ' + latlng.getLat() + ' 이고, ';
-		    message += '경도는 ' + latlng.getLng() + ' 입니다';
-		    
-		    var resultDiv = document.getElementById('clickLatlng'); 
-		    resultDiv.innerHTML = message;
-		    
-		});
-		var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
-
+		}
 		//마커가 표시될 위치입니다 
 		var markerPosition  = new kakao.maps.LatLng(mappy, mappx); 
 
@@ -291,7 +366,7 @@ $(document).ready(function(){
 		// 마커가 지도 위에 표시되도록 설정합니다
 		marker.setMap(map);
 
-		var iwContent = '<div class="map_loc" style="padding:5px;">여행지 위치<br><a href="https://map.kakao.com/link/map/'+mtitle+','+mappy+','+mappx+'" style="color:blue" target="_blank">'+mtitle+'</a> <a href="https://map.kakao.com/link/to/'+mtitle+','+mappy+','+mappx+'" style="color:blue" target="_blank">길찾기</a></div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+		var iwContent = '<div class="map_loc" style="padding:5px;"><a href="https://map.kakao.com/link/map/'+mtitle+','+mappy+','+mappx+'" style="color:blue" target="_blank">'+mtitle+'</a><br> <a href="https://map.kakao.com/link/to/'+mtitle+','+mappy+','+mappx+'" style="color:blue" target="_blank">길찾기</a></div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
 		    iwPosition = new kakao.maps.LatLng(mappy, mappx); //인포윈도우 표시 위치입니다
 
 		// 인포윈도우를 생성합니다
@@ -302,6 +377,7 @@ $(document).ready(function(){
 		  
 		// 마커 위에 인포윈도우를 표시합니다. 두번째 파라미터인 marker를 넣어주지 않으면 지도 위에 표시됩니다
 		infowindow.open(map, marker);
+
 	});
 
 $('i').on('click',function(){
