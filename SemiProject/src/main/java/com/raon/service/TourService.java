@@ -222,7 +222,6 @@ public class TourService {
                     }
                 } else if (itemValue instanceof JSONObject) {
                     // 단일 객체인 경우 바로 처리
-                	System.out.println(itemValue);
                     imgUrls.add(new TourImageInfo(((JSONObject) itemValue).getString("originimgurl")));
                 } else {
                     // "item"이 JSONObject도 JSONArray도 아닌 경우
