@@ -473,6 +473,7 @@ function deleteFromCart(){
         alert("로그인 후 이용해주세요.");
         $('i').attr('class','fa-regular fa-heart');
         i = 0; // 'i' 변수 초기화
+        window.location.href = "../../login/login";
         return;
     }
     
