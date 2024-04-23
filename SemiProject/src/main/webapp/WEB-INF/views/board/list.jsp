@@ -151,6 +151,7 @@
 		$("#regBtn").on("click",function(){
 			if(loginId=="null"){
 				alert("로그인 후 사용해주세요");
+				window.location.href = "../../login/login";
 				return;
 			}
 			else{
