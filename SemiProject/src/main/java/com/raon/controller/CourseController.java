@@ -110,7 +110,8 @@ public class CourseController {
 			PrintWriter out = response.getWriter();
 			out.println("<script>");
 			out.println("alert('로그인 후 이용해주세요')");
-			out.println("history.back()");
+			out.println("location.href='/login/login';");
+//			out.println("history.back()");
 			out.println("</script>");
 			out.flush();
 			throw new Exception();

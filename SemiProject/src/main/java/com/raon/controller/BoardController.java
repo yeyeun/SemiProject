@@ -57,7 +57,7 @@ public class BoardController {
 			PrintWriter out = response.getWriter();
 			out.println("<script>");
 			out.println("alert('로그인 후 이용해주세요')");
-			out.println("location.href='/board/list';");
+			out.println("location.href='/login/login';");
 			//out.println("history.back()");
 			out.println("</script>");
 			out.flush();

@@ -187,7 +187,7 @@ function showAllBus(nodeid, nodenm){
                      var arrivalInfoCell;
     					if (val.arrtime >= 0) {
         				arrivalInfoCell = $('<td class="td2"></td>').text(val.arrtime / 60 + "분 뒤 도착");
-        				arrivalInfoCell.append('<span style="color: gray;">[' + val.arrprevstationcnt + '번째 전]</span>');
+        				arrivalInfoCell.append('<span style="color: gray; font-weight:400;">[' + val.arrprevstationcnt + '번째 전]</span>');
     					} else {
         				arrivalInfoCell = $('<td class="td3"></td>').text("도착 정보 없음");
     				}
@@ -421,6 +421,7 @@ function addToCart(){
         alert("로그인 후 이용해주세요.");
         $('i').attr('class','fa-regular fa-heart');
         i = 0; // 'i' 변수 초기화
+        window.location.href = "../../login/login";
         return;
     }
     
