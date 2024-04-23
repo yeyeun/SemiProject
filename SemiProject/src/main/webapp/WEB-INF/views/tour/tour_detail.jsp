@@ -162,20 +162,26 @@ function showAllBus(nodeid, nodenm){
                     
                		// 버스 종류 표시
                     var routeTypeCell = $('<td class="td1"></td>');
-                    if (val.routetp === '순환버스') {
-                        routeTypeCell.append('<img class="routetp" src="../../resources/images/bus-yellow.png" alt="순환버스" /><span style="color:rgb(235,224,20); font-size: 20px;"><b>'+val.routetp.slice(0, -2)+' '+val.routeno+'번</b></span><br><p>'+val.startnodenm+'→'+val.endnodenm+'</p>');
-                    } else if (val.routetp === '급행버스') {
-                        routeTypeCell.append('<img class="routetp" src="../../resources/images/bus-red.png" alt="급행버스" /><span style="color:rgb(204,51,20); font-size: 20px;"><b>'+val.routetp.slice(0, -2)+' '+val.routeno+'번</b></span><br><p>'+val.startnodenm+'→'+val.endnodenm+'</p>');
-                    }  else if (val.routetp === '공항버스') {
-                        routeTypeCell.append('<img class="routetp" src="../../resources/images/bus-red.png" alt="공항버스" /><span style="color:rgb(204,51,20); font-size: 20px;"><b>'+val.routetp.slice(0, -2)+' '+val.routeno+'번</b></span><br><p>'+val.startnodenm+'→'+val.endnodenm+'</p>');
-                    } else if (val.routetp === '간선버스') {
-                        routeTypeCell.append('<img class="routetp" src="../../resources/images/bus-blue.png" alt="간선버스" /><span style="color:rgb(63,72,204); font-size: 20px;"><b>'+val.routetp.slice(0, -2)+' '+val.routeno+'번</b></span><br><p>'+val.startnodenm+'→'+val.endnodenm+'</p>');
-                    } else if (val.routetp === '지선버스') {
-                        routeTypeCell.append('<img class="routetp" src="../../resources/images/bus-green.png" alt="지선버스" /><span style="color:rgb(0,199,195); font-size: 20px;"><b>'+val.routetp.slice(0, -2)+' '+val.routeno+'번</b></span><br><p>'+val.startnodenm+'→'+val.endnodenm+'</p>');
-                    } else if (val.routetp === '심야버스') {
-                        routeTypeCell.append('<img class="routetp" src="../../resources/images/bus-yellow.png" alt="심야버스" /><span style="color:rgb(235,224,20); font-size: 20px;"><b>'+val.routetp.slice(0, -2)+' '+val.routeno+'번</b></span><br><p>'+val.startnodenm+'→'+val.endnodenm+'</p>');
-                    } else if (val.routetp === '임시버스') {
-                        routeTypeCell.append('<img class="routetp" src="../../resources/images/bus-yellow.png" alt="임시버스" /><span style="color:rgb(235,224,20); font-size: 20px;"><b>'+val.routetp.slice(0, -2)+' '+val.routeno+'번</b></span><br><p>'+val.startnodenm+'→'+val.endnodenm+'</p>');
+                    if (val.routeno.startsWith('1')) {
+                    	if (['1111', '1112', '1113'].includes(val.routeno)) {
+                            routeTypeCell.append('<img class="routetp" src="../../resources/images/bus-yellow.png" alt="순환버스" /><span style="color:rgb(235,224,20); font-size: 20px;"><b>순환 ' + val.routeno + '번</b></span><br><p>' + val.startnodenm + '→' + val.endnodenm + '</p>');
+                        } else{
+                        routeTypeCell.append('<img class="routetp" src="../../resources/images/bus-red.png" alt="급행버스" /><span style="color:rgb(204,51,20); font-size: 20px;"><b>급행 ' + val.routeno + '번</b></span><br><p>' + val.startnodenm + '→' + val.endnodenm + '</p>');
+                        }
+                    } else if (val.routeno.startsWith('2') || val.routeno.startsWith('3') || val.routeno.startsWith('5')) {
+                        routeTypeCell.append('<img class="routetp" src="../../resources/images/bus-blue.png" alt="간선버스" /><span style="color:rgb(63,72,204); font-size: 20px;"><b>간선 ' + val.routeno + '번</b></span><br><p>' + val.startnodenm + '→' + val.endnodenm + '</p>');
+                    } else if (val.routeno.startsWith('4') || val.routeno.startsWith('6') || val.routeno.startsWith('7')) {
+                    	if(val.routeno.startsWith('600')){
+                    		routeTypeCell.append('<img class="routetp" src="../../resources/images/bus-red.png" alt="급행버스" /><span style="color:rgb(204,51,20); font-size: 20px;"><b>공항 ' + val.routeno + '번</b></span><br><p>' + val.startnodenm + '→' + val.endnodenm + '</p>');	
+                    	}
+                        routeTypeCell.append('<img class="routetp" src="../../resources/images/bus-green.png" alt="지선버스" /><span style="color:rgb(0,199,195); font-size: 20px;"><b>지선 ' + val.routeno + '번</b></span><br><p>' + val.startnodenm + '→' + val.endnodenm + '</p>');
+                    } else if(['810', '820', '880'].includes(val.routeno)){
+                    	routeTypeCell.append('<img class="routetp" src="../../resources/images/bus-yellow.png" alt="순환버스" /><span style="color:rgb(235,224,20); font-size: 20px;"><b>순환 ' + val.routeno + '번</b></span><br><p>' + val.startnodenm + '→' + val.endnodenm + '</p>');
+                    } else if (val.routeno.startsWith('9') || val.routeno.startsWith('3') || val.routeno.startsWith('5')) {
+                    	routeTypeCell.append('<img class="routetp" src="../../resources/images/bus-green.png" alt="지선버스" /><span style="color:rgb(0,199,195); font-size: 20px;"><b>마을 ' + val.routeno + '번</b></span><br><p>' + val.startnodenm + '→' + val.endnodenm + '</p>');
+                    }  
+                    else {
+                    	routeTypeCell.append('<img class="routetp" src="../../resources/images/bus-red.png" alt="급행버스" /><span style="color:rgb(204,51,20); font-size: 20px;"><b>공항 ' + val.routeno + '번</b></span><br><p>' + val.startnodenm + '→' + val.endnodenm + '</p>');
                     }
                     newRow.append(routeTypeCell);
                     
