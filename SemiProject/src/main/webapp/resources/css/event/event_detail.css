@@ -147,6 +147,17 @@
 	width: 90%;
 }
 
+.event-map {
+    display: block;
+    background: #50627F;
+    color: #fff;
+    text-align: center;
+    border-radius: 10px 10px 10px 10px;
+    line-height:22px;
+    padding: 5px;
+    height:55px;
+}
+
 
 
 
