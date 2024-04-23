@@ -134,7 +134,7 @@
 		}
 
 		function showTourList() {
-			var checkboxsCnt = document.querySelectorAll('.cartCheckbox').length;
+			var checkboxsCnt = document.querySelectorAll('input[type="checkbox"]:checked').length;
 			console.log("체크박스 갯수 : " + checkboxsCnt);
 			if(checkboxsCnt>10){ //최대 선택 가능한 여행지 갯수 제한
 				alert("선택 가능한 여행지의 최대 갯수는 10개입니다.");
