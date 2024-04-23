@@ -94,6 +94,7 @@
 <%-- <jsp:include page="footer.jsp"/> --%>
 
 <script>
+	console.log("searchList = ", ${searchList});
     $(document).ready(function () {
     	 // 페이지 로드 시 초기 pagination 생성
         updatePagination(1);
@@ -106,7 +107,11 @@
             // 페이지 이동을 여기서 처리합니다.
             window.location.href = $(this).attr('href');
         });
-
+        if (request.getAttribute("noResults") != null && (Boolean) request.getAttribute("noResults")) { %>
+       		 alert('검색 결과가 없습니다.');
+       		 // 페이지를 다시 로드하여 검색 페이지로 이동
+        	window.location.href = "${contextPath}/tour/list";
+    	}
     });
 
     function updatePagination(nextPage) {

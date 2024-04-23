@@ -55,7 +55,10 @@ public class TourController {
 		
 		return "tour/tour";
 	}
-	
+	@GetMapping("/search_none")
+	public String showSearchNonePage() {
+	    return "tour/search_none";
+	}
 	@GetMapping("/detail")
 	public String detail(HttpServletRequest request, HttpServletResponse response, Model model) {
 		try {

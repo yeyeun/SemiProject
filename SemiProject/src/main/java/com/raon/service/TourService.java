@@ -95,11 +95,15 @@ public class TourService {
 				));
 
 			}
-			model.addAttribute("searchList", searchList);
+			if (searchList.isEmpty()) {
+	            model.addAttribute("noResults", true);
+	        } else {
+	            model.addAttribute("searchList", searchList);
+	        }
 			model.addAttribute("totalPages", totalPages);
 		}catch(Exception e) {
 			e.printStackTrace();
-			response.sendRedirect(request.getContextPath()+ "/tour/list");
+			response.sendRedirect(request.getContextPath()+ "/tour/search_none");
 		}
 		
 	}
