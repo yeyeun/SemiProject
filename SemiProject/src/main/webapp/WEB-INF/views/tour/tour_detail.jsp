@@ -175,7 +175,7 @@ function showAllBus(nodeid, nodenm){
                     		routeTypeCell.append('<img class="routetp" src="../../resources/images/bus-red.png" alt="급행버스" /><span style="color:rgb(204,51,20); font-size: 20px;"><b>공항 ' + val.routeno + '번</b></span><br><p>' + val.startnodenm + '→' + val.endnodenm + '</p>');	
                     	}
                         routeTypeCell.append('<img class="routetp" src="../../resources/images/bus-green.png" alt="지선버스" /><span style="color:rgb(0,199,195); font-size: 20px;"><b>지선 ' + val.routeno + '번</b></span><br><p>' + val.startnodenm + '→' + val.endnodenm + '</p>');
-                    } else if(['810', '820', '880'].includes(val.routeno)){
+                    } else if(['810','810-1','810-2', '820','820-1','820-2', '880'].includes(val.routeno)){
                     	routeTypeCell.append('<img class="routetp" src="../../resources/images/bus-yellow.png" alt="순환버스" /><span style="color:rgb(235,224,20); font-size: 20px;"><b>순환 ' + val.routeno + '번</b></span><br><p>' + val.startnodenm + '→' + val.endnodenm + '</p>');
                     } else if (val.routeno.startsWith('9') || val.routeno.startsWith('3') || val.routeno.startsWith('5')) {
                     	routeTypeCell.append('<img class="routetp" src="../../resources/images/bus-green.png" alt="지선버스" /><span style="color:rgb(0,199,195); font-size: 20px;"><b>마을 ' + val.routeno + '번</b></span><br><p>' + val.startnodenm + '→' + val.endnodenm + '</p>');
