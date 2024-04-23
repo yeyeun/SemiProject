@@ -397,125 +397,127 @@ $(document).ready(function(){
 // 		// 마커 위에 인포윈도우를 표시합니다. 두번째 파라미터인 marker를 넣어주지 않으면 지도 위에 표시됩니다
 // 		infowindow.open(map, marker);
 
+		$('i').on('click',function(){
+			console.log(i)
+		    if(i==0){
+		        $(this).attr('class','fa-solid fa-heart');
+		        i++;
+		        addToCart();
+		    }else if(i==1){
+		        $(this).attr('class','fa-regular fa-heart');
+		        i--;
+		        deleteFromCart();
+		    }
+
+		});
+		function addToCart(){
+		    // 세션에 저장된 "loginId" 확인
+		    var loginId = "<%= session.getAttribute("loginId") %>";
+
+		    
+		    // 만약 "loginId"가 없다면 알림창을 띄우고 함수를 호출하지 않음
+		    if(loginId == "null"){
+		        alert("로그인 후 이용해주세요.");
+		        $('i').attr('class','fa-regular fa-heart');
+		        i = 0; // 'i' 변수 초기화
+		        window.location.href = "../../login/login";
+		        return;
+		    }
+		    
+		    if(confirm("여행지를 관심 여행지에 추가하시겠습니까?")){
+		    	$.ajax({
+		            type: "GET",
+		            url: "/mypage/write", // 컨트롤러의 엔드포인트 URL
+		            data: { id: ids, contentid: contentids, firstimage: firstimages, title: titles }, // 요청 파라미터 설정
+		            success: function(response) {
+		            	console.log("add cart success");	
+//			            	console.log(response);
+//			            	if(response == "1"){
+//			            		i = 1;
+//			            		$('#heartzone').attr('class','fa-solid fa-heart');
+		            		
+//			            		; 
+//			            	}else{
+//			            		i = 0 ;
+//			            		$('#heartzone').attr('class','fa-regular fa-heart');
+//			            	}
+		            	
+		            	
+		            	
+		                // 요청이 성공하면 실행될 코드
+		                // 서버에서 보내온 응답(response)을 처리
+		                // 예를 들어, 장바구니에 여행지가 있는지 여부에 따라 화면 표시를 변경하는 등의 작업 수행
+		            },
+		            error: function(xhr, status, error) {
+		                // 요청이 실패하면 실행될 코드
+		                console.error("AJAX request failed:", status, error);
+		            }
+		        });
+		   	 $('i').attr('class','fa-solid fa-heart');
+		     i = 1; // 'i' 변수 초기화
+		    } else {
+		         // 알림창에서 '취소'를 눌렀을 때 아이콘 클래스 변경
+		        $('i').attr('class','fa-regular fa-heart');
+		        i = 0; // 'i' 변수 초기화
+		        document.addForm.reset();
+		    }
+		}
+		function deleteFromCart(){
+		    // 세션에 저장된 "loginId" 확인
+		    var loginId = "<%= session.getAttribute("loginId") %>";
+
+		    
+		    // 만약 "loginId"가 없다면 알림창을 띄우고 함수를 호출하지 않음
+		    if(loginId == "null"){
+		        alert("로그인 후 이용해주세요.");
+		        $('i').attr('class','fa-regular fa-heart');
+		        i = 0; // 'i' 변수 초기화
+		        window.location.href = "../../login/login";
+		        return;
+		    }
+		    
+		    if(confirm("여행지를 관심 여행지에서 제거하시겠습니까?")){
+		    	console.log("delete");
+		    	  $.ajax({
+			            type: "GET",
+			            url: "/mypage/deleteCartItem", // 컨트롤러의 엔드포인트 URL
+			            data: { id: ids, contentid: contentids }, // 요청 파라미터 설정
+			            success: function(response) {
+			            	console.log("delete cart success");	            	 
+//		 	            	console.log(response);
+//		 	            	if(response == "1"){
+//		 	            		i = 1;
+//		 	            		$('#heartzone').attr('class','fa-solid fa-heart');
+			            		
+//		 	            		; 
+//		 	            	}else{
+//		 	            		i = 0 ;
+//		 	            		$('#heartzone').attr('class','fa-regular fa-heart');
+//		 	            	}
+			            	
+			            	
+			            	
+			                // 요청이 성공하면 실행될 코드
+			                // 서버에서 보내온 응답(response)을 처리
+			                // 예를 들어, 장바구니에 여행지가 있는지 여부에 따라 화면 표시를 변경하는 등의 작업 수행
+			            },
+			            error: function(xhr, status, error) {
+			                // 요청이 실패하면 실행될 코드
+			                console.error("AJAX request failed:", status, error);
+			            }
+			        });
+		    } else {
+		         // 알림창에서 '취소'를 눌렀을 때 아이콘 클래스 변경
+		         console.log(contentids+"@@"+ids);
+		         
+		        $('i').attr('class','fa-solid fa-heart');
+		        i = 1;
+		    }
+
+		}
 	});
 
-$('i').on('click',function(){
-    if(i==0){
-        $(this).attr('class','fa-solid fa-heart');
-        i++;
-        addToCart();
-    }else if(i==1){
-        $(this).attr('class','fa-regular fa-heart');
-        i--;
-        deleteFromCart();
-    }
 
-});
-function addToCart(){
-    // 세션에 저장된 "loginId" 확인
-    var loginId = "<%= session.getAttribute("loginId") %>";
-
-    
-    // 만약 "loginId"가 없다면 알림창을 띄우고 함수를 호출하지 않음
-    if(loginId == "null"){
-        alert("로그인 후 이용해주세요.");
-        $('i').attr('class','fa-regular fa-heart');
-        i = 0; // 'i' 변수 초기화
-        window.location.href = "../../login/login";
-        return;
-    }
-    
-    if(confirm("여행지를 관심 여행지에 추가하시겠습니까?")){
-    	$.ajax({
-            type: "GET",
-            url: "/mypage/write", // 컨트롤러의 엔드포인트 URL
-            data: { id: ids, contentid: contentids, firstimage: firstimages, title: titles }, // 요청 파라미터 설정
-            success: function(response) {
-            	console.log("add cart success");	
-//	            	console.log(response);
-//	            	if(response == "1"){
-//	            		i = 1;
-//	            		$('#heartzone').attr('class','fa-solid fa-heart');
-            		
-//	            		; 
-//	            	}else{
-//	            		i = 0 ;
-//	            		$('#heartzone').attr('class','fa-regular fa-heart');
-//	            	}
-            	
-            	
-            	
-                // 요청이 성공하면 실행될 코드
-                // 서버에서 보내온 응답(response)을 처리
-                // 예를 들어, 장바구니에 여행지가 있는지 여부에 따라 화면 표시를 변경하는 등의 작업 수행
-            },
-            error: function(xhr, status, error) {
-                // 요청이 실패하면 실행될 코드
-                console.error("AJAX request failed:", status, error);
-            }
-        });
-   	 $('i').attr('class','fa-solid fa-heart');
-     i = 1; // 'i' 변수 초기화
-    } else {
-         // 알림창에서 '취소'를 눌렀을 때 아이콘 클래스 변경
-        $('i').attr('class','fa-regular fa-heart');
-        i = 0; // 'i' 변수 초기화
-        document.addForm.reset();
-    }
-}
-function deleteFromCart(){
-    // 세션에 저장된 "loginId" 확인
-    var loginId = "<%= session.getAttribute("loginId") %>";
-
-    
-    // 만약 "loginId"가 없다면 알림창을 띄우고 함수를 호출하지 않음
-    if(loginId == "null"){
-        alert("로그인 후 이용해주세요.");
-        $('i').attr('class','fa-regular fa-heart');
-        i = 0; // 'i' 변수 초기화
-        window.location.href = "../../login/login";
-        return;
-    }
-    
-    if(confirm("여행지를 관심 여행지에서 제거하시겠습니까?")){
-    	console.log("delete");
-    	  $.ajax({
-	            type: "GET",
-	            url: "/mypage/deleteCartItem", // 컨트롤러의 엔드포인트 URL
-	            data: { id: ids, contentid: contentids }, // 요청 파라미터 설정
-	            success: function(response) {
-	            	console.log("delete cart success");	            	 
-// 	            	console.log(response);
-// 	            	if(response == "1"){
-// 	            		i = 1;
-// 	            		$('#heartzone').attr('class','fa-solid fa-heart');
-	            		
-// 	            		; 
-// 	            	}else{
-// 	            		i = 0 ;
-// 	            		$('#heartzone').attr('class','fa-regular fa-heart');
-// 	            	}
-	            	
-	            	
-	            	
-	                // 요청이 성공하면 실행될 코드
-	                // 서버에서 보내온 응답(response)을 처리
-	                // 예를 들어, 장바구니에 여행지가 있는지 여부에 따라 화면 표시를 변경하는 등의 작업 수행
-	            },
-	            error: function(xhr, status, error) {
-	                // 요청이 실패하면 실행될 코드
-	                console.error("AJAX request failed:", status, error);
-	            }
-	        });
-    } else {
-         // 알림창에서 '취소'를 눌렀을 때 아이콘 클래스 변경
-         console.log(contentids+"@@"+ids);
-         
-        $('i').attr('class','fa-solid fa-heart');
-        i = 1;
-    }
-
-}
 
     </script>
 </body>
