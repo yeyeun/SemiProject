@@ -107,6 +107,29 @@ blockquote{
     height:47px;
 }
 /* 버스테이블 */
+
+/* spinner */
+.image-loading-spinner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.5); /* 투명한 배경색 */
+    z-index: 1; /* 이미지 위에 오도록 설정 */
+}
+.spinner-border {
+	position: absolute;
+	top: 187px;
+}
+
+.image-loading-spinner .spinner-border {
+    width: 3rem;
+    height: 3rem;
+}
 /* 이미지크기 */
 .routetp{
 	width:30px;

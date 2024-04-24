@@ -1,127 +1,134 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>tour_detail</title>
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-	 
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
 <link rel="stylesheet" href="${contextPath }/resources/css/tour/tour_detail.css">
 
 <script src="https://kit.fontawesome.com/3a115195d8.js" crossorigin="anonymous"></script>
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b179d98657949b7bb8bb0c0d1b9f2844"></script>   
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b179d98657949b7bb8bb0c0d1b9f2844"></script>
 </head>
 <body>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
-  <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
-<%
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+	<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+	<%
 	String id = (String)session.getAttribute("loginId");
 	String contentid = request.getParameter("contentid");
 	String title = request.getParameter("title");
 	String firstimage = request.getParameter("firstimage");
 %>
-<c:set var="contextPath" value="<%=request.getContextPath()%>" scope="application"></c:set>
-<div class="menu">
-	<jsp:include page="${pageContext.request.contextPath}/WEB-INF/views/include/header.jsp" />
-</div>
-	 <div class="container">
-	  	<div class="tour_title" style="display:inline; white-space:nowrap;">
-	  	<form name="addForm" action="${pageContext.request.contextPath}/mypage/write">
-	  		<blockquote><h2><%=title %><button type="button" class="like" onclick="click()">
-	  		
-	  		<i id="heartzone" class="fa-regular fa-heart" style="color: #7E57C2; margin-left:10px;"></i>
-	  		
-	  		</button></h2></blockquote>
-	  				<input id="contentidInput" name="contentid" type="text" value="<%=contentid %>" style="display: none;" /> 
-					<input id="firstimageInput" name="firstimage" type="text" value="<%=firstimage %>" style="display: none;" />
-					<input id="titleInput" name="title" type="text" value="<%=title %>" style="display: none;" />
-					<input id="idInput" name="id" type="text" value="<%=id %>" style="display: none;" />
-	  	</form>
-        </div>
-       
-        <div class="row">
-        	<div class="col">
-        <div class="detail-image">
-            <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel" style="height:500px;">
-                <div class="carousel-inner">
-                    <c:forEach items="${imgUrls}" var="item" varStatus="loop">
-                        <div class="carousel-item ${loop.index == 0 ? 'active' : ''}">
-                            <img src="${item.originimgurl}" class="d-block w-100" alt="Slide ${loop.index+1}" onerror="this.src='../../resources/images/tour_none_image.png'" style="max-height: 450px;">
-                        </div>
-                    </c:forEach>
-                      <!-- 캐러셀 이전/다음 버튼 추가 -->
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                </button>
-                </div>
-              
-            </div>
-        </div>
-    </div>
-			 <c:forEach items="${detailList}" var="item">
+	<c:set var="contextPath" value="<%=request.getContextPath()%>" scope="application"></c:set>
+	<div class="menu">
+		<jsp:include page="${pageContext.request.contextPath}/WEB-INF/views/include/header.jsp" />
+	</div>
+	<div class="container">
+		<div class="tour_title" style="display: inline; white-space: nowrap;">
+			<form name="addForm" action="${pageContext.request.contextPath}/mypage/write">
+				<blockquote>
+					<h2><%=title %><button type="button" class="like" onclick="click()">
+
+							<i id="heartzone" class="fa-regular fa-heart" style="color: #7E57C2; margin-left: 10px;"></i>
+
+						</button>
+					</h2>
+				</blockquote>
+				<input id="contentidInput" name="contentid" type="text" value="<%=contentid %>" style="display: none;" /> <input id="firstimageInput" name="firstimage" type="text" value="<%=firstimage %>" style="display: none;" /> <input id="titleInput" name="title" type="text" value="<%=title %>" style="display: none;" /> <input id="idInput" name="id" type="text" value="<%=id %>" style="display: none;" />
+			</form>
+		</div>
+
+		<div class="row">
 			<div class="col">
-			
-				<div class="description">
-					
+				<div class="detail-image">
+					<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel" style="height: 500px;">
+						<div class="carousel-inner">
+							<c:forEach items="${imgUrls}" var="item" varStatus="loop">
+								<div class="carousel-item ${loop.index == 0 ? 'active' : ''}">
+									<div class="spinner spinner-border text-primary" role="status">
+										<span class="visually-hidden">Loading...</span>
+									</div>
+									<img src="${item.originimgurl}" class="d-block w-100" alt="Slide ${loop.index+1}" onerror="this.src='../../resources/images/tour_none_image.png'" style="max-height: 450px;">
+								</div>
+							</c:forEach>
+
+							<!-- 캐러셀 이전/다음 버튼 추가 -->
+							<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+								<span class="carousel-control-prev-icon" aria-hidden="true"></span> <span class="visually-hidden">Previous</span>
+							</button>
+							<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+								<span class="carousel-control-next-icon" aria-hidden="true"></span> <span class="visually-hidden">Next</span>
+							</button>
+						</div>
+
+					</div>
+				</div>
+			</div>
+			<c:forEach items="${detailList}" var="item">
+				<div class="col">
+
+					<div class="description">
+
 						<p id="explain">상세 설명</p>
 						<hr style="border: none; width: 40%; height: 3px; background: black; opacity: 1;">
-					<ul>
-						<li><p>${item.overview}</p></li>
-						<li><p><b>홈페이지: </b>${item.homepage}</p></li>
-						<li><p><b>전화번호: </b>${item.tel }</p></li>
-					</ul>
-					
-				</div> 
-			
-			</div>
+						<ul>
+							<li><p>${item.overview}</p></li>
+							<li><p>
+									<b>홈페이지: </b>${item.homepage}</p></li>
+							<li><p>
+									<b>전화번호: </b>${item.tel }</p></li>
+						</ul>
+
+					</div>
+
+				</div>
 			</c:forEach>
-			<br/>
+			<br />
 			<c:forEach items="${detailList}" var="common">
-					<p id="title" style="display: none;">${common.title }<p>
-					<p id="mapx" style="display: none;">${common.mapx }<p>
-					<p id="mapy" style="display: none;">${common.mapy }<p>
-					<p id="mlevel" style="display: none;">${common.mlevel }<p>
+				<p id="title" style="display: none;">${common.title }
+				<p>
+				<p id="mapx" style="display: none;">${common.mapx }
+				<p>
+				<p id="mapy" style="display: none;">${common.mapy }
+				<p>
+				<p id="mlevel" style="display: none;">${common.mlevel }
+				<p>
 			</c:forEach>
 			<div class="map_info">
 				<p id="explain">위치</p>
 				<hr style="border: none; width: 100%; height: 3px; background: black; opacity: 1;">
-				<div id="map" style="width: 60%; height: 600px; border: 1px solid black;">
-				</div>
+				<div id="map" style="width: 60%; height: 600px; border: 1px solid black;"></div>
 				<div id="bustable">
-				<table class="bustable">
-					<thead>
+					<table class="bustable">
+						<thead>
 							<tr>
-								<th colspan="2" style="font-size:25px"><mark id="mark3">도착 정보</mark><br><br></th>
+								<th colspan="2" style="font-size: 25px"><mark id="mark3">도착 정보</mark><br>
+								<br></th>
 							</tr>
 						</thead>
-					<tbody id="busbody">
-						<tr>
-							<td colspan="2" style="font-size: 20px;"><mark id="mark3">정류소를 눌러 버스 도착 정보를 확인해보세요!</mark></td>
-						</tr>
-					</tbody>
-				</table>
+						<tbody id="busbody">
+							<tr>
+								<td colspan="2" style="font-size: 20px;"><mark id="mark3">정류소를 눌러 버스 도착 정보를 확인해보세요!</mark></td>
+							</tr>
+						</tbody>
+					</table>
 				</div>
 			</div>
 			<div style="position: relative; width: 300px; right: 225px;">
-				<p style="color:gray;">[여행지 주변 500m이내 정류장]</p>
+				<p style="color: gray;">[여행지 주변 500m이내 정류장]</p>
 			</div>
-			
-        </div>
-        
 
-        </div>
-  
-<script>
+		</div>
+
+
+	</div>
+
+	<script>
 var i = 0;
 var contentids = '<%= request.getParameter("contentid") %>';
 var ids = '<%=id %>'
@@ -228,6 +235,18 @@ function showAllBus(nodeid, nodenm){
 	 
 }
 $(document).ready(function(){
+	// 이미지 로딩 스피너 표시
+    $(".carousel-item img").on('load', function() {
+        $(this).closest('.carousel-item').find('.spinner').hide();
+    }).each(function() {
+        if(this.complete) $(this).trigger('load');
+    });
+
+    // 이미지 로딩 스피너 표시
+    $(".carousel-item img").on('error', function() {
+    	console.log("error");
+        $(this).closest('.carousel-item').find('.spinner').hide();
+    });
 	//지도 마커
 		<c:forEach items="${BusStationList}" var="station">
 			xList.push("${station.gpslong}");

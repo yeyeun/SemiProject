@@ -10,6 +10,16 @@
 <c:set value="${pageContext.request.contextPath}" var="contextPath" />
 <link href="${resourceurl}/css/board/common.css" rel="stylesheet">
 <link href="${resourceurl}/css/board/write.css" rel="stylesheet">
+<script>
+function validateForm() {
+    var title = document.forms["writeForm"]["title"].value;
+    var content = document.forms["writeForm"]["content"].value;
+    if (title == "" || content == "") {
+        alert("제목과 내용을 모두 입력해주세요.");
+        return false;
+    }
+}
+</script>
 </head>
 <body>
 <jsp:include page="${pageContext.request.contextPath}/WEB-INF/views/include/header.jsp"/>
@@ -23,7 +33,7 @@
 			</td>
 		</tr>
 	</table>
-	<form action="${contextPath}/board/write" method="POST">
+	    <form name="writeForm" action="${contextPath}/board/write" method="POST" onsubmit="return validateForm()">
 		<table class="table-middle" width="80%">
 			<tr>
 				<td width="30%">분류</td>
