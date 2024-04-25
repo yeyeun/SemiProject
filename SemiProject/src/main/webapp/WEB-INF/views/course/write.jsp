@@ -71,7 +71,7 @@
 								</c:forEach>
 							</ul>
 						</div>
-						<p style="margin-top: 20px;">
+						<p style="margin-top: 20px; width:80%;">
 							여행 순서: <span id="selectedIdsDisplay"></span>
 						</p>
 						<div class="modal-footer">
