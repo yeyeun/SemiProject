@@ -13,7 +13,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
     crossorigin="anonymous"></script>
-<link rel="stylesheet" href="${contextPath }/resources/css/tour/tour.css?after">
+<link rel="stylesheet" href="${contextPath }/resources/css/tour/tour.css">
 
 <style>
 
@@ -50,8 +50,8 @@
                                     onerror="this.src='../../resources/images/tour_none_image.png'"
                                     style="height: 300px">
                                 <div class="card-body">
-                                    <p class="card-title">${item.title}</p><br/>
-                                    <p class="card-text" style="font-size: 14px">${item.addr1} ${item.addr2}</p>
+                                    <p class="card-title" style="font-size:22px;  overflow: hidden; text-overflow: ellipsis;">${item.title}</p><br/>
+                                    <p class="card-text" style="font-size: 14px;">${item.addr1} ${item.addr2}</p>
                                     <p class="text-body-secondary"><a
                                             href="${contextPath }/tour/detail?contentid=${item.contentid}&title=${item.title}&mapy=${item.mapy}&mapx=${item.mapx}&firstimage=${item.firstimage}"
                                             class="btn text-white" style="background-color: rgb(128,0,255);">세부 정보</a></p>

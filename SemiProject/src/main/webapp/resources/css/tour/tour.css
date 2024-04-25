@@ -86,7 +86,7 @@ html, body {
 .card{
 	margin: 10px auto;
 	border: none;
-	
+	overflow: hidden;
 }
 .card-img-top{
 	height: 13rem;
@@ -95,9 +95,20 @@ html, body {
 .right-box::-webkit-scrollbar{
 	display:none;
 }
-.card-title{
-	font-size: 24px;
+.card-body{
+	width: 24rem;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: block;
 }
+.card-title{
+	font-size: 22px;
+	width: 300px;
+	text-overflow: ellipsis;
+	text-align: center;
+	white-space: nowrap;
+}
+
 .card-text{
 	width: fit-content;
 }
