@@ -100,7 +100,7 @@
 		    		<div class="blog-comment">
 						<h4>Comments</h4>
 						<div class="comment-header">
-							<input type="text" id="content"/>
+							<input type="text" id="content" maxlength="150"/>
 							<button type="button" id="registerBtn">댓글 등록</button>
                 			<hr/>
                 		</div>
@@ -417,7 +417,7 @@ $(document).ready(function(){
 					      <p id="comment-content">
 					      \${item.content}
 					      </p>
-					      <p id="modifycomment"><input type="hidden" value="\${item.content}"></p>
+					      <p id="modifycomment"><input type="hidden" value="\${item.content}" maxlength="150"></p>
 					  </div>
 					</li>
 					`;
@@ -438,7 +438,7 @@ $(document).ready(function(){
 						      <p id="comment-content">
 						      \${item.content}
 						      </p>
-						      <p id="modifycomment"><input type="hidden" value="\${item.content}"></p>
+						      <p id="modifycomment"><input type="hidden" value="\${item.content}" maxlength="150"></p>
 						  </div>
 						</li>
 						`;
