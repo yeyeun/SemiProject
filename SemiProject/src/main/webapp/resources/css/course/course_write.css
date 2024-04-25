@@ -155,7 +155,8 @@ textarea {
 
 /* Modal */
 .cartItem{
-	margin-bottom: 35px;	
+	margin-bottom: 35px;
+	display: block;
 }
 .cartimage{
 	width: 150px;
@@ -164,10 +165,22 @@ textarea {
         margin-bottom: 0;
 }
 .carttitle{
+	display: block;
 	font-size: 16px;
 	font-weight: 600;
 	margin-top: 10px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	margin-left: 30px;
 }
+
+.carttitle span{
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+
 .cartcontentid{
 	display:none;
 }
