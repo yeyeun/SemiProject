@@ -38,6 +38,11 @@ public interface MypageMapper {
 	@Select("select * from course where id = #{id}")
 	public List<Mycourse> mycourse(@Param("id") String id);
 	
-    @Select("SELECT contentid, COUNT(*) AS count FROM commentcourse WHERE id = #{id} GROUP BY contentid")
+//    @Select("SELECT contentid, COUNT(*) AS count FROM commentcourse WHERE id = #{id} GROUP BY contentid")
+//    public List<Mycourse> mycoursecomment(@Param("id") String id);
+	
+	@Select("SELECT contentid, COUNT(*) AS count FROM commentcourse GROUP BY contentid")
     public List<Mycourse> mycoursecomment(@Param("id") String id);
+    
+    
 }

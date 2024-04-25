@@ -96,6 +96,7 @@ public class MypageController {
 		List<Mycourse> mycourselist = (List<Mycourse>) model.getAttribute("cList");
 		List<Mycourse> mycoursecomment = (List<Mycourse>) model.getAttribute("count");
 		
+		
 		for (Mycourse course : mycourselist) {
 		    boolean found = false; // count를 찾았는지 여부를 나타내는 변수
 		    for (Mycourse comment : mycoursecomment) {
@@ -113,6 +114,7 @@ public class MypageController {
 		
 		return "mypage/mywrite";
 	}
+
 
 	@GetMapping("/mytour")
 	public String mytour(HttpServletRequest request, HttpServletResponse response, Model model) throws IOException {
