@@ -82,8 +82,8 @@ public class MemberController {
     @GetMapping("/login")
     public String login(HttpSession session, HttpServletRequest request) {
     	String previousPageUrl = request.getHeader("referer");
-    	if(!request.getHeader("referer").substring(21).equals("/login/login")) {
-    		previousPageUrl = previousPageUrl.substring(21);
+    	if(!request.getHeader("referer").substring(22).equals("/login/login")) {
+    		previousPageUrl = previousPageUrl.substring(22);
         	session.setAttribute("previousPageUrl", previousPageUrl);
     	}
     	log.info("previousPageUrl: " + session.getAttribute("previousPageUrl"));
@@ -96,7 +96,15 @@ public class MemberController {
         if (memberService.isUser(id, pwd)) {
         	log.info("login....");
             session.setAttribute("loginId", id);
-            return "redirect:"+session.getAttribute("previousPageUrl");
+            String previousPageUrl = (String) session.getAttribute("previousPageUrl");
+            if (previousPageUrl != null) {
+                // "/login/0" 부분을 제거하여 수정된 URL을 저장합니다.
+                previousPageUrl = previousPageUrl.replace("/login/0", "");
+                session.setAttribute("previousPageUrl", previousPageUrl);
+            }
+
+            log.info("@@@@@@@"+previousPageUrl);
+            return "redirect:/"+previousPageUrl;
         } else {
         	rttr.addFlashAttribute("loginfail","fail");
             return "redirect:/login/login";
