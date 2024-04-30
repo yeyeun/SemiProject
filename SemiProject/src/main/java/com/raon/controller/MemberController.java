@@ -100,6 +100,7 @@ public class MemberController {
             if (previousPageUrl != null) {
                 // "/login/0" 부분을 제거하여 수정된 URL을 저장합니다.
                 previousPageUrl = previousPageUrl.replace("/login/0", "");
+                previousPageUrl = previousPageUrl.replace("11301/", "");
                 session.setAttribute("previousPageUrl", previousPageUrl);
             }
 
